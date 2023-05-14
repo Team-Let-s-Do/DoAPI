@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "doapi",
+  "version": "${version}",
+  "name": "Lets Do Api",
+  "description": "This is an API for the Let's do mods",
+  "authors": [
+    "Cristelknight"
+  ],
+  "license": "LGPL-3.0-only",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "de.cristelknight.doapi.fabric.DoApiFabric"
+    ],
+    "client": [
+      "de.cristelknight.doapi.fabric.client.DoApiClientFabric"
+    ]
+  },
+  "mixins": [
+    "doapi.mixins.json",
+    "doapi-common.mixins.json"
+  ],
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
+  },
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.19.2",
+    "architectury": ">=6.5.77"
+  }
+}

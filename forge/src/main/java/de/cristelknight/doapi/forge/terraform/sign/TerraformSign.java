@@ -1,0 +1,7 @@
+package de.cristelknight.doapi.forge.terraform.sign;
+
+import net.minecraft.resources.ResourceLocation;
+
+public interface TerraformSign {
+	ResourceLocation getTexture();
+}
