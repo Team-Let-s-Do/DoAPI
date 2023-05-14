@@ -1,12 +1,14 @@
 package de.cristelknight.doapi.forge;
 
 import com.mojang.datafixers.util.Pair;
-import de.cristelknight.doapi.DoApi;
+import de.cristelknight.doapi.forge.registry.BurningBlockRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.api.TerraformBoatTypeRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformBoatEntity;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformChestBoatEntity;
 import de.cristelknight.doapi.forge.terraform.sign.SpriteIdentifierRegistry;
+import de.cristelknight.doapi.forge.terraform.sign.block.TerraformHangingSignBlock;
 import de.cristelknight.doapi.forge.terraform.sign.block.TerraformSignBlock;
+import de.cristelknight.doapi.forge.terraform.sign.block.TerraformWallHangingSignBlock;
 import de.cristelknight.doapi.forge.terraform.sign.block.TerraformWallSignBlock;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.minecraft.client.renderer.Sheets;
@@ -18,8 +20,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
 
@@ -44,21 +47,12 @@ public class DoApiExpectPlatformImpl {
         return boatEntity;
     }
 
-    public static Set<ResourceLocation> getAllBoatTypeNames() {
-        return TerraformBoatTypeRegistry.getIds();
-    }
+
 
     public static void addFlammable(int burnOdd, int igniteOdd, Block... blocks) {
-
+        BurningBlockRegistry.add(burnOdd, igniteOdd, blocks);
     }
 
-    public static Block getSign(ResourceLocation signTextureId) {
-        return new TerraformSignBlock(signTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_SIGN));
-    }
-
-    public static Block getWallSign(ResourceLocation signTextureId) {
-        return new TerraformWallSignBlock(signTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_SIGN));
-    }
 
     public static void addSignSprite(ResourceLocation signTextureId) {
         SpriteIdentifierRegistry.INSTANCE.addIdentifier(new Material(Sheets.SIGN_SHEET, signTextureId));
@@ -68,5 +62,29 @@ public class DoApiExpectPlatformImpl {
         return ApiFinder.scanForAPIs(annotationClazz, returnClazz);
     }
 
+    public static Map<ResourceLocation, Boolean> getAllBoatTypeNamesAndRaft() {
+        Map<ResourceLocation, Boolean> boats = new HashMap<>();
+        for(Map.Entry<ResourceLocation, TerraformBoatType> entry : TerraformBoatTypeRegistry.entrySet()){
+            boats.put(entry.getKey(), entry.getValue().isRaft());
+        }
+        return boats;
+    }
+
+
+    public static Block getSign(ResourceLocation signTextureId) {
+        return new TerraformSignBlock(signTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_SIGN));
+    }
+
+    public static Block getWallSign(ResourceLocation signTextureId) {
+        return new TerraformWallSignBlock(signTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_SIGN));
+    }
+
+    public static Block getHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId) {
+        return new TerraformHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN));
+    }
+
+    public static Block getWallHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId) {
+        return new TerraformWallHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN));
+    }
 
 }

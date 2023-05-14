@@ -12,20 +12,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class TerraformBoatItemHelper {
-	private static final CreativeModeTab DEFAULT_ITEM_GROUP = CreativeModeTab.TAB_TRANSPORTATION;
 
 	private static Map<RegistrySupplier<? extends ItemLike>, TerraformBoatDispenserBehavior> DISPENSER_BEHAVIOURS = new HashMap<>();
 
 	private TerraformBoatItemHelper() {
 		return;
 	}
+	
+	
 
 	public static RegistrySupplier<Item> registerBoatItem(DeferredRegister<Item> register, String name, ResourceLocation boatTypeName, boolean chest) {
-		return registerBoatItem(register, name, boatTypeName, chest, DEFAULT_ITEM_GROUP);
-	}
-
-	public static RegistrySupplier<Item> registerBoatItem(DeferredRegister<Item> register, String name, ResourceLocation boatTypeName, boolean chest, CreativeModeTab group) {
-		return registerBoatItem(register, name, boatTypeName, chest, new Item.Properties().stacksTo(1).tab(group));
+		return registerBoatItem(register, name, boatTypeName, chest, new Item.Properties().stacksTo(1));
 	}
 
 

@@ -1,7 +1,7 @@
 package de.cristelknight.doapi.forge.mixin.boat;
 
-import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformBoatHolder;
+import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,6 @@ public class MixinBoatEntity {
 			TerraformBoatType boat = ((TerraformBoatHolder) this).getTerraformBoat();
 			return boat.getPlanks();
 		}
-
 		return original;
 	}
 }

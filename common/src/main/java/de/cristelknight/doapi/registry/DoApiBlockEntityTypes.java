@@ -10,6 +10,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -21,7 +22,7 @@ import java.util.function.Supplier;
 public class DoApiBlockEntityTypes {
 
 
-    private static final Registrar<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY).getRegistrar();
+    private static final Registrar<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registries.BLOCK_ENTITY_TYPE).getRegistrar();
 
 
     public static final RegistrySupplier<BlockEntityType<StorageBlockEntity>> STORAGE_ENTITY = create("storage", () -> BlockEntityType.Builder.of(

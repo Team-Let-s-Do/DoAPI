@@ -13,7 +13,6 @@ public class TerraformSignBlock extends StandingSignBlock implements TerraformSi
 		this.texture = texture;
 	}
 
-
 	@Override
 	public ResourceLocation getTexture() {
 		return texture;

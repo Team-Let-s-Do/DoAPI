@@ -6,14 +6,18 @@ import com.terraformersmc.terraform.boat.api.TerraformBoatTypeRegistry;
 import com.terraformersmc.terraform.boat.impl.entity.TerraformBoatEntity;
 import com.terraformersmc.terraform.boat.impl.entity.TerraformChestBoatEntity;
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
+import com.terraformersmc.terraform.sign.block.TerraformHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
+import com.terraformersmc.terraform.sign.block.TerraformWallHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
@@ -21,15 +25,18 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
 
     public static void registerBoatType(ResourceLocation boatTypeName, TerraformBoatType type) {
-        com.terraformersmc.terraform.boat.api.TerraformBoatType type1 = new com.terraformersmc.terraform.boat.api.TerraformBoatType.Builder().item(type.getItem()).chestItem(type.getChestItem()).planks(type.getPlanks()).build();
+        com.terraformersmc.terraform.boat.api.TerraformBoatType.Builder type1 = new com.terraformersmc.terraform.boat.api.TerraformBoatType.Builder().item(type.getItem()).chestItem(type.getChestItem()).planks(type.getPlanks());
 
-        Registry.register(TerraformBoatTypeRegistry.INSTANCE, boatTypeName, type1);
+        if(type.isRaft()) type1 = type1.raft();
+
+        Registry.register(TerraformBoatTypeRegistry.INSTANCE, boatTypeName, type1.build());
     }
 
 
@@ -48,9 +55,6 @@ public class DoApiExpectPlatformImpl {
         return boatEntity;
     }
 
-    public static Set<ResourceLocation> getAllBoatTypeNames() {
-        return TerraformBoatTypeRegistry.INSTANCE.keySet();
-    }
 
     public static void addFlammable(int burnOdd, int igniteOdd, Block... blocks) {
         FlammableBlockRegistry registry = FlammableBlockRegistry.getDefaultInstance();
@@ -79,4 +83,21 @@ public class DoApiExpectPlatformImpl {
         });
         return instances;
     }
+
+    public static Map<ResourceLocation, Boolean> getAllBoatTypeNamesAndRaft() {
+        Map<ResourceLocation, Boolean> boats = new HashMap<>();
+        for(Map.Entry<ResourceKey<com.terraformersmc.terraform.boat.api.TerraformBoatType>, com.terraformersmc.terraform.boat.api.TerraformBoatType> entry : TerraformBoatTypeRegistry.INSTANCE.entrySet()){
+            boats.put(entry.getKey().location(), entry.getValue().isRaft());
+        }
+        return boats;
+    }
+
+    public static Block getHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId) {
+        return new TerraformHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, FabricBlockSettings.copy(Blocks.OAK_HANGING_SIGN));
+    }
+
+    public static Block getWallHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId) {
+        return new TerraformWallHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, FabricBlockSettings.copy(Blocks.OAK_HANGING_SIGN));
+    }
+
 }

@@ -72,7 +72,7 @@ public class TerraformBoatItem extends Item {
 			
 			if (!world.isClientSide()) {
 				world.addFreshEntity(boatEntity);
-				world.gameEvent(user, GameEvent.ENTITY_PLACE, new BlockPos(hitResult.getLocation()));
+				world.gameEvent(user, GameEvent.ENTITY_PLACE, BlockPos.containing(hitResult.getLocation()));
 
 				if (!user.getAbilities().instabuild) {
 					stack.shrink(1);

@@ -33,11 +33,9 @@ public class Util {
         return apis;
     }
 
-    public static <T extends Block> RegistrySupplier<T> registerWithItem(DeferredRegister<Block> registerB, Registrar<Block> registrarB, DeferredRegister<Item> registerI, Registrar<Item> registrarI, ResourceLocation name, Supplier<T> block, @Nullable CreativeModeTab tab) {
+    public static <T extends Block> RegistrySupplier<T> registerWithItem(DeferredRegister<Block> registerB, Registrar<Block> registrarB, DeferredRegister<Item> registerI, Registrar<Item> registrarI, ResourceLocation name, Supplier<T> block) {
         RegistrySupplier<T> toReturn = registerWithoutItem(registerB, registrarB, name, block);
-        Item.Properties properties = new Item.Properties();
-        if(tab != null) properties.tab(tab);
-        registerItem(registerI, registrarI, name, () -> new BlockItem(toReturn.get(), properties));
+        registerItem(registerI, registrarI, name, () -> new BlockItem(toReturn.get(), new Item.Properties()));
         return toReturn;
     }
 

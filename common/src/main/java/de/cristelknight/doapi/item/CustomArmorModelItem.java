@@ -7,7 +7,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 
 public abstract class CustomArmorModelItem extends ArmorItem {
-    public CustomArmorModelItem(ArmorMaterial material, EquipmentSlot slot, Item.Properties settings) {
+    public CustomArmorModelItem(ArmorMaterial material, ArmorItem.Type slot, Item.Properties settings) {
         super(material, slot, settings);
     }
 

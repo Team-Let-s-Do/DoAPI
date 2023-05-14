@@ -1,7 +1,7 @@
 package de.cristelknight.doapi.forge.client;
 
 import de.cristelknight.doapi.client.DoApiClient;
-import de.cristelknight.doapi.client.terraform.TerraformBoatClientHelper;
+import de.cristelknight.doapi.client.terraform.CustomBoatClientHelper;
 import de.cristelknight.doapi.forge.terraform.TerraformApiForge;
 import de.cristelknight.doapi.forge.terraform.boat.impl.client.TerraformBoatClientInitializer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,7 +16,7 @@ public class TerraformClient {
 
     @SubscribeEvent
     public static void beforeClientSetup(RegisterEvent event) {
-        TerraformBoatClientHelper.onClientInit();
+        CustomBoatClientHelper.onClientInit();
     }
 
     @SubscribeEvent

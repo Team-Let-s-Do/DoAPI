@@ -1,7 +1,7 @@
 package de.cristelknight.doapi.client.render.block.storage;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.cristelknight.doapi.block.StorageBlock;
 import de.cristelknight.doapi.block.entity.StorageBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -53,6 +53,6 @@ public class StorageBlockEntityRenderer implements BlockEntityRenderer<StorageBl
     public static void applyBlockAngle(PoseStack matrices, BlockState state, float angleOffset) {
         float angle = state.getValue(StorageBlock.FACING).toYRot();
         matrices.translate(0.5, 0, 0.5);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(angleOffset - angle));
+        matrices.mulPose(Axis.YP.rotationDegrees(angleOffset - angle));
     }
 }

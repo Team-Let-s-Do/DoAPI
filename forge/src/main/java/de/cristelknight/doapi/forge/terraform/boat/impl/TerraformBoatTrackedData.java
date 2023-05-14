@@ -5,24 +5,23 @@ import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
+
+import java.util.Optional;
+
 public final class TerraformBoatTrackedData {
 	private TerraformBoatTrackedData() {
 		return;
 	}
 
-	public static final EntityDataSerializer<TerraformBoatType> HANDLER = new EntityDataSerializer<>() {
-		public void write(FriendlyByteBuf buf, TerraformBoatType boat) {
-			buf.writeResourceLocation(TerraformBoatTypeRegistry.getId(boat));
-		}
+	public static final EntityDataSerializer<Optional<TerraformBoatType>> HANDLER = EntityDataSerializer.optional(TerraformBoatTrackedData::write, TerraformBoatTrackedData::read);
 
-		public TerraformBoatType read(FriendlyByteBuf buf) {
-			return TerraformBoatTypeRegistry.get(buf.readResourceLocation());
-		}
+	private static void write(FriendlyByteBuf buf, TerraformBoatType boat) {
+		buf.writeResourceLocation(TerraformBoatTypeRegistry.getId(boat));
+	}
 
-		public TerraformBoatType copy(TerraformBoatType boat) {
-			return boat;
-		}
-	};
+	private static TerraformBoatType read(FriendlyByteBuf buf) {
+		return TerraformBoatTypeRegistry.get(buf.readResourceLocation());
+	}
 
 	public static void register() {
 		EntityDataSerializers.registerSerializer(HANDLER);
