@@ -25,9 +25,6 @@ public class Test {
         RegistrySupplier<Item> palmSignItem = registerItem(PALM_SIGN_ID, () -> new SignItem(new Item.Properties().stacksTo(16).tab(DoApi.CREATIVE_TAB), sign.get(), wallSign.get()));
     }
 
-
-
-    
 }
 ```
 ### Client
