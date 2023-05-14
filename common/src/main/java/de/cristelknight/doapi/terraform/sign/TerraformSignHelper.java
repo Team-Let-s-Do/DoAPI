@@ -1,4 +1,4 @@
-package de.cristelknight.doapi.terraform;
+package de.cristelknight.doapi.terraform.sign;
 
 import de.cristelknight.doapi.DoApiExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +12,14 @@ public class TerraformSignHelper {
 
     public static Block getWallSign(ResourceLocation signTextureId){
         return DoApiExpectPlatform.getWallSign(signTextureId);
+    }
+
+    public static Block getHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId){
+        return DoApiExpectPlatform.getHangingSign(hangingSignTextureId, hangingSignGuiTextureId);
+    }
+
+    public static Block getWallHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId){
+        return DoApiExpectPlatform.getWallHangingSign(hangingSignTextureId, hangingSignGuiTextureId);
     }
 
     public static void regsterSignSprite(ResourceLocation signTextureId){
