@@ -17,4 +17,6 @@ public class TerraformWallSignBlock extends WallSignBlock implements TerraformSi
 	public ResourceLocation getTexture() {
 		return texture;
 	}
+
+
 }

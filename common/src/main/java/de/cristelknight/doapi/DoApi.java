@@ -1,5 +1,6 @@
 package de.cristelknight.doapi;
 
+import de.cristelknight.doapi.registry.DoApiBlockEntityTypes;
 import de.cristelknight.doapi.terraform.boat.item.TerraformBoatItemHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ public class DoApi {
 
 
     public static void init() {
+        DoApiBlockEntityTypes.loadClass();
     }
 
     public static void commonTerraformInit() {

@@ -1,5 +1,7 @@
 package de.cristelknight.doapi.fabric;
 
+import com.google.common.collect.Lists;
+import com.mojang.datafixers.util.Pair;
 import com.terraformersmc.terraform.boat.api.TerraformBoatTypeRegistry;
 import com.terraformersmc.terraform.boat.impl.entity.TerraformBoatEntity;
 import com.terraformersmc.terraform.boat.impl.entity.TerraformChestBoatEntity;
@@ -8,6 +10,7 @@ import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Registry;
@@ -18,11 +21,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.List;
 import java.util.Set;
 
 public class DoApiExpectPlatformImpl {
 
-    public static void register(ResourceLocation boatTypeName, TerraformBoatType type) {
+    public static void registerBoatType(ResourceLocation boatTypeName, TerraformBoatType type) {
         com.terraformersmc.terraform.boat.api.TerraformBoatType type1 = new com.terraformersmc.terraform.boat.api.TerraformBoatType.Builder().item(type.getItem()).chestItem(type.getChestItem()).planks(type.getPlanks()).build();
 
         Registry.register(TerraformBoatTypeRegistry.INSTANCE, boatTypeName, type1);
@@ -63,5 +67,16 @@ public class DoApiExpectPlatformImpl {
 
     public static void addSignSprite(ResourceLocation signTextureId) {
         SpriteIdentifierRegistry.INSTANCE.addIdentifier(new Material(Sheets.SIGN_SHEET, signTextureId));
+    }
+
+    public static <T> List<Pair<List<String>, T>> findAPIs(Class<T> returnClazz, String name, Class<?> annotationClazz) {
+        List<Pair<List<String>, T>> instances = Lists.newArrayList();
+
+        FabricLoader.getInstance().getEntrypointContainers(name, returnClazz).forEach(entrypoint -> {
+            String modId = entrypoint.getProvider().getMetadata().getId();
+            T api = entrypoint.getEntrypoint();
+            instances.add(new Pair<>(List.of(modId), api));
+        });
+        return instances;
     }
 }

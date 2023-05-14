@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 public class MixinTexturedRenderLayers {
 	@Inject(method = "getAllMaterials", at = @At("RETURN"))
 	private static void injectTerrestriaSigns(Consumer<Material> consumer, CallbackInfo info) {
-		for(Material identifier: SpriteIdentifierRegistry.INSTANCE.getIdentifiers()) {
+		for(Material identifier : SpriteIdentifierRegistry.INSTANCE.getIdentifiers()) {
 			consumer.accept(identifier);
 		}
 	}

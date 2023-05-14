@@ -7,8 +7,8 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 public final class TerraformBoatClientInitializer {
 
 	public static void init(EntityRenderersEvent.RegisterRenderers event) {
-		//EntityRendererRegistry.register(TerraformBoatInitializer.BOAT, context -> new TerraformBoatEntityRenderer(context, false));
-		//EntityRendererRegistry.register(TerraformBoatInitializer.CHEST_BOAT, context -> new TerraformBoatEntityRenderer(context, true));
+		//EntityRendererRegistry.registerBoatType(TerraformBoatInitializer.BOAT, context -> new TerraformBoatEntityRenderer(context, false));
+		//EntityRendererRegistry.registerBoatType(TerraformBoatInitializer.CHEST_BOAT, context -> new TerraformBoatEntityRenderer(context, true));
 
 
 		event.registerEntityRenderer(TerraformBoatInitializer.BOAT.get(), context -> new TerraformBoatEntityRenderer(context, false));

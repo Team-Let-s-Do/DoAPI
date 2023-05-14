@@ -1,5 +1,6 @@
 package de.cristelknight.doapi;
 
+import com.mojang.datafixers.util.Pair;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
@@ -7,10 +8,16 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
+import java.util.List;
 import java.util.Set;
 
 
 public class DoApiExpectPlatform {
+
+    @ExpectPlatform
+    public static <T> List<Pair<List<String>, T>> findAPIs(Class<T> returnClazz, String name, Class<?> annotationClazz){
+        throw new AssertionError();
+    }
 
     @ExpectPlatform
     public static void addSignSprite(ResourceLocation signTextureId){
@@ -31,7 +38,7 @@ public class DoApiExpectPlatform {
         throw new AssertionError();
     }
     @ExpectPlatform
-    public static void register(ResourceLocation resourceLocation, TerraformBoatType type) {
+    public static void registerBoatType(ResourceLocation resourceLocation, TerraformBoatType type) {
         throw new AssertionError();
     }
 

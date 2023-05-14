@@ -1,5 +1,7 @@
 package de.cristelknight.doapi.forge;
 
+import com.mojang.datafixers.util.Pair;
+import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.forge.terraform.boat.api.TerraformBoatTypeRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformBoatEntity;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformChestBoatEntity;
@@ -16,12 +18,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.List;
 import java.util.Set;
 
 public class DoApiExpectPlatformImpl {
 
 
-    public static void register(ResourceLocation resourceLocation, TerraformBoatType type) {
+    public static void registerBoatType(ResourceLocation resourceLocation, TerraformBoatType type) {
         TerraformBoatTypeRegistry.register(resourceLocation, type);
     }
 
@@ -60,5 +63,10 @@ public class DoApiExpectPlatformImpl {
     public static void addSignSprite(ResourceLocation signTextureId) {
         SpriteIdentifierRegistry.INSTANCE.addIdentifier(new Material(Sheets.SIGN_SHEET, signTextureId));
     }
+
+    public static <T> List<Pair<List<String>, T>> findAPIs(Class<T> returnClazz, String name, Class<?> annotationClazz) {
+        return ApiFinder.scanForAPIs(annotationClazz, returnClazz);
+    }
+
 
 }
