@@ -26,6 +26,8 @@ public class Test {
 
 }
 ```
+Don't forget to register your ``DeferredRegister``s after ``init()``
+
 ### Client
 ```
 public class DoApiClient {
