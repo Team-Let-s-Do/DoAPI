@@ -2,6 +2,7 @@ package de.cristelknight.doapi.forge;
 
 import com.mojang.datafixers.util.Pair;
 import de.cristelknight.doapi.DoApi;
+import de.cristelknight.doapi.forge.registry.BurningBlockRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.api.TerraformBoatTypeRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformBoatEntity;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformChestBoatEntity;
@@ -49,7 +50,7 @@ public class DoApiExpectPlatformImpl {
     }
 
     public static void addFlammable(int burnOdd, int igniteOdd, Block... blocks) {
-
+        BurningBlockRegistry.add(burnOdd, igniteOdd, blocks);
     }
 
     public static Block getSign(ResourceLocation signTextureId) {
