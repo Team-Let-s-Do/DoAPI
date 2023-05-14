@@ -9,6 +9,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,16 +48,10 @@ public class StorageBlockEntity extends BlockEntity {
 
     @Override
     public void setChanged() {
-        if(!level.isClientSide()) {
-            FriendlyByteBuf data = new FriendlyByteBuf(Unpooled.buffer());
-            data.writeInt(inventory.size());
-            for (ItemStack itemStack : inventory) {
-                data.writeItem(itemStack);
-            }
-            data.writeBlockPos(getBlockPos());
-
+        if(level != null && !level.isClientSide()) {
+            Packet<ClientGamePacketListener> updatePacket = getUpdatePacket();
             for (ServerPlayer player : Util.tracking((ServerLevel) level, getBlockPos())) {
-                NetworkManager.sendToPlayer(player, DoApiMessages.ITEM_SYNC, data);
+                player.connection.send(updatePacket);
             }
         }
         super.setChanged();
