@@ -41,15 +41,15 @@ public class DoApiClient {
 
 ### Registry
 ```
-    private static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> block, @Nullable CreativeModeTab tab) {
-        return ObjectRegistry.registerWithItem(DoApi.BLOCKS, DoApi.BLOCK_REGISTRAR, DoApi.ITEMS, DoApi.ITEM_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, name), block, tab);
-    }
+private static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> block, @Nullable CreativeModeTab tab) {
+    return ObjectRegistry.registerWithItem(DoApi.BLOCKS, DoApi.BLOCK_REGISTRAR, DoApi.ITEMS, DoApi.ITEM_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, name), block, tab);
+}
 
-    private static <T extends Block> RegistrySupplier<T> registerWithoutItem(String path, Supplier<T> block) {
-        return ObjectRegistry.registerWithoutItem(DoApi.BLOCKS, DoApi.BLOCK_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, path), block);
-    }
+private static <T extends Block> RegistrySupplier<T> registerWithoutItem(String path, Supplier<T> block) {
+    return ObjectRegistry.registerWithoutItem(DoApi.BLOCKS, DoApi.BLOCK_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, path), block);
+}
 
-    private static <T extends Item> RegistrySupplier<T> registerItem(String path, Supplier<T> itemSupplier) {
-        return ObjectRegistry.registerItem(DoApi.ITEMS, DoApi.ITEM_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, path), itemSupplier);
-    }
+ private static <T extends Item> RegistrySupplier<T> registerItem(String path, Supplier<T> itemSupplier) {
+     return ObjectRegistry.registerItem(DoApi.ITEMS, DoApi.ITEM_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, path), itemSupplier);
+}
 ´´´
