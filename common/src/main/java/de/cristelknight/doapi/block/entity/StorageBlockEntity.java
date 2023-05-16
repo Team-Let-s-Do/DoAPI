@@ -1,14 +1,10 @@
 package de.cristelknight.doapi.block.entity;
 
 import de.cristelknight.doapi.Util;
-import de.cristelknight.doapi.networking.DoApiMessages;
 import de.cristelknight.doapi.registry.DoApiBlockEntityTypes;
-import dev.architectury.networking.NetworkManager;
-import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
