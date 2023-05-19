@@ -45,7 +45,7 @@ public final class CustomBoatClientHelper {
 	}
 
 	public static void registerAllModelLayers(){
-		for(Map.Entry<ResourceLocation, Boolean> e : DoApiExpectPlatform.getAllBoatTypeNamesAndRaft().entrySet()){
+		for(Map.Entry<ResourceLocation, Boolean> e : DoApiExpectPlatform.getAllDoApiBoatTypeNamesAndRaft().entrySet()){
 			registerModelLayers(e.getKey(), e.getValue());
 		}
 	}

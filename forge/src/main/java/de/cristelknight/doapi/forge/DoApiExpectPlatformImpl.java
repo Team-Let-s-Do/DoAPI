@@ -62,7 +62,7 @@ public class DoApiExpectPlatformImpl {
         return ApiFinder.scanForAPIs(annotationClazz, returnClazz);
     }
 
-    public static Map<ResourceLocation, Boolean> getAllBoatTypeNamesAndRaft() {
+    public static Map<ResourceLocation, Boolean> getAllDoApiBoatTypeNamesAndRaft() {
         Map<ResourceLocation, Boolean> boats = new HashMap<>();
         for(Map.Entry<ResourceLocation, TerraformBoatType> entry : TerraformBoatTypeRegistry.entrySet()){
             boats.put(entry.getKey(), entry.getValue().isRaft());

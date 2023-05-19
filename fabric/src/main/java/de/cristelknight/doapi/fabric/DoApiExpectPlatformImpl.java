@@ -10,6 +10,7 @@ import com.terraformersmc.terraform.sign.block.TerraformHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
+import de.cristelknight.doapi.fabric.terraform.DoApiBoatTypeHolder;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
@@ -32,11 +33,9 @@ import java.util.Map;
 public class DoApiExpectPlatformImpl {
 
     public static void registerBoatType(ResourceLocation boatTypeName, TerraformBoatType type) {
-        com.terraformersmc.terraform.boat.api.TerraformBoatType.Builder type1 = new com.terraformersmc.terraform.boat.api.TerraformBoatType.Builder().item(type.getItem()).chestItem(type.getChestItem()).planks(type.getPlanks());
+        DoApiBoatTypeHolder holder = new DoApiBoatTypeHolder(type.isRaft(), type.getItem(), type.getChestItem(), type.getPlanks());
 
-        if(type.isRaft()) type1 = type1.raft();
-
-        Registry.register(TerraformBoatTypeRegistry.INSTANCE, boatTypeName, type1.build());
+        Registry.register(TerraformBoatTypeRegistry.INSTANCE, boatTypeName, holder);
     }
 
 
@@ -84,10 +83,12 @@ public class DoApiExpectPlatformImpl {
         return instances;
     }
 
-    public static Map<ResourceLocation, Boolean> getAllBoatTypeNamesAndRaft() {
+    public static Map<ResourceLocation, Boolean> getAllDoApiBoatTypeNamesAndRaft() {
         Map<ResourceLocation, Boolean> boats = new HashMap<>();
         for(Map.Entry<ResourceKey<com.terraformersmc.terraform.boat.api.TerraformBoatType>, com.terraformersmc.terraform.boat.api.TerraformBoatType> entry : TerraformBoatTypeRegistry.INSTANCE.entrySet()){
-            boats.put(entry.getKey().location(), entry.getValue().isRaft());
+            if(entry.getValue() instanceof DoApiBoatTypeHolder){
+                boats.put(entry.getKey().location(), entry.getValue().isRaft());
+            }
         }
         return boats;
     }

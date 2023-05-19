@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 public class DoApiExpectPlatform {
@@ -54,7 +53,7 @@ public class DoApiExpectPlatform {
     }
 
     @ExpectPlatform
-    public static Map<ResourceLocation, Boolean> getAllBoatTypeNamesAndRaft(){
+    public static Map<ResourceLocation, Boolean> getAllDoApiBoatTypeNamesAndRaft(){
         throw new AssertionError();
     }
 
