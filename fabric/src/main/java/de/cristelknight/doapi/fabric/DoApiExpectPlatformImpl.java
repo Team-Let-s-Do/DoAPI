@@ -8,12 +8,14 @@ import com.terraformersmc.terraform.boat.impl.entity.TerraformChestBoatEntity;
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
 import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
+import de.cristelknight.doapi.fabric.terraform.DoApiBoatTypeHolder;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
@@ -21,15 +23,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class DoApiExpectPlatformImpl {
 
     public static void registerBoatType(ResourceLocation boatTypeName, TerraformBoatType type) {
-        com.terraformersmc.terraform.boat.api.TerraformBoatType type1 = new com.terraformersmc.terraform.boat.api.TerraformBoatType.Builder().item(type.getItem()).chestItem(type.getChestItem()).planks(type.getPlanks()).build();
+        DoApiBoatTypeHolder holder = new DoApiBoatTypeHolder(type.getItem(), type.getChestItem(), type.getPlanks());
 
-        Registry.register(TerraformBoatTypeRegistry.INSTANCE, boatTypeName, type1);
+        Registry.register(TerraformBoatTypeRegistry.INSTANCE, boatTypeName, holder);
     }
 
 
@@ -48,8 +52,14 @@ public class DoApiExpectPlatformImpl {
         return boatEntity;
     }
 
-    public static Set<ResourceLocation> getAllBoatTypeNames() {
-        return TerraformBoatTypeRegistry.INSTANCE.keySet();
+    public static Set<ResourceLocation> getAllDoApiBoatTypeNames() {
+        Set<ResourceLocation> boats = new HashSet<>();
+        for(Map.Entry<ResourceKey<com.terraformersmc.terraform.boat.api.TerraformBoatType>, com.terraformersmc.terraform.boat.api.TerraformBoatType> entry : TerraformBoatTypeRegistry.INSTANCE.entrySet()){
+            if(entry.getValue() instanceof DoApiBoatTypeHolder){
+                boats.add(entry.getKey().location());
+            }
+        }
+        return boats;
     }
 
     public static void addFlammable(int burnOdd, int igniteOdd, Block... blocks) {

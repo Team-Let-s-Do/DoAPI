@@ -30,7 +30,7 @@ public final class TerraformBoatClientHelper {
 	}
 
 	public static void registerAllModelLayers(){
-		for(ResourceLocation location : DoApiExpectPlatform.getAllBoatTypeNames()){
+		for(ResourceLocation location : DoApiExpectPlatform.getAllDoApiBoatTypeNames()){
 			registerModelLayers(location);
 		}
 	}

@@ -43,7 +43,7 @@ public class DoApiExpectPlatform {
     }
 
     @ExpectPlatform
-    public static Set<ResourceLocation> getAllBoatTypeNames(){
+    public static Set<ResourceLocation> getAllDoApiBoatTypeNames(){
         throw new AssertionError();
     }
 
