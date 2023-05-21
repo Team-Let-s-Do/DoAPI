@@ -23,12 +23,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class DoApiExpectPlatformImpl {
+    public static Path getConfigDirectory() {
+        return FabricLoader.getInstance().getConfigDir();
+    }
 
     public static void registerBoatType(ResourceLocation boatTypeName, TerraformBoatType type) {
         DoApiBoatTypeHolder holder = new DoApiBoatTypeHolder(type.getItem(), type.getChestItem(), type.getPlanks());

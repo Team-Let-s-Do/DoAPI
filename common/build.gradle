@@ -6,6 +6,9 @@ loom {
     accessWidenerPath = file("src/main/resources/doapi.accesswidener")
 }
 
+repositories {
+    maven { url "https://maven.shedaniel.me/" }
+}
 
 
 dependencies {
@@ -15,6 +18,11 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury:${rootProject.architectury_version}")
             { exclude group: 'net.fabricmc', module: 'fabric-loader' }
+
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    implementation("blue.endless:jankson:${jankson_version}")
 }
 
 publishing {

@@ -17,13 +17,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.fml.loading.FMLPaths;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
 public class DoApiExpectPlatformImpl {
 
-
+    public static Path getConfigDirectory() {
+        return FMLPaths.CONFIGDIR.get();
+    }
     public static void registerBoatType(ResourceLocation resourceLocation, TerraformBoatType type) {
         TerraformBoatTypeRegistry.register(resourceLocation, type);
     }
