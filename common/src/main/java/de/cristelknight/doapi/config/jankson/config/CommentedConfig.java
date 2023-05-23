@@ -37,23 +37,25 @@ public interface CommentedConfig<T extends Record> {
         return DoApiExpectPlatform.getConfigDirectory().resolve(getSubPath() + ".json5");
     }
 
-    default T getConfig(boolean serialize, boolean recreate) {
-        if (getInstance() == null || serialize || recreate) {
-            setInstance(readConfig(recreate));
+    default T getConfig(boolean fromFile, boolean save) {
+        if (getInstance() == null || fromFile || save) {
+            setInstance(readConfig(save));
         }
         return getInstance();
     }
 
 
-    private T readConfig(boolean recreate) {
+    default T readConfig(boolean recreate) {
         if (!getConfigPath().toFile().exists() || recreate) {
-            createConfig(getConfigPath());
+            createConfig();
         }
         return ConfigUtil.readConfig(getConfigPath(), getCodec(), JanksonOps.INSTANCE);
     }
 
-    private void createConfig(Path path) {
-        ConfigUtil.createConfig(path, getCodec(), getMap(getComments()), JanksonOps.INSTANCE, getDefault(), isSorted(), getComment(getHeader()));
+    default void createConfig() {
+        T create = getInstance();
+        if(create == null) create = getDefault();
+        ConfigUtil.createConfig(getConfigPath(), getCodec(), getMap(getComments()), JanksonOps.INSTANCE, create, isSorted(), getComment(getHeader()));
     }
 
     private String getComment(String header){
