@@ -7,7 +7,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import de.cristelknight.doapi.DoApi;
-import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,10 +19,6 @@ import java.util.function.Supplier;
 
 
 public class ConfigUtil {
-
-    public static final Path CONFIG_DIR = FabricLoader.getInstance().getConfigDir();
-
-    public static final Path CONFIG_WWOO = CONFIG_DIR.resolve("wwoo");
 
     public static final Jankson JANKSON = Jankson.builder().build();
 

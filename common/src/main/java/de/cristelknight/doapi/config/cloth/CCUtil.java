@@ -16,8 +16,10 @@ import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.function.Supplier;
+
 @Environment(EnvType.CLIENT)
-public class ClothConfigScreenUtil {
+public class CCUtil {
     public static Component entryName(String id, String modid) {
         return Component.translatable(modid + ".config.entry." + id);
     }
@@ -25,14 +27,18 @@ public class ClothConfigScreenUtil {
         return Component.translatable(modid + ".config.category." + id);
     }
 
-    private BooleanListEntry createBooleanField(String modid, String id, boolean value, boolean defaultValue, ConfigEntryBuilder builder) {
+    public static Component translatableText(String id, String modid) {
+        return Component.translatable(modid + ".config.text." + id);
+    }
+
+    public static BooleanListEntry createBooleanField(String modid, String id, boolean value, boolean defaultValue, ConfigEntryBuilder builder) {
         BooleanToggleBuilder e = builder.startBooleanToggle(entryName(id, modid), value)
                 .setDefaultValue(defaultValue);
 
         return e.build();
     }
 
-    private IntegerListEntry createIntField(String modid, String id, int value, int defaultValue, ConfigEntryBuilder builder) {
+    public static IntegerListEntry createIntField(String modid, String id, int value, int defaultValue, ConfigEntryBuilder builder) {
         IntegerListEntry entry = builder.startIntField(entryName(id, modid), value)
                 .setDefaultValue(defaultValue)
                 .setMin(0).setMax(100)
@@ -41,7 +47,7 @@ public class ClothConfigScreenUtil {
         return entry;
     }
 
-    private FloatListEntry createFloatField(String modid, String id, int value, int defaultValue, ConfigEntryBuilder builder) {
+    public static FloatListEntry createFloatField(String modid, String id, int value, int defaultValue, ConfigEntryBuilder builder) {
         FloatListEntry entry = builder.startFloatField(entryName(id, modid), value)
                 .setDefaultValue(defaultValue)
                 .setMin(0).setMax(100)
@@ -50,19 +56,19 @@ public class ClothConfigScreenUtil {
         return entry;
     }
 
-    private void linkButtons(String modid, ConfigCategory category, ConfigEntryBuilder builder, String dcLink, String cfLink, Screen configScreen){
+    public static void linkButtons(String modid, ConfigCategory category, ConfigEntryBuilder builder, String dcLink, String cfLink, Supplier<Screen> configScreen){
         TextListEntry tle = builder.startTextDescription(Component.literal(" ")).build();
         category.addEntry(tle);
         category.addEntry(new LinkEntry(entryName(modid,"dc"), buttonWidget -> Minecraft.getInstance().setScreen(new ConfirmLinkScreen(confirmed -> {
             if (confirmed) {
                 Util.getPlatform().openUri(dcLink);
             }
-            Minecraft.getInstance().setScreen(configScreen); }, dcLink, true)), new DoApiRL("textures/gui/dc.png"), 3));
+            Minecraft.getInstance().setScreen(configScreen.get()); }, dcLink, true)), new DoApiRL("textures/gui/dc.png"), 3));
         category.addEntry(tle);
         category.addEntry(new LinkEntry(entryName(modid, "cf"), buttonWidget -> Minecraft.getInstance().setScreen(new ConfirmLinkScreen(confirmed -> {
             if (confirmed) {
                 Util.getPlatform().openUri(cfLink);
             }
-            Minecraft.getInstance().setScreen(configScreen); }, cfLink, true)), new DoApiRL("textures/gui/cf.png"), 10));
+            Minecraft.getInstance().setScreen(configScreen.get()); }, cfLink, true)), new DoApiRL("textures/gui/cf.png"), 10));
     }
 }

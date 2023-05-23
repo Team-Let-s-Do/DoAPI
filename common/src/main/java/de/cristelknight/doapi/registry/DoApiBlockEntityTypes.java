@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class DoApiBlockEntityTypes {
 
 
-    private static final Registrar<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY).getRegistrar();
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
 
 
     public static final RegistrySupplier<BlockEntityType<StorageBlockEntity>> STORAGE_ENTITY = create("storage", () -> BlockEntityType.Builder.of(
@@ -38,10 +38,10 @@ public class DoApiBlockEntityTypes {
 
 
     private static <T extends BlockEntityType<?>> RegistrySupplier<T> create(final String path, final Supplier<T> type) {
-        return BLOCK_ENTITY_TYPES.register(new DoApiRL(path), type);
+        return BLOCK_ENTITY_TYPES.register(path, type);
     }
 
-    public static void loadClass() {
-        
+    public static void init() {
+        BLOCK_ENTITY_TYPES.register();
     }
 }

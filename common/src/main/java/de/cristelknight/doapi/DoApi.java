@@ -12,7 +12,7 @@ public class DoApi {
 
 
     public static void init() {
-        DoApiBlockEntityTypes.loadClass();
+        DoApiBlockEntityTypes.init();
     }
 
     public static void commonTerraformInit() {
