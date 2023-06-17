@@ -1,3 +1,7 @@
+plugins {
+    id "maven-publish"
+}
+
 architectury {
     common(rootProject.enabled_platforms.split(","))
 }
@@ -29,12 +33,23 @@ publishing {
     publications {
         mavenCommon(MavenPublication) {
             artifactId = rootProject.archives_base_name
-            from components.java
+            artifact(remapJar)
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
         }
     }
 
     // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
         // Add repositories to publish to here.
+        maven {
+            name = "DoAPI"
+            url = uri("https://maven.pkg.github.com/Cristelknight999/DoAPI")
+            credentials() {
+                username = System.getenv("ACTOR")
+                password = System.getenv("TOKEN")
+            }
+        }
     }
 }
