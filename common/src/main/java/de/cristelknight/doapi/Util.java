@@ -54,8 +54,6 @@ public class Util {
         return registrar.register(path, itemSupplier);
     }
 
-
-
     public static Collection<ServerPlayer> tracking(ServerLevel world, BlockPos pos) {
         Objects.requireNonNull(pos, "BlockPos cannot be null");
 
