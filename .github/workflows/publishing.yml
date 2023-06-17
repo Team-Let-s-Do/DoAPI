@@ -2,10 +2,7 @@ name: Release
 on:
   push:
     paths:
-      - '**.gradle'
       - '**.properties'
-      - '**/src/**'
-      - '.github/**'
 
 permissions:
   contents: read
