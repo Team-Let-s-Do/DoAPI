@@ -26,6 +26,8 @@ jobs:
           java-version: '17'
           distribution: 'oracle'
 
+      - name: Grant execute permission to Gradle wrapper
+        run: chmod +x gradlew
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
