@@ -1,5 +1,6 @@
-# DoApi Example
+# DoApi Wiki
 
+## Terraform Api for boats and signs
 ```
 public class Test {
 
@@ -38,18 +39,11 @@ public class DoApiClient {
 
 }
 ```
+## Recipe Book
+There is no tutorial yet, but you can take a look at this example of the Vinery mod
 
-### Registry
-```
-private static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> block, @Nullable CreativeModeTab tab) {
-    return ObjectRegistry.registerWithItem(DoApi.BLOCKS, DoApi.BLOCK_REGISTRAR, DoApi.ITEMS, DoApi.ITEM_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, name), block, tab);
-}
+- Creating your [group](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/recipebook/custom/FermentationBarrelRecipeBookGroup.java)
+- Handling your [book](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/screen/recipe/custom/FermentationPotRecipeBook.java)
 
-private static <T extends Block> RegistrySupplier<T> registerWithoutItem(String path, Supplier<T> block) {
-    return ObjectRegistry.registerWithoutItem(DoApi.BLOCKS, DoApi.BLOCK_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, path), block);
-}
-
- private static <T extends Item> RegistrySupplier<T> registerItem(String path, Supplier<T> itemSupplier) {
-     return ObjectRegistry.registerItem(DoApi.ITEMS, DoApi.ITEM_REGISTRAR, new ResourceLocation(DoApi.MOD_ID, path), itemSupplier);
-}
-´´´
+- Adding your book to your [screenhandler](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/gui/handler/FermentationBarrelGuiHandler.java)
+and [screen](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/screen/FermentationBarrelGui.java)
