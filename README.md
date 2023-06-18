@@ -4,6 +4,8 @@
 ```
 public class Test {
 
+    // Replace DoApi.MOD_ID with your modid
+
     public static ResourceLocation PALM_BOAT_TYPE_LOCATION = new ResourceLocation(DoApi.MOD_ID, "palm");
 
     public static final ResourceLocation PALM_SIGN_TEXTURE_ID = new ResourceLocation(DoApi.MOD_ID, "entity/sign/palm");
