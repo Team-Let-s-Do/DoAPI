@@ -36,7 +36,13 @@ public record RBConfig(boolean recipeBookOpen, boolean craftableToggle)
     @Override
     public String getHeader() {
         return """
-               Do Api Recipe Book values""";
+               Do Api Recipe Book values
+               
+               =======
+               Links:
+               CurseForge: https://www.curseforge.com/minecraft/mc-mods/do-api
+               Modrinth: https://modrinth.com/mod/do-api
+               GitHub: https://github.com/Cristelknight999/DoAPI""";
     }
 
     @Override
@@ -46,7 +52,6 @@ public record RBConfig(boolean recipeBookOpen, boolean craftableToggle)
 
     @Override
     public RBConfig getInstance() {
-
         return INSTANCE;
     }
 

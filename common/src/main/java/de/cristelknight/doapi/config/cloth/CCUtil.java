@@ -55,20 +55,4 @@ public class CCUtil {
 
         return entry;
     }
-
-    public static void linkButtons(String modid, ConfigCategory category, ConfigEntryBuilder builder, String dcLink, String cfLink, Supplier<Screen> configScreen){
-        TextListEntry tle = builder.startTextDescription(Component.literal(" ")).build();
-        category.addEntry(tle);
-        category.addEntry(new LinkEntry(entryName(modid,"dc"), buttonWidget -> Minecraft.getInstance().setScreen(new ConfirmLinkScreen(confirmed -> {
-            if (confirmed) {
-                Util.getPlatform().openUri(dcLink);
-            }
-            Minecraft.getInstance().setScreen(configScreen.get()); }, dcLink, true)), new DoApiRL("textures/gui/dc.png"), 3));
-        category.addEntry(tle);
-        category.addEntry(new LinkEntry(entryName(modid, "cf"), buttonWidget -> Minecraft.getInstance().setScreen(new ConfirmLinkScreen(confirmed -> {
-            if (confirmed) {
-                Util.getPlatform().openUri(cfLink);
-            }
-            Minecraft.getInstance().setScreen(configScreen.get()); }, cfLink, true)), new DoApiRL("textures/gui/cf.png"), 10));
-    }
 }
