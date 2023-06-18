@@ -6,15 +6,16 @@ license = "LGPL-3.0-only"
 modId = "doapi"
 version = "${version}"
 displayName = "Lets Do Api"
-authors = "Cristelknight"
+authors = "Cristelknight, BaumeisterJO"
+logoFile = "pack.png"
 description = '''
 This is an API for the Let's do mods
 '''
 
 [[mods]]
 modId = "terraform"
-version = "${version}"
-displayName = "Terraform"
+version = "4.2.0"
+displayName = "Terraform Wood Api Reforged"
 authors = "Prospector, coderbot16, TerraformersMC"
 description = '''
 Terraform Wood Api, but for forge

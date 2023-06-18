@@ -5,10 +5,12 @@
   "name": "Lets Do Api",
   "description": "This is an API for the Let's do mods",
   "authors": [
-    "Cristelknight"
+    "Cristelknight",
+    "BaumeisterJO"
   ],
   "license": "LGPL-3.0-only",
   "environment": "*",
+  "icon": "pack.png",
   "entrypoints": {
     "main": [
       "de.cristelknight.doapi.fabric.DoApiFabric"
