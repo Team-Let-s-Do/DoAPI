@@ -5,12 +5,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 
-public class BetterCustomArmorModelItem extends CustomArmorModelItem {
+public class BetterCustomHatItem extends CustomHatItem {
 
     public ResourceLocation texture;
 
     public float offset;
-    public BetterCustomArmorModelItem(ArmorMaterial material, EquipmentSlot slot, Item.Properties settings, ResourceLocation texture, float offset) {
+    public BetterCustomHatItem(ArmorMaterial material, EquipmentSlot slot, Item.Properties settings, ResourceLocation texture, float offset) {
         super(material, slot, settings);
         this.texture = texture;
         this.offset = offset;

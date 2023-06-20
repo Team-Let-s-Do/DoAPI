@@ -1,6 +1,7 @@
 package de.cristelknight.doapi.mixin.armor;
 
 import de.cristelknight.doapi.client.render.feature.CustomArmorFeatureRenderer;
+import de.cristelknight.doapi.client.render.feature.CustomHatFeatureRenderer;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -20,5 +21,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     @Inject(at = @At("RETURN"), method = "<init>")
     public void onConstruct(EntityRendererProvider.Context ctx, boolean bl, CallbackInfo cbi) {
         addLayer(new CustomArmorFeatureRenderer<>(this, ctx.getModelSet()));
+        addLayer(new CustomHatFeatureRenderer<>(this, ctx.getModelSet()));
     }
 }
