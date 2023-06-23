@@ -1,4 +1,4 @@
-package de.cristelknight.doapi.block;
+package de.cristelknight.doapi.common.block;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

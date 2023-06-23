@@ -1,13 +1,11 @@
-package de.cristelknight.doapi.registry;
+package de.cristelknight.doapi.common.registry;
 
 import de.cristelknight.doapi.DoApi;
-import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.Util;
 import de.cristelknight.doapi.api.DoApiAPI;
 import de.cristelknight.doapi.api.DoApiPlugin;
-import de.cristelknight.doapi.block.entity.StorageBlockEntity;
+import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.Block;

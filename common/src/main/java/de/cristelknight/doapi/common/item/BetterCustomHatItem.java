@@ -1,4 +1,4 @@
-package de.cristelknight.doapi.item;
+package de.cristelknight.doapi.common.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;

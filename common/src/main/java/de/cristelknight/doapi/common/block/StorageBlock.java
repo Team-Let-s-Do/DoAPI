@@ -1,8 +1,7 @@
-package de.cristelknight.doapi.block;
+package de.cristelknight.doapi.common.block;
 
 import de.cristelknight.doapi.Util;
-import de.cristelknight.doapi.block.entity.StorageBlockEntity;
-import de.cristelknight.doapi.client.render.block.storage.StorageTypeRenderer;
+import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +25,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import java.util.HashMap;
+
 import java.util.Optional;
 
 public abstract class StorageBlock extends FacingBlock implements EntityBlock {

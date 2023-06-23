@@ -35,9 +35,8 @@ public final class TerraformBoatClientHelper {
 		}
 	}
 
-	public static void onClientInit() {
+	public static void preClientInit() {
 		TerraformBoatClientHelper.registerAllModelLayers();
-
 	}
 
 }

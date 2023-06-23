@@ -1,8 +1,8 @@
 package de.cristelknight.doapi.mixin.armor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.cristelknight.doapi.item.CustomArmorItem;
-import de.cristelknight.doapi.item.CustomHatItem;
+import de.cristelknight.doapi.common.item.CustomArmorItem;
+import de.cristelknight.doapi.common.item.CustomHatItem;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;

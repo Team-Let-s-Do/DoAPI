@@ -7,7 +7,8 @@ import net.fabricmc.api.ClientModInitializer;
 public class DoApiClientFabric implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        TerraformBoatClientHelper.preClientInit();
+        DoApiClient.preClientInit();
         DoApiClient.onClientInit();
-        TerraformBoatClientHelper.onClientInit();
     }
 }

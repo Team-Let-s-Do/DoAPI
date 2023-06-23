@@ -14,7 +14,7 @@ import java.util.Map;
 public final class TerraformBoatItemHelper {
 	private static final CreativeModeTab DEFAULT_ITEM_GROUP = CreativeModeTab.TAB_TRANSPORTATION;
 
-	private static Map<RegistrySupplier<? extends ItemLike>, TerraformBoatDispenserBehavior> DISPENSER_BEHAVIOURS = new HashMap<>();
+	private static final Map<RegistrySupplier<? extends ItemLike>, TerraformBoatDispenserBehavior> DISPENSER_BEHAVIOURS = new HashMap<>();
 
 	private TerraformBoatItemHelper() {
 		return;
