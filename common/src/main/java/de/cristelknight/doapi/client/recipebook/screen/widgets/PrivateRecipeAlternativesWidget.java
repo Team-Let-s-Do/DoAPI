@@ -3,6 +3,7 @@ package de.cristelknight.doapi.client.recipebook.screen.widgets;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.config.builtin.RBConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class PrivateRecipeAlternativesWidget extends GuiComponent implements Widget, GuiEventListener {
-    static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
+    static final ResourceLocation BACKGROUND_TEXTURE = new DoApiRL("textures/gui/recipe_book.png");
     private final List<CustomAlternativeButtonWidget> alternativeButtons = Lists.newArrayList();
     private boolean visible;
     private int buttonX;

@@ -3,6 +3,7 @@ package de.cristelknight.doapi.client.recipebook.screen.widgets;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.client.DoApiClient;
 import de.cristelknight.doapi.client.recipebook.IRecipeBookGroup;
 import de.cristelknight.doapi.client.recipebook.PrivateRecipeBookGhostSlots;
@@ -45,7 +46,7 @@ import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public abstract class PrivateRecipeBookWidget extends GuiComponent implements PlaceRecipe<Ingredient>, Widget, GuiEventListener, RecipeShownListener {
-    public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
+    public static final ResourceLocation TEXTURE = new DoApiRL("textures/gui/recipe_book.png");
     private static final Component SEARCH_HINT_TEXT;
     private static final Component TOGGLE_CRAFTABLE_RECIPES_TEXT;
     private static final Component TOGGLE_ALL_RECIPES_TEXT;
