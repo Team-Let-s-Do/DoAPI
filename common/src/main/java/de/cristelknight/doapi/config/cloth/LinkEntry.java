@@ -19,7 +19,7 @@ import java.util.Optional;
 @Environment(EnvType.CLIENT)
 public class LinkEntry extends AbstractConfigListEntry<Void> {
     private static final int HEIGHT = 40;
-    private final Button button;
+    private Button button = null;
 
     public LinkEntry(Component fieldName, Button.OnPress onPress, ResourceLocation texture, int offset) {
         super(fieldName, false);
@@ -44,6 +44,7 @@ public class LinkEntry extends AbstractConfigListEntry<Void> {
     public void save() {}
 
     private List<Button> children0() {
+        if(button == null) return Collections.emptyList();
         return Collections.singletonList(button);
     }
 

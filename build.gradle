@@ -33,7 +33,7 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
-
+        maven { url "https://maven.shedaniel.me/" }
     }
 
     tasks.withType(JavaCompile) {

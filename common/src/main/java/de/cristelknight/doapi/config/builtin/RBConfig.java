@@ -36,7 +36,7 @@ public record RBConfig(boolean recipeBookOpen, boolean craftableToggle)
     @Override
     public String getHeader() {
         return """
-               Do Api Recipe Book values
+               Do Api Config
                
                =======
                Links:

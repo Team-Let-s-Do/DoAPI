@@ -35,6 +35,10 @@ dependencies {
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
     include(implementation("blue.endless:jankson:${jankson_version}"))
 
+    modImplementation("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
