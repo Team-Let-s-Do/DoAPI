@@ -61,7 +61,7 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
         boolean bl = this.bounce > 0.0F;
         PoseStack poseStack = RenderSystem.getModelViewStack();
         if (bl) {
-            float f = 1.0F + 0.1F * (float)Math.sin((this.bounce / 15.0F * 3.1415927F));
+            float f = 1.0F + 0.1F * (float) Math.sin((this.bounce / 15.0F * 3.1415927F));
             poseStack.pushPose();
             poseStack.translate((this.getX() + 8), (this.getY() + 12), 0.0);
             poseStack.scale(f, f, 1.0F);
@@ -96,7 +96,7 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
 
     @Override
     protected boolean isValidClickButton(int button) {
-        return button == 0 ||button == 1;
+        return button == 0 || button == 1;
     }
 
     public List<Component> getTooltip(Screen screen) {

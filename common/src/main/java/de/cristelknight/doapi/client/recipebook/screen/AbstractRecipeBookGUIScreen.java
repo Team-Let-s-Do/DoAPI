@@ -1,7 +1,6 @@
 package de.cristelknight.doapi.client.recipebook.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
 import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateRecipeBookWidget;
@@ -39,7 +38,7 @@ public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecip
         this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.topPos + 25, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (button) -> {
             this.recipeBook.toggleOpen();
             this.leftPos = this.recipeBook.findLeftEdge(this.width, this.imageWidth);
-            ((ImageButton)button).setPosition(this.leftPos +  5, this.topPos + 25);
+            button.setPosition(this.leftPos + 5, this.topPos + 25);
         }));
         this.titleLabelX += 20;
     }
@@ -108,7 +107,7 @@ public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecip
 
     @Override
     protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
-        boolean bl = mouseX < (double)left || mouseY < (double)top || mouseX >= (double)(left + this.imageWidth) || mouseY >= (double)(top + this.imageHeight);
+        boolean bl = mouseX < (double) left || mouseY < (double) top || mouseX >= (double) (left + this.imageWidth) || mouseY >= (double) (top + this.imageHeight);
         return this.recipeBook.isClickOutsideBounds(mouseX, mouseY, this.leftPos, this.topPos, this.imageWidth, this.imageHeight) && bl;
     }
 

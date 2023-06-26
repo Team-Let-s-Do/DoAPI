@@ -40,7 +40,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
+public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
     public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private static final Component SEARCH_HINT_TEXT;
     private static final Component TOGGLE_CRAFTABLE_RECIPES_TEXT;
@@ -71,7 +71,9 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
     }
 
     protected abstract RecipeType<? extends Recipe<Container>> getRecipeType();
-    public abstract void insertRecipe(Recipe<?> recipe) ;
+
+    public abstract void insertRecipe(Recipe<?> recipe);
+
     public abstract void showGhostRecipe(Recipe<?> recipe, List<Slot> slots);
 
     public void initialize(int parentWidth, int parentHeight, Minecraft client, boolean narrow, AbstractPrivateRecipeScreenHandler craftingScreenHandler) {
@@ -101,15 +103,19 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
             this.recipesArea.hideAlternates();
         }
     }
+
     public boolean isOpen() {
         return this.open;
     }
+
     private boolean isGuiOpen() {
         return RBConfig.DEFAULT.getConfig().recipeBookOpen();
     }
+
     public void toggleOpen() {
         this.setOpen(!this.isOpen());
     }
+
     /*
     public void close() {
         this.client.keyboard.setRepeatEvents(false);
@@ -160,7 +166,7 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
             if (this.toggleCraftableButton.isHovered()) {
                 Component text = this.getCraftableButtonText();
                 if (this.client.screen != null) {
-                   guiGraphics.renderTooltip(this.client.font, text, mouseX, mouseY);
+                    guiGraphics.renderTooltip(this.client.font, text, mouseX, mouseY);
                 }
             }
 
@@ -171,7 +177,7 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
     private void drawGhostSlotTooltip(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY) {
         ItemStack itemStack = null;
 
-        for(int i = 0; i < this.ghostSlots.getSlotCount(); ++i) {
+        for (int i = 0; i < this.ghostSlots.getSlotCount(); ++i) {
             PrivateRecipeBookGhostSlots.PrivateGhostInputSlot ghostInputSlot = this.ghostSlots.getSlot(i);
             int j = ghostInputSlot.getX() + x;
             int k = ghostInputSlot.getY() + y;
@@ -201,7 +207,6 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
             this.searchField.tick();
         }
     }
-
 
 
     private void refreshResults(boolean resetCurrentPage) {
@@ -237,7 +242,7 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
     private void refreshTabButtons() {
         int i = (this.parentWidth - 147) / 2 - this.leftOffset - 30;
         int j = (this.parentHeight - 166) / 2 + 3;
-        
+
         int l = 0;
         for (PrivateRecipeGroupButtonWidget recipeGroupButtonWidget : this.tabButtons) {
             recipeGroupButtonWidget.visible = true;
@@ -304,7 +309,7 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.open && !this.client.player.isSpectator()) {
-            if (this.recipesArea.mouseClicked(mouseX, mouseY, button, (this.parentWidth - 147) / 2 - this.leftOffset, (this.parentHeight - 166) / 2, 147, 166)) {
+            if (this.recipesArea.mouseClicked(mouseX, mouseY, button)) {
                 Recipe<?> recipe = this.recipesArea.getLastClickedRecipe();
                 Recipe<?> recipeBookRecipe = this.recipesArea.getLastClickedRecipe();
                 if (recipe != null) {
@@ -446,8 +451,8 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
         if (!this.isOpen()) {
             return true;
         } else {
-            boolean bl = mouseX < (double)x || mouseY < (double)y || mouseX >= (double)(x + backgroundWidth) || mouseY >= (double)(y + backgroundHeight);
-            boolean bl2 = (double)(x - 147) < mouseX && mouseX < (double)x && (double)y < mouseY && mouseY < (double)(y + backgroundHeight);
+            boolean bl = mouseX < (double) x || mouseY < (double) y || mouseX >= (double) (x + backgroundWidth) || mouseY >= (double) (y + backgroundHeight);
+            boolean bl2 = (double) (x - 147) < mouseX && mouseX < (double) x && (double) y < mouseY && mouseY < (double) (y + backgroundHeight);
             return bl && !bl2 && !this.currentTab.isHovered();
         }
     }
@@ -480,10 +485,12 @@ public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient
     }
 
     @Override
-    public void addItemToSlot(Iterator<Ingredient> inputs, int slot, int amount, int gridX, int gridY) {}
+    public void addItemToSlot(Iterator<Ingredient> inputs, int slot, int amount, int gridX, int gridY) {
+    }
 
     @Override
-    public void recipesShown(List<Recipe<?>> recipes) {}
+    public void recipesShown(List<Recipe<?>> recipes) {
+    }
 
     static {
         SEARCH_HINT_TEXT = Component.translatable("gui.recipebook.search_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);

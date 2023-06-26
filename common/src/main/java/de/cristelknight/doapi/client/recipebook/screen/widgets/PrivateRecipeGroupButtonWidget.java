@@ -5,11 +5,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import de.cristelknight.doapi.client.recipebook.IRecipeBookGroup;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -29,7 +27,7 @@ public class PrivateRecipeGroupButtonWidget extends StateSwitchingButton {
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         PoseStack poseStack = guiGraphics.pose();
         if (this.bounce > 0.0F) {
-            float f = 1.0F + 0.1F * (float)Math.sin((this.bounce / 15.0F * 3.1415927F));
+            float f = 1.0F + 0.1F * (float) Math.sin((this.bounce / 15.0F * 3.1415927F));
             poseStack.pushPose();
             poseStack.translate((this.getX() + 8), (this.getY() + 12), 0.0);
             poseStack.scale(1.0F, f, 1.0F);
