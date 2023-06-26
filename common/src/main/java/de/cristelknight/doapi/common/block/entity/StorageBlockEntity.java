@@ -1,7 +1,7 @@
-package de.cristelknight.doapi.block.entity;
+package de.cristelknight.doapi.common.block.entity;
 
 import de.cristelknight.doapi.Util;
-import de.cristelknight.doapi.registry.DoApiBlockEntityTypes;
+import de.cristelknight.doapi.common.registry.DoApiBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -46,7 +46,6 @@ public class StorageBlockEntity extends BlockEntity {
     public void setChanged() {
         if(level != null && !level.isClientSide()) {
             Packet<ClientGamePacketListener> updatePacket = getUpdatePacket();
-
             for (ServerPlayer player : Util.tracking((ServerLevel) level, getBlockPos())) {
                 player.connection.send(updatePacket);
             }

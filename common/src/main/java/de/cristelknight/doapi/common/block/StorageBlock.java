@@ -1,8 +1,7 @@
-package de.cristelknight.doapi.block;
+package de.cristelknight.doapi.common.block;
 
 import de.cristelknight.doapi.Util;
-import de.cristelknight.doapi.block.entity.StorageBlockEntity;
-import de.cristelknight.doapi.client.render.block.storage.StorageTypeRenderer;
+import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -26,10 +25,12 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import java.util.HashMap;
+
 import java.util.Optional;
 
 public abstract class StorageBlock extends FacingBlock implements EntityBlock {
+
+    public static SoundEvent event = SoundEvents.WOOD_PLACE;
 
     public StorageBlock(BlockBehaviour.Properties settings) {
         super(settings);
@@ -70,7 +71,7 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
 
     public void add(Level level, BlockPos blockPos, Player player, StorageBlockEntity shelfBlockEntity, ItemStack itemStack, int i) {
         if (!level.isClientSide) {
-            SoundEvent soundEvent = SoundEvents.WOOD_PLACE;
+            SoundEvent soundEvent = getAddSound(level, blockPos, player, i);
             shelfBlockEntity.setStack(i, itemStack.split(1));
             level.playSound(null, blockPos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (player.isCreative()) {
@@ -88,13 +89,21 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
     public void remove(Level level, BlockPos blockPos, Player player, StorageBlockEntity shelfBlockEntity, int i) {
         if (!level.isClientSide) {
             ItemStack itemStack = shelfBlockEntity.removeStack(i);
-            SoundEvent soundEvent = SoundEvents.WOOD_PLACE;
+            SoundEvent soundEvent = getRemoveSound(level, blockPos, player, i);
             level.playSound(null, blockPos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!player.getInventory().add(itemStack)) {
                 player.drop(itemStack, false);
             }
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, blockPos);
         }
+    }
+
+    public SoundEvent getRemoveSound(Level level, BlockPos blockPos, Player player,  int i){
+        return event;
+    }
+
+    public SoundEvent getAddSound(Level level, BlockPos blockPos, Player player,  int i){
+        return event;
     }
 
     @Override

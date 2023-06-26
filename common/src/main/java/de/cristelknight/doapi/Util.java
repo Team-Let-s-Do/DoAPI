@@ -24,7 +24,6 @@ import java.util.*;
 import java.util.function.Supplier;
 
 public class Util {
-
     public static <T> List<T> getApis(Class<T> returnClazz, String name, Class<?> annotationClazz){
          List<T> apis = new ArrayList<>();
         for(Pair<List<String>, T> apiPair : DoApiExpectPlatform.findAPIs(returnClazz, name, annotationClazz)){
@@ -52,8 +51,6 @@ public class Util {
         }
         return registrar.register(path, itemSupplier);
     }
-
-
 
     public static Collection<ServerPlayer> tracking(ServerLevel world, BlockPos pos) {
         Objects.requireNonNull(pos, "BlockPos cannot be null");

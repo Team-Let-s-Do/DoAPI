@@ -1,7 +1,7 @@
 package de.cristelknight.doapi.client.render.block.storage;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.cristelknight.doapi.block.entity.StorageBlockEntity;
+import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;

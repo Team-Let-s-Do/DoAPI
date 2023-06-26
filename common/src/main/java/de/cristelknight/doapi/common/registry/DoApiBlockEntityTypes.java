@@ -1,13 +1,11 @@
-package de.cristelknight.doapi.registry;
+package de.cristelknight.doapi.common.registry;
 
 import de.cristelknight.doapi.DoApi;
-import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.Util;
 import de.cristelknight.doapi.api.DoApiAPI;
 import de.cristelknight.doapi.api.DoApiPlugin;
-import de.cristelknight.doapi.block.entity.StorageBlockEntity;
+import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -21,9 +19,7 @@ import java.util.function.Supplier;
 
 public class DoApiBlockEntityTypes {
 
-
-    private static final Registrar<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registries.BLOCK_ENTITY_TYPE).getRegistrar();
-
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
 
     public static final RegistrySupplier<BlockEntityType<StorageBlockEntity>> STORAGE_ENTITY = create("storage", () -> BlockEntityType.Builder.of(
             StorageBlockEntity::new, getBlocksForStorage()).build(null));
@@ -39,10 +35,10 @@ public class DoApiBlockEntityTypes {
 
 
     private static <T extends BlockEntityType<?>> RegistrySupplier<T> create(final String path, final Supplier<T> type) {
-        return BLOCK_ENTITY_TYPES.register(new DoApiRL(path), type);
+        return BLOCK_ENTITY_TYPES.register(path, type);
     }
 
-    public static void loadClass() {
-        
+    public static void init() {
+        BLOCK_ENTITY_TYPES.register();
     }
 }

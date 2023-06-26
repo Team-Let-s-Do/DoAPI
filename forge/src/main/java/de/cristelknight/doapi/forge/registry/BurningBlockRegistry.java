@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BurningBlockRegistry {
-    private static Map<Block, Pair<Integer, Integer>> INSTANCE = new HashMap<>();
+    private static final Map<Block, Pair<Integer, Integer>> INSTANCE = new HashMap<>();
 
     public static void add(int burnOdd, int igniteOdd, Block... blocks){
         for(Block b : blocks) INSTANCE.put(b, new Pair<>(burnOdd, igniteOdd));

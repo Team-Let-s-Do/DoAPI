@@ -19,14 +19,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.util.HashMap;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
 
-
+    public static Path getConfigDirectory() {
+        return FMLPaths.CONFIGDIR.get();
+    }
     public static void registerBoatType(ResourceLocation resourceLocation, TerraformBoatType type) {
         TerraformBoatTypeRegistry.register(resourceLocation, type);
     }
@@ -46,8 +50,6 @@ public class DoApiExpectPlatformImpl {
         }
         return boatEntity;
     }
-
-
 
     public static void addFlammable(int burnOdd, int igniteOdd, Block... blocks) {
         BurningBlockRegistry.add(burnOdd, igniteOdd, blocks);

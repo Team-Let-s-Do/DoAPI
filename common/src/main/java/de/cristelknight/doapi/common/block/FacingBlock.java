@@ -1,4 +1,4 @@
-package de.cristelknight.doapi.block;
+package de.cristelknight.doapi.common.block;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -12,7 +12,7 @@ public class FacingBlock extends HorizontalDirectionalBlock {
 
 	public FacingBlock(Properties settings) {
 		super(settings);
-		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
+		//this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
 	}
 
 	@Nullable
