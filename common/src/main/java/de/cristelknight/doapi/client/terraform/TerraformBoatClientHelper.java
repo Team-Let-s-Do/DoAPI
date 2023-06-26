@@ -13,8 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public final class CustomBoatClientHelper {
-	private CustomBoatClientHelper() {
+public final class TerraformBoatClientHelper {
+	private TerraformBoatClientHelper() {
 		return;
 	}
 
@@ -50,7 +50,7 @@ public final class CustomBoatClientHelper {
 		}
 	}
 
-	public static void onClientInit() {
+	public static void preClientInit() {
 		registerAllModelLayers();
 	}
 }

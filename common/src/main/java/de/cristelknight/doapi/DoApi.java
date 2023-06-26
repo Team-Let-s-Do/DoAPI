@@ -13,11 +13,10 @@ public class DoApi {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static void init() {
+        DoApiEntityTypes.init();
         DoApiBlockEntityTypes.init();
         Test.onInitialize();
         Test.ITEMS.register();
-        DoApiEntityTypes.init();
-        DoApiBlockEntityTypes.init();
     }
 
     public static void commonTerraformInit() {

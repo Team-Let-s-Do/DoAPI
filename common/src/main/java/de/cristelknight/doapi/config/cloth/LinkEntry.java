@@ -29,8 +29,8 @@ public class LinkEntry extends AbstractConfigListEntry<Void> {
     @Override
     public void render(PoseStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta) {
         super.render(matrices, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
-        button.x = (x + (entryWidth - button.getWidth()) / 2);
-        button.y = (y + (entryHeight - HEIGHT) / 2);
+        button.setX(x + (entryWidth - button.getWidth()) / 2);
+        button.setY(y + (entryHeight - HEIGHT) / 2);
         button.render(matrices, mouseX, mouseY, delta);
     }
 

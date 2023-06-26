@@ -38,15 +38,6 @@ public class Test {
                 .build();
 
         DoApiExpectPlatform.registerBoatType(BOAT_TYPE_KEY, boat);
-        
-
-        /* Signs
-        Block sign = new TerraformSignBlock(SIGN_TEXTURE_ID, FabricBlockSettings.copyOf(Blocks.OAK_SIGN));
-        Block wallSign = new TerraformWallSignBlock(SIGN_TEXTURE_ID, FabricBlockSettings.copyOf(Blocks.OAK_WALL_SIGN));
-
-        Item signItem = new SignItem(new Item.Settings().maxCount(16), sign, wallSign);
-
-         */
     }
     
 }

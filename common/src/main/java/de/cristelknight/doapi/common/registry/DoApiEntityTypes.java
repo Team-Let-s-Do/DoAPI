@@ -10,6 +10,7 @@ import de.cristelknight.doapi.common.entity.ChairEntity;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.block.Block;
@@ -23,7 +24,7 @@ import java.util.function.Supplier;
 public class DoApiEntityTypes {
 
 
-    private static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registry.ENTITY_TYPE_REGISTRY);
+    private static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(DoApi.MOD_ID, Registries.ENTITY_TYPE);
 
 
     public static final RegistrySupplier<EntityType<ChairEntity>> CHAIR = create("chair", () -> EntityType.Builder.of(ChairEntity::new, MobCategory.MISC).sized(0.001F, 0.001F).build(new DoApiRL("chair").toString()));

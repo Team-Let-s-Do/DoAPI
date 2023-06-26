@@ -53,7 +53,7 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 		if (!(itemStack.getItem() instanceof ArmorItem armorItem)) {
 			return;
 		}
-		if (armorItem.getSlot() != equipmentSlot) {
+		if (armorItem.getEquipmentSlot() != equipmentSlot) {
 			return;
 		}
 		if(armor == null) return;

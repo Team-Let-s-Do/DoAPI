@@ -3,8 +3,6 @@ package de.cristelknight.doapi.client.recipebook.screen.widgets;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.cristelknight.doapi.DoApiRL;
-import de.cristelknight.doapi.client.DoApiClient;
 import de.cristelknight.doapi.client.recipebook.IRecipeBookGroup;
 import de.cristelknight.doapi.client.recipebook.PrivateRecipeBookGhostSlots;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
@@ -17,11 +15,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.StateSwitchingButton;
-import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
-import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
@@ -30,9 +27,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -45,8 +40,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public abstract class PrivateRecipeBookWidget extends GuiComponent implements PlaceRecipe<Ingredient>, Widget, GuiEventListener, RecipeShownListener {
-    public static final ResourceLocation TEXTURE = new DoApiRL("textures/gui/recipe_book.png");
+public abstract class  PrivateRecipeBookWidget extends GuiComponent implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
+    public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private static final Component SEARCH_HINT_TEXT;
     private static final Component TOGGLE_CRAFTABLE_RECIPES_TEXT;
     private static final Component TOGGLE_ALL_RECIPES_TEXT;
@@ -74,26 +69,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
     public PrivateRecipeBookWidget() {}
 
     protected abstract RecipeType<? extends Recipe<Container>> getRecipeType();
-
-    /**
-     * Move stacks from your inventory to the desired slot
-     * Use {@linkplain MultiPlayerGameMode#handleInventoryMouseClick(int, int, int, ClickType, Player)}
-     * @param recipe to get the ingredients from
-     * @param slots move your items around!
-     */
-    public abstract void insertRecipe(Recipe<?> recipe, List<Slot> slots);
-
-    /**
-     * Use {@linkplain PrivateRecipeBookGhostSlots#addSlot(ItemStack, int, int)} or {@linkplain PrivateRecipeBookGhostSlots#addSlot(ItemStack, Slot)}
-     * <pre>{@code
-     * ghostSlots.addSlot(inputStack, slots.get(x).x, slots.get(x).y);
-     * ghostSlots.addSlot(recipe.getResultItem(), slots.get(x));
-     *
-     *}</pre>
-     * @param recipe for displaying the items
-     * @param slots get the position of your ScreenHandler slots
-     *
-     */
+    public abstract void insertRecipe(Recipe<?> recipe) ;
     public abstract void showGhostRecipe(Recipe<?> recipe, List<Slot> slots);
 
     public void initialize(int parentWidth, int parentHeight, Minecraft client, boolean narrow, AbstractPrivateRecipeScreenHandler craftingScreenHandler) {
@@ -109,18 +85,16 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
         if (this.open) {
             this.reset();
         }
-
-        client.keyboardHandler.setSendRepeatsToGui(true);
+        //client.keyboard.setRepeatEvents(true);
     }
 
     protected void setOpen(boolean opened) {
         if (opened) {
             this.reset();
         }
+
         this.open = opened;
-
-        RBConfig.setRecipeBookOpenToggle(opened);
-
+        RBConfig.setCraftableToggle(opened);
         if (!opened) {
             this.recipesArea.hideAlternates();
         }
@@ -134,9 +108,12 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
     public void toggleOpen() {
         this.setOpen(!this.isOpen());
     }
+    /*
     public void close() {
-        this.client.keyboardHandler.setSendRepeatsToGui(false);
+        this.client.keyboard.setRepeatEvents(false);
     }
+
+     */
     private boolean toggleFilteringCraftable() {
         boolean bl = !RBConfig.DEFAULT.getConfig().craftableToggle();
         RBConfig.setCraftableToggle(bl);
@@ -176,7 +153,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
     public void drawTooltip(PoseStack matrices, int x, int y, int mouseX, int mouseY) {
         if (this.isOpen()) {
             this.recipesArea.drawTooltip(matrices, mouseX, mouseY);
-            if (this.toggleCraftableButton.isHoveredOrFocused()) {
+            if (this.toggleCraftableButton.isHovered()) {
                 Component text = this.getCraftableButtonText();
                 if (this.client.screen != null) {
                     this.client.screen.renderTooltip(matrices, text, mouseX, mouseY);
@@ -221,6 +198,8 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
         }
     }
 
+
+
     private void refreshResults(boolean resetCurrentPage) {
         if (this.currentTab == null) return;
         if (this.searchField == null) return;
@@ -230,7 +209,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
         String string = this.searchField.getValue();
 
         if (!string.isEmpty()) {
-            recipes.removeIf((recipe) -> !recipe.getResultItem().getHoverName().getString().toLowerCase(Locale.ROOT).contains(string.toLowerCase(Locale.ROOT)));
+            recipes.removeIf((recipe) -> !recipe.getResultItem(client.level.registryAccess()).getHoverName().getString().toLowerCase(Locale.ROOT).contains(string.toLowerCase(Locale.ROOT)));
         }
 
         if (RBConfig.DEFAULT.getConfig().craftableToggle()) {
@@ -243,7 +222,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
     private <T extends Recipe<Container>> List<T> getResultsForGroup(IRecipeBookGroup group, List<T> recipes) {
         List<T> results = Lists.newArrayList();
         for (T recipe : recipes) {
-            if (group.fitRecipe(recipe)) {
+            if (group.fitRecipe(recipe, client.level.registryAccess())) {
                 results.add(recipe);
             }
         }
@@ -318,6 +297,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
 
     }
 
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.open && !this.client.player.isSpectator()) {
             if (this.recipesArea.mouseClicked(mouseX, mouseY, button, (this.parentWidth - 147) / 2 - this.leftOffset, (this.parentHeight - 166) / 2, 147, 166)) {
@@ -334,7 +314,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
                     }
 
                     this.ghostSlots.reset();
-                    insertRecipe(recipe, screenHandler.slots);
+                    insertRecipe(recipe);
 
                     this.refreshResults(false);
                 }
@@ -392,7 +372,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
                 return true;
             } else if (this.client.options.keyChat.matches(keyCode, scanCode) && !this.searchField.isFocused()) {
                 this.searching = true;
-                this.searchField.setFocus(true);
+                this.searchField.setFocused(true);
                 return true;
             } else {
                 return false;
@@ -464,7 +444,7 @@ public abstract class PrivateRecipeBookWidget extends GuiComponent implements Pl
         } else {
             boolean bl = mouseX < (double)x || mouseY < (double)y || mouseX >= (double)(x + backgroundWidth) || mouseY >= (double)(y + backgroundHeight);
             boolean bl2 = (double)(x - 147) < mouseX && mouseX < (double)x && (double)y < mouseY && mouseY < (double)(y + backgroundHeight);
-            return bl && !bl2 && !this.currentTab.isHoveredOrFocused();
+            return bl && !bl2 && !this.currentTab.isHovered();
         }
     }
 

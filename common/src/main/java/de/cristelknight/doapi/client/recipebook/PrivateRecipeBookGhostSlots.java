@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -26,21 +25,6 @@ public class PrivateRecipeBookGhostSlots {
         this.time = 0.0F;
     }
 
-    /**
-     * Displays a ghost item at the position of a slot
-     * @param itemStack the stack to display
-     * @param slot the slot to display on
-     */
-    public void addSlot(ItemStack itemStack, Slot slot) {
-        this.slots.add(new PrivateGhostInputSlot(itemStack, slot.x, slot.y));
-    }
-
-    /**
-     * Displays a ghost item at the x y position
-     * @param itemStack the stack to display
-     * @param x the x position
-     * @param y the y position
-     */
     public void addSlot(ItemStack itemStack, int x, int y) {
         this.slots.add(new PrivateGhostInputSlot(itemStack, x, y));
     }
@@ -70,12 +54,12 @@ public class PrivateRecipeBookGhostSlots {
 
             ItemStack itemStack = ghostInputSlot.getCurrentItemStack();
             ItemRenderer itemRenderer = client.getItemRenderer();
-            itemRenderer.renderAndDecorateFakeItem(itemStack, l, m);
+            itemRenderer.renderAndDecorateFakeItem(matrices, itemStack, l, m);
             RenderSystem.depthFunc(516);
             GuiComponent.fill(matrices, l, m, l + 16, m + 16, 822083583);
             RenderSystem.depthFunc(515);
             if (k == 0) {
-                itemRenderer.renderGuiItemDecorations(client.font, itemStack, l, m);
+                itemRenderer.renderGuiItemDecorations(matrices, client.font, itemStack, l, m);
             }
         }
 

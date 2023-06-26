@@ -36,8 +36,8 @@
   },
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.19.2",
-    "architectury": ">=6.5.77",
-    "terraform-wood-api-v1": ">=4.2.0"
+    "minecraft": ">=1.19.4",
+    "architectury": ">=8.1.79",
+    "terraform-wood-api-v1": ">=6.1.0"
   }
 }

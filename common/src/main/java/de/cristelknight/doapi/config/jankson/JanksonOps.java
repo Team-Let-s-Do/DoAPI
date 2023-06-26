@@ -78,14 +78,14 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
                 try {
                     return DataResult.success(Integer.parseInt(s));
                 } catch (final NumberFormatException e) {
-                    return DataResult.error("Not a number: " + e + " " + input);
+                    return DataResult.error( () -> "Not a number: " + e + " " + input);
                 }
             }
         }
         if (input instanceof JsonPrimitive primitive && primitive.getValue() instanceof Boolean) {
             return DataResult.success((Boolean) primitive.getValue() ? 1 : 0);
         }
-        return DataResult.error("Not a number: " + input);
+        return DataResult.error( () -> "Not a number: " + input);
     }
 
     @Override
@@ -103,7 +103,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
                 return DataResult.success(num.byteValue() != 0);
             }
         }
-        return DataResult.error("Not a boolean: " + input);
+        return DataResult.error( () -> "Not a boolean: " + input);
     }
 
     @Override
@@ -118,7 +118,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
                 return DataResult.success(primitive.asString());
             }
         }
-        return DataResult.error("Not a string: " + input);
+        return DataResult.error( () -> "Not a string: " + input);
     }
 
     @Override
@@ -129,7 +129,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
     @Override
     public DataResult<JsonElement> mergeToList(final JsonElement list, final JsonElement value) {
         if (!(list instanceof JsonArray) && list != empty()) {
-            return DataResult.error("mergeToList called with not a list: " + list, list);
+            return DataResult.error( () -> "mergeToList called with not a list: " + list, list);
         }
 
         final JsonArray result = new JsonArray();
@@ -143,7 +143,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
     @Override
     public DataResult<JsonElement> mergeToList(final JsonElement list, final List<JsonElement> values) {
         if (!(list instanceof JsonArray) && list != empty()) {
-            return DataResult.error("mergeToList called with not a list: " + list, list);
+            return DataResult.error( () -> "mergeToList called with not a list: " + list, list);
         }
 
         final JsonArray result = new JsonArray();
@@ -157,10 +157,10 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
     @Override
     public DataResult<JsonElement> mergeToMap(final JsonElement map, final JsonElement key, final JsonElement value) {
         if (!(map instanceof JsonObject) && map != empty()) {
-            return DataResult.error("mergeToMap called with not a map: " + map, map);
+            return DataResult.error( () -> "mergeToMap called with not a map: " + map, map);
         }
         if (!(key instanceof JsonPrimitive primitive) || !(primitive.getValue() instanceof String) && !compressed) {
-            return DataResult.error("key is not a string: " + key, map);
+            return DataResult.error( () -> "key is not a string: " + key, map);
         }
 
         final JsonObject output = new JsonObject();
@@ -175,7 +175,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
     @Override
     public DataResult<JsonElement> mergeToMap(final JsonElement map, final MapLike<JsonElement> values) {
         if (!(map instanceof JsonObject) && map != empty()) {
-            return DataResult.error("mergeToMap called with not a map: " + map, map);
+            return DataResult.error( () -> "mergeToMap called with not a map: " + map, map);
         }
 
         final JsonObject output = new JsonObject();
@@ -195,7 +195,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
         });
 
         if (!missed.isEmpty()) {
-            return DataResult.error("some keys are not strings: " + missed, output);
+            return DataResult.error( () -> "some keys are not strings: " + missed, output);
         }
 
         return DataResult.success(output);
@@ -204,7 +204,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
     @Override
     public DataResult<Stream<Pair<JsonElement, JsonElement>>> getMapValues(final JsonElement input) {
         if (!(input instanceof JsonObject)) {
-            return DataResult.error("Not a JSON object: " + input);
+            return DataResult.error( () -> "Not a JSON object: " + input);
         }
         return DataResult.success(((JsonObject) input).entrySet().stream().map(entry -> Pair.of(new JsonPrimitive(entry.getKey()), entry.getValue() instanceof JsonNull ? null : entry.getValue())));
     }
@@ -212,7 +212,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
     @Override
     public DataResult<Consumer<BiConsumer<JsonElement, JsonElement>>> getMapEntries(final JsonElement input) {
         if (!(input instanceof JsonObject)) {
-            return DataResult.error("Not a JSON object: " + input);
+            return DataResult.error( () -> "Not a JSON object: " + input);
         }
         return DataResult.success(c -> {
             for (final Map.Entry<String, JsonElement> entry : ((JsonObject) input).entrySet()) {
@@ -223,10 +223,9 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
 
     @Override
     public DataResult<MapLike<JsonElement>> getMap(final JsonElement input) {
-        if (!(input instanceof JsonObject)) {
-            return DataResult.error("Not a JSON object: " + input);
+        if (!(input instanceof JsonObject object)) {
+            return DataResult.error( () -> "Not a JSON object: " + input);
         }
-        final JsonObject object = (JsonObject) input;
         return DataResult.success(new CommentsMap<>() {
             @Nullable
             @Override
@@ -283,7 +282,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
         if (input instanceof JsonArray) {
             return DataResult.success(((JsonArray) input).stream().map(e -> e instanceof JsonNull ? null : e));
         }
-        return DataResult.error("Not a json array: " + input);
+        return DataResult.error( () -> "Not a json array: " + input);
     }
 
     @Override
@@ -295,7 +294,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
                 }
             });
         }
-        return DataResult.error("Not a json array: " + input);
+        return DataResult.error( () -> "Not a json array: " + input);
     }
 
     @Override
@@ -367,7 +366,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
         public DataResult<JsonElement> build(final JsonElement prefix) {
             final DataResult<JsonElement> result = builder.flatMap(b -> {
                 if (!(prefix instanceof JsonArray) && prefix != ops().empty()) {
-                    return DataResult.error("Cannot append a list to not a list: " + prefix, prefix);
+                    return DataResult.error( () -> "Cannot append a list to not a list: " + prefix, prefix);
                 }
 
                 final JsonArray array = new JsonArray();
@@ -435,7 +434,7 @@ public record JanksonOps(boolean compressed) implements DynamicOps<JsonElement> 
                 }
                 return DataResult.success(result);
             }
-            return DataResult.error("mergeToMap called with not a map: " + prefix, prefix);
+            return DataResult.error( () -> "mergeToMap called with not a map: " + prefix, prefix);
         }
 
         @Override

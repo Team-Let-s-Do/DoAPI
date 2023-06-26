@@ -1,7 +1,6 @@
 package de.cristelknight.doapi.client;
 
 import de.cristelknight.doapi.client.render.block.storage.StorageBlockEntityRenderer;
-import de.cristelknight.doapi.registry.DoApiBlockEntityTypes;
 import de.cristelknight.doapi.client.render.entity.ChairRenderer;
 import de.cristelknight.doapi.common.registry.DoApiBlockEntityTypes;
 import de.cristelknight.doapi.common.registry.DoApiEntityTypes;

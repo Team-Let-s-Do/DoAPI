@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.math.Axis;
 import de.cristelknight.doapi.forge.terraform.boat.api.TerraformBoatTypeRegistry;
-import de.cristelknight.doapi.client.terraform.CustomBoatClientHelper;
+import de.cristelknight.doapi.client.terraform.TerraformBoatClientHelper;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformBoatHolder;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.minecraft.client.model.*;
@@ -39,7 +39,7 @@ public class CustomBoatEntityRenderer extends BoatRenderer {
 			ResourceLocation id = entry.getKey();
 			ResourceLocation textureId = new ResourceLocation(id.getNamespace(), "textures/entity/" + prefix + id.getPath() + ".png");
 
-			ModelLayerLocation layer = CustomBoatClientHelper.getLayer(id, raft, chest);
+			ModelLayerLocation layer = TerraformBoatClientHelper.getLayer(id, raft, chest);
 			ListModel<Boat> model = createModel(context.bakeLayer(layer), raft, chest);
 
 			return new Pair<>(textureId, model);
