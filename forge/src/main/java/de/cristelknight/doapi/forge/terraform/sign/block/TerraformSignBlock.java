@@ -1,5 +1,6 @@
 package de.cristelknight.doapi.forge.terraform.sign.block;
 
+import de.cristelknight.doapi.forge.terraform.sign.BlockSettingsLock;
 import de.cristelknight.doapi.forge.terraform.sign.TerraformSign;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.StandingSignBlock;
@@ -9,7 +10,7 @@ public class TerraformSignBlock extends StandingSignBlock implements TerraformSi
 	private final ResourceLocation texture;
 
 	public TerraformSignBlock(ResourceLocation texture, Properties settings) {
-		super(settings, WoodType.OAK);
+		super(BlockSettingsLock.lock(settings), WoodType.OAK);
 		this.texture = texture;
 	}
 

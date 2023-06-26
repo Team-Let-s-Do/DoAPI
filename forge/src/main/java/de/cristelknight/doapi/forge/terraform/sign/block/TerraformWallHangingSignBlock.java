@@ -1,5 +1,6 @@
 package de.cristelknight.doapi.forge.terraform.sign.block;
 
+import de.cristelknight.doapi.forge.terraform.sign.BlockSettingsLock;
 import de.cristelknight.doapi.forge.terraform.sign.TerraformHangingSign;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.WallHangingSignBlock;
@@ -10,7 +11,7 @@ public class TerraformWallHangingSignBlock extends WallHangingSignBlock implemen
 	private final ResourceLocation guiTexture;
 
 	public TerraformWallHangingSignBlock(ResourceLocation texture, ResourceLocation guiTexture, Properties settings) {
-		super(settings, WoodType.OAK);
+		super(BlockSettingsLock.lock(settings), WoodType.OAK);
 		this.texture = texture;
 		this.guiTexture = guiTexture;
 	}

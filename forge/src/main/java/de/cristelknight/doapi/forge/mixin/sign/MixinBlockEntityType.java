@@ -13,9 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockEntityType.class)
 public class MixinBlockEntityType {
-	@Inject(method = "isValid", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "supports", at = @At("HEAD"), cancellable = true)
 	private void supports(BlockState state, CallbackInfoReturnable<Boolean> info) {
 		Block block = state.getBlock();
+
 		if (block instanceof TerraformSign) {
 			if (BlockEntityType.HANGING_SIGN.equals(this)) {
 				if (!(block instanceof CeilingHangingSignBlock || block instanceof WallHangingSignBlock)) {

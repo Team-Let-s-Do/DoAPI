@@ -1,11 +1,10 @@
 package de.cristelknight.doapi.forge.terraform.sign;
 
-import net.minecraft.client.resources.model.Material;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.client.resources.model.Material;
 
 public class SpriteIdentifierRegistry {
 	public static final SpriteIdentifierRegistry INSTANCE = new SpriteIdentifierRegistry();

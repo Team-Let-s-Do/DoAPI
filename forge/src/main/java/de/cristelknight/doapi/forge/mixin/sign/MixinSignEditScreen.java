@@ -1,23 +1,29 @@
 package de.cristelknight.doapi.forge.mixin.sign;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import de.cristelknight.doapi.forge.terraform.sign.TerraformSign;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.SignEditScreen;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(SignEditScreen.class)
 public class MixinSignEditScreen {
-	@ModifyVariable(method = "renderSignBackground", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/Sheets;getSignMaterial(Lnet/minecraft/world/level/block/state/properties/WoodType;)Lnet/minecraft/client/resources/model/Material;"))
-	private Material getSignTextureId(Material spriteIdentifier, PoseStack matrices, MultiBufferSource.BufferSource vertexConsumers, BlockState state) {
-		if (state.getBlock() instanceof TerraformSign) {
-			return new Material(Sheets.SIGN_SHEET, ((TerraformSign) state.getBlock()).getTexture());
+	@WrapOperation(
+			method = "renderSignBackground",
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/TexturedRenderLayers;getSignTextureId(Lnet/minecraft/block/WoodType;)Lnet/minecraft/client/util/SpriteIdentifier;")
+	)
+	@SuppressWarnings("unused")
+	private Material getTerraformSignTextureId(WoodType type, Operation<Material> original, GuiGraphics drawContext, BlockState state) {
+		if (state.getBlock() instanceof TerraformSign signBlock) {
+			return new Material(Sheets.SIGN_SHEET, signBlock.getTexture());
 		}
-		return spriteIdentifier;
+
+		return original.call(type);
 	}
 }
