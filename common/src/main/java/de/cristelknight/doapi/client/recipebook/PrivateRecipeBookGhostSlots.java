@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.List;
 
 public class PrivateRecipeBookGhostSlots {
-    private final List<GhostRecipe.GhostIngredient> slots = Lists.newArrayList();
+    private final List<PrivateRecipeBookGhostSlots.PrivateGhostInputSlot> slots = Lists.newArrayList();
     float time;
 
     public PrivateRecipeBookGhostSlots() {
@@ -25,11 +25,11 @@ public class PrivateRecipeBookGhostSlots {
         this.time = 0.0F;
     }
 
-    public void addSlot(Ingredient itemStack, int x, int y) {
-        this.slots.add(new GhostRecipe().new GhostIngredient(itemStack, x, y));
+    public void addSlot(ItemStack itemStack, int x, int y) {
+        this.slots.add(new PrivateRecipeBookGhostSlots.PrivateGhostInputSlot(itemStack, x, y));
     }
 
-    public GhostRecipe.GhostIngredient getSlot(int index) {
+    public PrivateRecipeBookGhostSlots.PrivateGhostInputSlot getSlot(int index) {
         return this.slots.get(index);
 
     }
@@ -44,7 +44,7 @@ public class PrivateRecipeBookGhostSlots {
         }
 
         for(int k = 0; k < this.slots.size(); ++k) {
-            GhostRecipe.GhostIngredient ghostIngredient = this.slots.get(k);
+            PrivateRecipeBookGhostSlots.PrivateGhostInputSlot ghostIngredient = this.slots.get(k);
             int l = ghostIngredient.getX() + i;
             int m = ghostIngredient.getY() + j;
             if (k == 0 && bl) {
@@ -53,7 +53,7 @@ public class PrivateRecipeBookGhostSlots {
                 guiGraphics.fill(l, m, l + 16, m + 16, 822018048);
             }
 
-            ItemStack itemStack = ghostIngredient.getItem();
+            ItemStack itemStack = ghostIngredient.itemStack;
             guiGraphics.renderFakeItem(itemStack, l, m);
             guiGraphics.fill(RenderType.guiGhostRecipeOverlay(), l, m, l + 16, m + 16, 822083583);
             if (k == 0) {

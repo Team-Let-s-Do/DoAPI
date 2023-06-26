@@ -7,6 +7,7 @@ import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScr
 import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateRecipeBookWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -44,39 +45,39 @@ public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecip
     }
 
     @Override
-    public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderBackground(matrices);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        this.renderBackground(guiGraphics);
         if (this.recipeBook.isOpen() && this.narrow) {
-            this.renderBg(matrices, delta, mouseX, mouseY);
-            this.recipeBook.render(matrices, mouseX, mouseY, delta);
+            this.renderBg(guiGraphics, delta, mouseX, mouseY);
+            this.recipeBook.render(guiGraphics, mouseX, mouseY, delta);
         } else {
-            this.recipeBook.render(matrices, mouseX, mouseY, delta);
-            super.render(matrices, mouseX, mouseY, delta);
-            this.recipeBook.drawGhostSlots(matrices, this.leftPos, this.topPos, true, delta);
+            this.recipeBook.render(guiGraphics, mouseX, mouseY, delta);
+            super.render(guiGraphics, mouseX, mouseY, delta);
+            this.recipeBook.drawGhostSlots(guiGraphics, this.leftPos, this.topPos, true, delta);
         }
 
-        this.renderTooltip(matrices, mouseX, mouseY);
-        this.recipeBook.drawTooltip(matrices, this.leftPos, this.topPos, mouseX, mouseY);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        this.recipeBook.drawTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrices, float delta, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, BACKGROUND);
 
         final int posX = this.leftPos;
         final int posY = this.topPos;
-        this.blit(matrices, posX, posY, 0, 0, this.imageWidth - 1, this.imageHeight);
+        guiGraphics.blit(BACKGROUND, posX, posY, 0, 0, this.imageWidth - 1, this.imageHeight);
 
-        renderProgressArrow(matrices);
-        renderBurnIcon(matrices, posX, posY);
+        renderProgressArrow(guiGraphics);
+        renderBurnIcon(guiGraphics, posX, posY);
     }
 
-    protected void renderProgressArrow(PoseStack matrices) {
+    protected void renderProgressArrow(GuiGraphics guiGraphics) {
     }
 
-    protected void renderBurnIcon(PoseStack matrices, int posX, int posY) {
+    protected void renderBurnIcon(GuiGraphics guiGraphics, int posX, int posY) {
     }
 
     @Override

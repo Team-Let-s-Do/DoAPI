@@ -7,6 +7,7 @@ import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScr
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -46,7 +47,7 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(PoseStack matrices, int mouseX, int mouseY, float delta) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         Minecraft minecraftClient = Minecraft.getInstance();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
@@ -58,24 +59,24 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
         int j = 206;
 
         boolean bl = this.bounce > 0.0F;
-        PoseStack matrixStack = RenderSystem.getModelViewStack();
+        PoseStack poseStack = RenderSystem.getModelViewStack();
         if (bl) {
             float f = 1.0F + 0.1F * (float)Math.sin((this.bounce / 15.0F * 3.1415927F));
-            matrixStack.pushPose();
-            matrixStack.translate((this.getX() + 8), (this.getY() + 12), 0.0);
-            matrixStack.scale(f, f, 1.0F);
-            matrixStack.translate((-(this.getX() + 8)), (-(this.getY() + 12)), 0.0);
+            poseStack.pushPose();
+            poseStack.translate((this.getX() + 8), (this.getY() + 12), 0.0);
+            poseStack.scale(f, f, 1.0F);
+            poseStack.translate((-(this.getX() + 8)), (-(this.getY() + 12)), 0.0);
             RenderSystem.applyModelViewMatrix();
             this.bounce -= delta;
         }
 
-        this.blit(matrices, this.getX(), this.getY(), i, j, this.width, this.height);
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.getX(), this.getY(), i, j, this.width, this.height);
         Recipe<?> recipe = this.getResult();
         int k = 4;
 
-        minecraftClient.getItemRenderer().renderAndDecorateFakeItem(matrices, recipe.getResultItem(minecraftClient.level.registryAccess()), this.getX() + k, this.getY() + k);
+        guiGraphics.renderItem(recipe.getResultItem(minecraftClient.level.registryAccess()), this.getX() + k, this.getY() + k);
         if (bl) {
-            matrixStack.popPose();
+            poseStack.popPose();
             RenderSystem.applyModelViewMatrix();
         }
 
@@ -100,7 +101,7 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
 
     public List<Component> getTooltip(Screen screen) {
         ItemStack itemStack = this.getResult().getResultItem(Minecraft.getInstance().level.registryAccess());
-        return Lists.newArrayList(screen.getTooltipFromItem(itemStack));
+        return Lists.newArrayList();
     }
 
     @Override

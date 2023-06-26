@@ -13,7 +13,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.StateSwitchingButton;
@@ -40,7 +40,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public abstract class  PrivateRecipeBookWidget extends GuiComponent implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
+public abstract class  PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
     public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private static final Component SEARCH_HINT_TEXT;
     private static final Component TOGGLE_CRAFTABLE_RECIPES_TEXT;
@@ -66,7 +66,9 @@ public abstract class  PrivateRecipeBookWidget extends GuiComponent implements P
     private boolean open;
     private boolean narrow;
 
-    public PrivateRecipeBookWidget() {}
+    public PrivateRecipeBookWidget() {
+        super();
+    }
 
     protected abstract RecipeType<? extends Recipe<Container>> getRecipeType();
     public abstract void insertRecipe(Recipe<?> recipe) ;
@@ -120,51 +122,53 @@ public abstract class  PrivateRecipeBookWidget extends GuiComponent implements P
         return bl;
     }
 
-    public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         if (this.isOpen()) {
-            matrices.pushPose();
-            matrices.translate(0.0, 0.0, 100.0);
+            PoseStack poseStack = guiGraphics.pose();
+            poseStack.pushPose();
+            poseStack.translate(0.0, 0.0, 100.0);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, TEXTURE);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             int i = (this.parentWidth - 147) / 2 - this.leftOffset;
             int j = (this.parentHeight - 166) / 2;
-            this.blit(matrices, i, j, 1, 1, 147, 166);
+            guiGraphics.blit(TEXTURE, i, j, 1, 1, 147, 166);
             if (!this.searchField.isFocused() && this.searchField.getValue().isEmpty()) {
-                drawString(matrices, this.client.font, SEARCH_HINT_TEXT, i + 25, j + 14, -1);
+                //TODO drawString(guiGraphics, this.client.font, SEARCH_HINT_TEXT, i + 25, j + 14, -1);
             } else {
-                this.searchField.render(matrices, mouseX, mouseY, delta);
+                this.searchField.render(guiGraphics, mouseX, mouseY, delta);
             }
 
             for (PrivateRecipeGroupButtonWidget recipeGroupButtonWidget : this.tabButtons) {
-                recipeGroupButtonWidget.render(matrices, mouseX, mouseY, delta);
+                recipeGroupButtonWidget.render(guiGraphics, mouseX, mouseY, delta);
             }
 
-            this.toggleCraftableButton.render(matrices, mouseX, mouseY, delta);
-            this.recipesArea.draw(matrices, i, j, mouseX, mouseY, delta);
-            matrices.popPose();
+            this.toggleCraftableButton.render(guiGraphics, mouseX, mouseY, delta);
+            this.recipesArea.draw(guiGraphics, i, j, mouseX, mouseY, delta);
+            poseStack.popPose();
         }
     }
 
-    public void drawGhostSlots(PoseStack matrices, int x, int y, boolean bl, float delta) {
-        this.ghostSlots.draw(matrices, this.client, x, y, bl, delta);
+    public void drawGhostSlots(GuiGraphics guiGraphics, int x, int y, boolean bl, float delta) {
+        this.ghostSlots.draw(guiGraphics, this.client, x, y, bl, delta);
     }
 
-    public void drawTooltip(PoseStack matrices, int x, int y, int mouseX, int mouseY) {
+    public void drawTooltip(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY) {
         if (this.isOpen()) {
-            this.recipesArea.drawTooltip(matrices, mouseX, mouseY);
+            this.recipesArea.drawTooltip(guiGraphics, mouseX, mouseY);
             if (this.toggleCraftableButton.isHovered()) {
                 Component text = this.getCraftableButtonText();
                 if (this.client.screen != null) {
-                    this.client.screen.renderTooltip(matrices, text, mouseX, mouseY);
+                   guiGraphics.renderTooltip(this.client.font, text, mouseX, mouseY);
                 }
             }
 
-            this.drawGhostSlotTooltip(matrices, x, y, mouseX, mouseY);
+            this.drawGhostSlotTooltip(guiGraphics, x, y, mouseX, mouseY);
         }
     }
 
-    private void drawGhostSlotTooltip(PoseStack matrices, int x, int y, int mouseX, int mouseY) {
+    private void drawGhostSlotTooltip(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY) {
         ItemStack itemStack = null;
 
         for(int i = 0; i < this.ghostSlots.getSlotCount(); ++i) {
@@ -177,7 +181,7 @@ public abstract class  PrivateRecipeBookWidget extends GuiComponent implements P
         }
 
         if (itemStack != null && this.client.screen != null) {
-            this.client.screen.renderComponentTooltip(matrices, this.client.screen.getTooltipFromItem(itemStack), mouseX, mouseY);
+            guiGraphics.renderTooltip(this.client.font, itemStack, mouseX, mouseY);
         }
 
     }

@@ -7,7 +7,7 @@ import de.cristelknight.doapi.config.builtin.RBConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class PrivateRecipeAlternativesWidget extends GuiComponent implements Renderable, GuiEventListener {
+public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventListener {
     static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private final List<CustomAlternativeButtonWidget> alternativeButtons = Lists.newArrayList();
     private boolean visible;
@@ -36,9 +36,6 @@ public class PrivateRecipeAlternativesWidget extends GuiComponent implements Ren
     @Nullable
     private Recipe<?> lastClickedRecipe;
     float time;
-
-    public PrivateRecipeAlternativesWidget() {
-    }
 
     public void setVisible(boolean visible) {
         this.visible = visible;
@@ -125,56 +122,58 @@ public class PrivateRecipeAlternativesWidget extends GuiComponent implements Ren
         return false;
     }
 
-    public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         if (this.visible) {
             this.time += delta;
             RenderSystem.enableBlend();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
-            matrices.pushPose();
-            matrices.translate(0.0, 0.0, 170.0);
+            PoseStack poseStack = guiGraphics.pose();
+            poseStack.pushPose();
+            poseStack.translate(0.0, 0.0, 170.0);
             int i = this.alternativeButtons.size() <= 16 ? 4 : 5;
             int j = Math.min(this.alternativeButtons.size(), i);
             int k = Mth.ceil((float)this.alternativeButtons.size() / (float)i);
-            this.renderGrid(matrices, j, k, 24, 4, 82, 208);
+            this.renderGrid(guiGraphics, j, k, 24, 4, 82, 208);
             RenderSystem.disableBlend();
 
             for (CustomAlternativeButtonWidget alternativeButtonWidget : this.alternativeButtons) {
-                alternativeButtonWidget.render(matrices, mouseX, mouseY, delta);
+                alternativeButtonWidget.render(guiGraphics, mouseX, mouseY, delta);
             }
 
-            matrices.popPose();
+            poseStack.popPose();
         }
     }
 
-    private void renderGrid(PoseStack matrices, int i, int j, int k, int l, int m, int n) {
-        this.blit(matrices, this.buttonX, this.buttonY, m, n, l, l);
-        this.blit(matrices, this.buttonX + l * 2 + i * k, this.buttonY, m + k + l, n, l, l);
-        this.blit(matrices, this.buttonX, this.buttonY + l * 2 + j * k, m, n + k + l, l, l);
-        this.blit(matrices, this.buttonX + l * 2 + i * k, this.buttonY + l * 2 + j * k, m + k + l, n + k + l, l, l);
+    private void renderGrid(GuiGraphics guiGraphics, int i, int j, int k, int l, int m, int n) {
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX, this.buttonY, m, n, l, l);
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l * 2 + i * k, this.buttonY, m + k + l, n, l, l);
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX, this.buttonY + l * 2 + j * k, m, n + k + l, l, l);
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l * 2 + i * k, this.buttonY + l * 2 + j * k, m + k + l, n + k + l, l, l);
 
         for(int o = 0; o < i; ++o) {
-            this.blit(matrices, this.buttonX + l + o * k, this.buttonY, m + l, n, k, l);
-            this.blit(matrices, this.buttonX + l + (o + 1) * k, this.buttonY, m + l, n, l, l);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + o * k, this.buttonY, m + l, n, k, l);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + (o + 1) * k, this.buttonY, m + l, n, l, l);
 
             for(int p = 0; p < j; ++p) {
                 if (o == 0) {
-                    this.blit(matrices, this.buttonX, this.buttonY + l + p * k, m, n + l, l, k);
-                    this.blit(matrices, this.buttonX, this.buttonY + l + (p + 1) * k, m, n + l, l, l);
+                    guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX, this.buttonY + l + p * k, m, n + l, l, k);
+                    guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX, this.buttonY + l + (p + 1) * k, m, n + l, l, l);
                 }
 
-                this.blit(matrices, this.buttonX + l + o * k, this.buttonY + l + p * k, m + l, n + l, k, k);
-                this.blit(matrices, this.buttonX + l + (o + 1) * k, this.buttonY + l + p * k, m + l, n + l, l, k);
-                this.blit(matrices, this.buttonX + l + o * k, this.buttonY + l + (p + 1) * k, m + l, n + l, k, l);
-                this.blit(matrices, this.buttonX + l + (o + 1) * k - 1, this.buttonY + l + (p + 1) * k - 1, m + l, n + l, l + 1, l + 1);
+                guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + o * k, this.buttonY + l + p * k, m + l, n + l, k, k);
+                guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + (o + 1) * k, this.buttonY + l + p * k, m + l, n + l, l, k);
+                guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + o * k, this.buttonY + l + (p + 1) * k, m + l, n + l, k, l);
+                guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + (o + 1) * k - 1, this.buttonY + l + (p + 1) * k - 1, m + l, n + l, l + 1, l + 1);
                 if (o == i - 1) {
-                    this.blit(matrices, this.buttonX + l * 2 + i * k, this.buttonY + l + p * k, m + k + l, n + l, l, k);
-                    this.blit(matrices, this.buttonX + l * 2 + i * k, this.buttonY + l + (p + 1) * k, m + k + l, n + l, l, l);
+                    guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l * 2 + i * k, this.buttonY + l + p * k, m + k + l, n + l, l, k);
+                    guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l * 2 + i * k, this.buttonY + l + (p + 1) * k, m + k + l, n + l, l, l);
                 }
             }
 
-            this.blit(matrices, this.buttonX + l + o * k, this.buttonY + l * 2 + j * k, m + l, n + k + l, k, l);
-            this.blit(matrices, this.buttonX + l + (o + 1) * k, this.buttonY + l * 2 + j * k, m + l, n + k + l, l, l);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + o * k, this.buttonY + l * 2 + j * k, m + l, n + k + l, k, l);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.buttonX + l + (o + 1) * k, this.buttonY + l * 2 + j * k, m + l, n + k + l, l, l);
         }
 
     }
@@ -202,8 +201,6 @@ public class PrivateRecipeAlternativesWidget extends GuiComponent implements Ren
             this.defaultButtonNarrationText(builder);
         }
 
-
-
         public void addItemToSlot(Iterator<Ingredient> inputs, int slot, int amount, int gridX, int gridY) {
             ItemStack[] itemStacks = inputs.next().getItems();
             if (itemStacks.length != 0) {
@@ -212,7 +209,8 @@ public class PrivateRecipeAlternativesWidget extends GuiComponent implements Ren
 
         }
 
-        public void renderWidget(PoseStack matrices, int mouseX, int mouseY, float delta) {
+        @Override
+        public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
             RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
             int i = 152;
             if (!this.craftable) {
@@ -223,23 +221,22 @@ public class PrivateRecipeAlternativesWidget extends GuiComponent implements Ren
             if (this.isHovered()) {
                 j += 26;
             }
-
-            this.blit(matrices, this.getX(), this.getY(), i, j, this.width, this.height);
-            PoseStack matrixStack = RenderSystem.getModelViewStack();
-            matrixStack.pushPose();
-            matrixStack.translate( (this.getX() + 2), (this.getY() + 2), 125.0);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.getX(), this.getY(), i, j, this.width, this.height);
+            PoseStack poseStack = RenderSystem.getModelViewStack();
+            poseStack.pushPose();
+            poseStack.translate( (this.getX() + 2), (this.getY() + 2), 125.0);
 
             for (InputSlot inputSlot : this.slots) {
-                matrixStack.pushPose();
-                matrixStack.translate(inputSlot.y, inputSlot.x, 0.0);
-                matrixStack.scale(0.375F, 0.375F, 1.0F);
-                matrixStack.translate(-8.0, -8.0, 0.0);
+                poseStack.pushPose();
+                poseStack.translate(inputSlot.y, inputSlot.x, 0.0);
+                poseStack.scale(0.375F, 0.375F, 1.0F);
+                poseStack.translate(-8.0, -8.0, 0.0);
                 RenderSystem.applyModelViewMatrix();
-                PrivateRecipeAlternativesWidget.this.client.getItemRenderer().renderAndDecorateItem(matrices, inputSlot.stacks[Mth.floor(PrivateRecipeAlternativesWidget.this.time / 30.0F) % inputSlot.stacks.length], 0, 0);
-                matrixStack.popPose();
+                guiGraphics.renderItem(inputSlot.stacks[Mth.floor(PrivateRecipeAlternativesWidget.this.time / 30.0F) % inputSlot.stacks.length], 0, 0);
+                poseStack.popPose();
             }
 
-            matrixStack.popPose();
+            poseStack.popPose();
             RenderSystem.applyModelViewMatrix();
         }
 

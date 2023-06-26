@@ -2,7 +2,6 @@ package de.cristelknight.doapi.client.recipebook.screen;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
 import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateRecipeBookWidget;
 import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateAnimatedResultButton;
@@ -10,6 +9,7 @@ import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateRecipeAlte
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
@@ -32,18 +32,17 @@ public class PrivateRecipeBookRecipeArea {
     private int currentPage;
     @Nullable
     private Recipe<?> lastClickedRecipe;
-    private AbstractPrivateRecipeScreenHandler cookingPanScreenHandler;
+    private AbstractPrivateRecipeScreenHandler recipeScreenHandler;
 
     public PrivateRecipeBookRecipeArea() {
         for(int i = 0; i < 20; ++i) {
             this.resultButtons.add(new PrivateAnimatedResultButton());
         }
-
     }
 
-    public void initialize(Minecraft client, int parentLeft, int parentTop, AbstractPrivateRecipeScreenHandler cookingPanScreenHandler) {
+    public void initialize(Minecraft client, int parentLeft, int parentTop, AbstractPrivateRecipeScreenHandler recipeScreenHandler) {
         this.client = client;
-        this.cookingPanScreenHandler = cookingPanScreenHandler;
+        this.recipeScreenHandler = recipeScreenHandler;
 
         for(int i = 0; i < this.resultButtons.size(); ++i) {
             this.resultButtons.get(i).setPos(parentLeft + 11 + 25 * (i % 5), parentTop + 31 + 25 * (i / 5));
@@ -72,7 +71,7 @@ public class PrivateRecipeBookRecipeArea {
             PrivateAnimatedResultButton animatedResultButton = this.resultButtons.get(j);
             if (i + j < this.resultCollections.size()) {
                 Recipe<?> recipe = this.resultCollections.get(i + j);
-                animatedResultButton.showResultCollection(recipe, cookingPanScreenHandler);
+                animatedResultButton.showResultCollection(recipe, recipeScreenHandler);
                 animatedResultButton.visible = true;
             } else {
                 animatedResultButton.visible = false;
@@ -87,31 +86,31 @@ public class PrivateRecipeBookRecipeArea {
         this.prevPageButton.visible = this.pageCount > 1 && this.currentPage > 0;
     }
 
-    public void draw(PoseStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+    public void draw(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float delta) {
         if (this.pageCount > 1) {
             int var10000 = this.currentPage + 1;
             String string = "" + var10000 + "/" + this.pageCount;
             int i = this.client.font.width(string);
-            this.client.font.draw(matrices, string, (float)(x - i / 2 + 73), (float)(y + 141), -1);
+            guiGraphics.drawString(this.client.font, string, (x - i / 2 + 73), (y + 141), -1, false);
         }
 
         this.hoveredResultButton = null;
 
         for (PrivateAnimatedResultButton animatedResultButton : this.resultButtons) {
-            animatedResultButton.render(matrices, mouseX, mouseY, delta);
+            animatedResultButton.render(guiGraphics, mouseX, mouseY, delta);
             if (animatedResultButton.visible && animatedResultButton.isHoveredOrFocused()) {
                 this.hoveredResultButton = animatedResultButton;
             }
         }
 
-        this.prevPageButton.render(matrices, mouseX, mouseY, delta);
-        this.nextPageButton.render(matrices, mouseX, mouseY, delta);
-        this.alternatesWidget.render(matrices, mouseX, mouseY, delta);
+        this.prevPageButton.render(guiGraphics, mouseX, mouseY, delta);
+        this.nextPageButton.render(guiGraphics, mouseX, mouseY, delta);
+        this.alternatesWidget.render(guiGraphics, mouseX, mouseY, delta);
     }
 
-    public void drawTooltip(PoseStack matrices, int x, int y) {
+    public void drawTooltip(GuiGraphics guiGraphics, int x, int y) {
         if (this.client.screen != null && this.hoveredResultButton != null && !this.alternatesWidget.isVisible()) {
-            this.client.screen.renderComponentTooltip(matrices, this.hoveredResultButton.getTooltip(this.client.screen), x, y);
+            guiGraphics.renderComponentTooltip(this.client.font, this.hoveredResultButton.getTooltip(this.client.screen), x, y);
         }
 
     }

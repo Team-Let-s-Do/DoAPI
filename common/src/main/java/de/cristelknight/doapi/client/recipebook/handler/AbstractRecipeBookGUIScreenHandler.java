@@ -18,7 +18,7 @@ public abstract class AbstractRecipeBookGUIScreenHandler extends AbstractPrivate
 
     protected AbstractRecipeBookGUIScreenHandler(MenuType<?> screenHandler, int syncId, int inputSlots, Inventory playerInventory, Container inventory, ContainerData propertyDelegate) {
         super(screenHandler, syncId);
-        this.world = playerInventory.player.level;
+        this.world = playerInventory.player.level();
         this.inventory = inventory;
         this.inputSlots = inputSlots;
         this.propertyDelegate = propertyDelegate;
@@ -47,7 +47,7 @@ public abstract class AbstractRecipeBookGUIScreenHandler extends AbstractPrivate
             Item item = itemStack2.getItem();
             itemStack = itemStack2.copy();
             if (invSlot == entityOutputSlot) {
-                item.onCraftedBy(itemStack2, player.level, player);
+                item.onCraftedBy(itemStack2, player.level(), player);
                 if (!this.moveItemStackTo(itemStack2, inventoryStart, hotbarEnd, true)) {
                     return ItemStack.EMPTY;
                 }

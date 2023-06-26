@@ -6,6 +6,7 @@ import de.cristelknight.doapi.client.recipebook.IRecipeBookGroup;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -24,16 +25,17 @@ public class PrivateRecipeGroupButtonWidget extends StateSwitchingButton {
         this.initTextureValues(153, 2, 35, 0, PrivateRecipeBookWidget.TEXTURE);
     }
 
-    public void renderWidget(PoseStack matrices, int mouseX, int mouseY, float delta) {
+    @Override
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        PoseStack poseStack = guiGraphics.pose();
         if (this.bounce > 0.0F) {
             float f = 1.0F + 0.1F * (float)Math.sin((this.bounce / 15.0F * 3.1415927F));
-            matrices.pushPose();
-            matrices.translate((this.getX() + 8), (this.getY() + 12), 0.0);
-            matrices.scale(1.0F, f, 1.0F);
-            matrices.translate((-(this.getX() + 8)), (-(this.getY() + 12)), 0.0);
+            poseStack.pushPose();
+            poseStack.translate((this.getX() + 8), (this.getY() + 12), 0.0);
+            poseStack.scale(1.0F, f, 1.0F);
+            poseStack.translate((-(this.getX() + 8)), (-(this.getY() + 12)), 0.0);
         }
 
-        Minecraft minecraftClient = Minecraft.getInstance();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, this.resourceLocation);
         RenderSystem.disableDepthTest();
@@ -53,23 +55,23 @@ public class PrivateRecipeGroupButtonWidget extends StateSwitchingButton {
         }
 
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        this.blit(matrices, k, this.getY(), i, j, this.width, this.height);
+        guiGraphics.blit(this.resourceLocation, k, this.getY(), i, j, this.width, this.height);
         RenderSystem.enableDepthTest();
-        this.renderIcons(matrices, minecraftClient.getItemRenderer());
+        this.renderIcons(guiGraphics);
         if (this.bounce > 0.0F) {
-            matrices.popPose();
+            poseStack.popPose();
             this.bounce -= delta;
         }
     }
 
-    private void renderIcons(PoseStack matrices, ItemRenderer itemRenderer) {
+    private void renderIcons(GuiGraphics guiGraphics) {
         List<ItemStack> list = this.group.getIcons();
         int i = this.isStateTriggered ? -2 : 0;
         if (list.size() == 1) {
-            itemRenderer.renderAndDecorateFakeItem(matrices, list.get(0), this.getX() + 9 + i, this.getY() + 5);
+            guiGraphics.renderItem(list.get(0), this.getX() + 9 + i, this.getY() + 5);
         } else if (list.size() == 2) {
-            itemRenderer.renderAndDecorateFakeItem(matrices, list.get(0), this.getX() + 3 + i, this.getY() + 5);
-            itemRenderer.renderAndDecorateFakeItem(matrices, list.get(1), this.getX() + 14 + i, this.getY() + 5);
+            guiGraphics.renderItem(list.get(0), this.getX() + 3 + i, this.getY() + 5);
+            guiGraphics.renderItem(list.get(1), this.getX() + 14 + i, this.getY() + 5);
         }
 
     }

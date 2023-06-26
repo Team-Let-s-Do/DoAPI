@@ -13,7 +13,7 @@ public abstract class AbstractPrivateRecipeScreenHandler extends AbstractContain
         super(type, syncId);
     }
 
-    public abstract List<IRecipeBookGroup>  getGroups();
+    public abstract List<IRecipeBookGroup> getGroups();
 
     public abstract boolean hasIngredient(Recipe<?> recipe);
 
