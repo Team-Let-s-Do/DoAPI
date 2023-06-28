@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[45,)"
+loaderVersion = "[47,)"
 license = "LGPL-3.0-only"
 
 [[mods]]
@@ -14,7 +14,7 @@ This is an API for the Let's do mods
 
 [[mods]]
 modId = "terraform"
-version = "6.1.0"
+version = "7.0.1"
 displayName = "Terraform Wood Api Reforged"
 authors = "Prospector, coderbot16, TerraformersMC"
 description = '''
@@ -24,20 +24,20 @@ Terraform Wood Api, but for forge
 [[dependencies.doapi]]
 modId = "forge"
 mandatory = true
-versionRange = "[45.1.2,)"
+versionRange = "[47.0.19,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.doapi]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.4,)"
+versionRange = "[1.20,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.doapi]]
 modId = "architectury"
 mandatory = true
-versionRange = "[8.1.79,)"
+versionRange = "[9.0.8,)"
 ordering = "AFTER"
 side = "BOTH"
