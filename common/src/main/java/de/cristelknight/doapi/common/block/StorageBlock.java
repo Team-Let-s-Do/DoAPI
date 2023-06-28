@@ -67,8 +67,6 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
         }
     }
 
-
-
     public void add(Level level, BlockPos blockPos, Player player, StorageBlockEntity shelfBlockEntity, ItemStack itemStack, int i) {
         if (!level.isClientSide) {
             SoundEvent soundEvent = getAddSound(level, blockPos, player, i);
@@ -80,12 +78,6 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, blockPos);
         }
     }
-
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.IGNORE;
-    }
-
     public void remove(Level level, BlockPos blockPos, Player player, StorageBlockEntity shelfBlockEntity, int i) {
         if (!level.isClientSide) {
             ItemStack itemStack = shelfBlockEntity.removeStack(i);

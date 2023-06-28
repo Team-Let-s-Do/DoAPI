@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Sheets.class)
 public class MixinTexturedRenderLayers {
-	@Inject(method = "addDefaultTextures", at = @At("RETURN"))
+	@Inject(method = "getAllMaterials", at = @At("RETURN"))
 	private static void injectTerrestriaSigns(Consumer<Material> consumer, CallbackInfo info) {
 		for(Material identifier: SpriteIdentifierRegistry.INSTANCE.getIdentifiers()) {
 			consumer.accept(identifier);

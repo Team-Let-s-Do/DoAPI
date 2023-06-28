@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(HangingSignRenderer.class)
 public abstract class MixinHangingSignBlockEntityRenderer extends MixinSignBlockEntityRenderer {
-	@Inject(method = "getTextureId", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getSignMaterial", at = @At("HEAD"), cancellable = true)
 	private void getHangingSignTextureId(CallbackInfoReturnable<Material> ci) {
 		if (this.terraform$renderedBlockEntity != null) {
 			if (this.terraform$renderedBlockEntity.getBlockState().getBlock() instanceof TerraformSign signBlock) {

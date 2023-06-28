@@ -14,9 +14,10 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(SignEditScreen.class)
 public class MixinSignEditScreen {
+
 	@WrapOperation(
 			method = "renderSignBackground",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/TexturedRenderLayers;getSignTextureId(Lnet/minecraft/block/WoodType;)Lnet/minecraft/client/util/SpriteIdentifier;")
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/Sheets;getSignMaterial(Lnet/minecraft/world/level/block/state/properties/WoodType;)Lnet/minecraft/client/resources/model/Material;")
 	)
 	@SuppressWarnings("unused")
 	private Material getTerraformSignTextureId(WoodType type, Operation<Material> original, GuiGraphics drawContext, BlockState state) {
@@ -26,4 +27,6 @@ public class MixinSignEditScreen {
 
 		return original.call(type);
 	}
+
+
 }

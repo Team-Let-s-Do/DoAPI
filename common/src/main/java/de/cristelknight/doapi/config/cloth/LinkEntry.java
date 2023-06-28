@@ -1,9 +1,9 @@
 package de.cristelknight.doapi.config.cloth;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -26,12 +26,13 @@ public class LinkEntry extends AbstractConfigListEntry<Void> {
         button = new ImageButton(0, 0, 200, HEIGHT, 0, 0, offset, texture,200, 40, onPress);
     }
 
+
     @Override
-    public void render(PoseStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta) {
-        super.render(matrices, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
+    public void render(GuiGraphics graphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta) {
+        super.render(graphics, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
         button.setX(x + (entryWidth - button.getWidth()) / 2);
         button.setY(y + (entryHeight - HEIGHT) / 2);
-        button.render(matrices, mouseX, mouseY, delta);
+        button.render(graphics, mouseX, mouseY, delta);
     }
 
     @Override

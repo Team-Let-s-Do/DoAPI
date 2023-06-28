@@ -23,8 +23,8 @@ public abstract class MixinSignBlockEntityRenderer {
 	protected SignBlockEntity terraform$renderedBlockEntity;
 
 	@WrapOperation(
-			method = "render(Lnet/minecraft/block/entity/SignBlockEntity;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/block/BlockState;Lnet/minecraft/block/AbstractSignBlock;Lnet/minecraft/block/WoodType;Lnet/minecraft/client/model/Model;)V",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/block/entity/SignBlockEntityRenderer;renderSign(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/block/WoodType;Lnet/minecraft/client/model/Model;)V")
+			method = "renderSign(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/world/level/block/state/properties/WoodType;Lnet/minecraft/client/model/Model;)V",
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/blockentity/SignRenderer;renderSignModel(Lcom/mojang/blaze3d/vertex/PoseStack;IILnet/minecraft/client/model/Model;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V")
 	)
 	@SuppressWarnings("unused")
 	private void setRenderedBlockEntity(SignRenderer instance, PoseStack matrices, MultiBufferSource verticesProvider, int light, int overlay, WoodType type, Model model, Operation<Void> original, SignBlockEntity signBlockEntity) {
@@ -33,7 +33,7 @@ public abstract class MixinSignBlockEntityRenderer {
 		this.terraform$renderedBlockEntity = null;
 	}
 
-	@Inject(method = "getTextureId", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getSignMaterial", at = @At("HEAD"), cancellable = true)
 	private void getSignTextureId(CallbackInfoReturnable<Material> ci) {
 		if (this.terraform$renderedBlockEntity != null) {
 			if (this.terraform$renderedBlockEntity.getBlockState().getBlock() instanceof TerraformSign signBlock) {

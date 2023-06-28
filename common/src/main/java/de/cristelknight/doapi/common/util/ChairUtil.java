@@ -67,7 +67,7 @@ public class ChairUtil {
     }
 
     public static ChairEntity getChairEntity(Level world, BlockPos pos) {
-        if(!world.isClientSide) {
+        if(!world.isClientSide()) {
             ResourceLocation id = getDimensionTypeId(world);
             if(CHAIRS.containsKey(id) && CHAIRS.get(id).containsKey(pos))
                 return CHAIRS.get(id).get(pos).getFirst();
@@ -75,8 +75,8 @@ public class ChairUtil {
         return null;
     }
     public static BlockPos getPreviousPlayerPosition(Player player, ChairEntity chairEntity) {
-        if(!player.level.isClientSide) {
-            ResourceLocation id = getDimensionTypeId(player.level);
+        if(!player.level().isClientSide()) {
+            ResourceLocation id = getDimensionTypeId(player.level());
             if(CHAIRS.containsKey(id)) {
                 for(Pair<ChairEntity,BlockPos> pair : CHAIRS.get(id).values()) {
                     if(pair.getFirst() == chairEntity)
