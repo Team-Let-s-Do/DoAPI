@@ -3,6 +3,7 @@ package de.cristelknight.doapi.client.recipebook.screen.widgets;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -23,7 +24,7 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class PrivateAnimatedResultButton extends AbstractWidget {
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
+    private static final ResourceLocation BACKGROUND_TEXTURE = new DoApiRL("textures/gui/recipe_book.png"); //Use own texture, to stop mods to remove our recipe book
     private AbstractPrivateRecipeScreenHandler craftingScreenHandler;
     private Recipe<?> recipe;
     private float bounce;

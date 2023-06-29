@@ -3,6 +3,7 @@ package de.cristelknight.doapi.client.recipebook.screen.widgets;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.client.recipebook.IRecipeBookGroup;
 import de.cristelknight.doapi.client.recipebook.PrivateRecipeBookGhostSlots;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
@@ -20,6 +21,7 @@ import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -41,7 +43,7 @@ import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
-    public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
+    public static final ResourceLocation TEXTURE = new DoApiRL("textures/gui/recipe_book.png"); //Use own texture, to stop mods to remove our recipe book
     private static final Component SEARCH_HINT_TEXT;
     private static final Component TOGGLE_CRAFTABLE_RECIPES_TEXT;
     private static final Component TOGGLE_ALL_RECIPES_TEXT;
@@ -74,7 +76,7 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
 
     public abstract void insertRecipe(Recipe<?> recipe);
 
-    public abstract void showGhostRecipe(Recipe<?> recipe, List<Slot> slots);
+    public abstract void showGhostRecipe(Recipe<?> recipe, List<Slot> slots, RegistryAccess access);
 
     public void initialize(int parentWidth, int parentHeight, Minecraft client, boolean narrow, AbstractPrivateRecipeScreenHandler craftingScreenHandler) {
         this.client = client;
@@ -318,7 +320,7 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
 
                     assert recipeBookRecipe != null;
                     if (!screenHandler.hasIngredient(recipe)) {
-                        showGhostRecipe(recipe, screenHandler.slots);
+                        showGhostRecipe(recipe, screenHandler.slots, this.client.level.registryAccess());
                         return false;
                     }
 
@@ -429,8 +431,8 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
                 name = "satisfy";
                 text = "Boo!";
             }
-            case "crystalknight" -> {
-                name = "CrystalKnight";
+            case "cristelknight" -> {
+                name = "CristelKnight";
                 text = "Boo!";
             }
             case "bmjo" -> {

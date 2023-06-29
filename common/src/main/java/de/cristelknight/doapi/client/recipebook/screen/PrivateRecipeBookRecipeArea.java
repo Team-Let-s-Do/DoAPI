@@ -156,6 +156,7 @@ public class PrivateRecipeBookRecipeArea {
                 this.lastClickedRecipe = animatedResultButton.currentRecipe();
             }
             if (button == 1 && !this.alternatesWidget.isVisible() && animatedResultButton.hasResult()) {
+                //Todo:
                 // Implement maybe later
                 // this.alternatesWidget.showAlternativesForResult(this.client, animatedResultButton.getRecipe(), animatedResultButton.x, animatedResultButton.y, areaLeft + areaWidth / 2, areaTop + 13 + areaHeight / 2, (float)animatedResultButton.getWidth());
             }

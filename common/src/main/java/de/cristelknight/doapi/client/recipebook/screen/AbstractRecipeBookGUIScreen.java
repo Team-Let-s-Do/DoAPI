@@ -19,7 +19,7 @@ import net.minecraft.world.inventory.Slot;
 @Environment(EnvType.CLIENT)
 public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecipeScreenHandler> extends AbstractContainerScreen<T> {
     private final ResourceLocation BACKGROUND;
-    private static final ResourceLocation RECIPE_BUTTON_TEXTURE;
+    private static final ResourceLocation RECIPE_BUTTON_TEXTURE = new DoApiRL("textures/gui/recipe_button.png");
     public final PrivateRecipeBookWidget recipeBook;
     private boolean narrow;
 
@@ -35,7 +35,7 @@ public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecip
         this.narrow = this.width < 379;
         this.recipeBook.initialize(this.width, this.height, this.minecraft, this.narrow, this.menu);
         this.leftPos = this.recipeBook.findLeftEdge(this.width, this.imageWidth);
-        this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.topPos + 25, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (button) -> {
+        this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.topPos + 25, 20, 18, 0, 0, 19, getRecipeButtonTexture(), (button) -> {
             this.recipeBook.toggleOpen();
             this.leftPos = this.recipeBook.findLeftEdge(this.width, this.imageWidth);
             button.setPosition(this.leftPos + 5, this.topPos + 25);
@@ -121,7 +121,7 @@ public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecip
         super.removed();
     }
 
-    static {
-        RECIPE_BUTTON_TEXTURE = new DoApiRL("textures/gui/recipe_button.png");
+    public ResourceLocation getRecipeButtonTexture() {
+        return RECIPE_BUTTON_TEXTURE;
     }
 }
