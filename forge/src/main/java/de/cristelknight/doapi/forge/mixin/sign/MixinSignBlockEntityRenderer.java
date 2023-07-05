@@ -23,15 +23,16 @@ public abstract class MixinSignBlockEntityRenderer {
 	protected SignBlockEntity terraform$renderedBlockEntity;
 
 	@WrapOperation(
-			method = "renderSign(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/world/level/block/state/properties/WoodType;Lnet/minecraft/client/model/Model;)V",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/blockentity/SignRenderer;renderSignModel(Lcom/mojang/blaze3d/vertex/PoseStack;IILnet/minecraft/client/model/Model;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V")
+			method = "renderSignWithText(Lnet/minecraft/world/level/block/entity/SignBlockEntity;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/SignBlock;Lnet/minecraft/world/level/block/state/properties/WoodType;Lnet/minecraft/client/model/Model;)V",
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/blockentity/SignRenderer;renderSign(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/world/level/block/state/properties/WoodType;Lnet/minecraft/client/model/Model;)V")
 	)
 	@SuppressWarnings("unused")
 	private void setRenderedBlockEntity(SignRenderer instance, PoseStack matrices, MultiBufferSource verticesProvider, int light, int overlay, WoodType type, Model model, Operation<Void> original, SignBlockEntity signBlockEntity) {
 		this.terraform$renderedBlockEntity = signBlockEntity;
-		original.call(instance, matrices, verticesProvider, light, overlay, type, model);
+		original.call(instance, matrices, light, overlay, model, verticesProvider);
 		this.terraform$renderedBlockEntity = null;
 	}
+
 
 	@Inject(method = "getSignMaterial", at = @At("HEAD"), cancellable = true)
 	private void getSignTextureId(CallbackInfoReturnable<Material> ci) {
