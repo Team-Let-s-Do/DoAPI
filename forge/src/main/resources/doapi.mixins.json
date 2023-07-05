@@ -11,6 +11,7 @@
     "sign.MixinTexturedRenderLayers"
   ],
   "mixins": [
+    "sign.MixinAbstractBlockSettings",
     "sign.MixinBlockEntityType",
     "boat.MixinBoatEntity",
     "FireBlockMixin"

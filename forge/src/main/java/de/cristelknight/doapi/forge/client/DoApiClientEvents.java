@@ -6,20 +6,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.RegisterEvent;
 
 @Mod.EventBusSubscriber(modid = DoApi.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DoApiClientEvents {
 
     @SubscribeEvent
-    public static void beforeClientSetup(RegisterEvent event) {
-        DoApiClient.preClientInit();
-    }
-
-    @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         DoApiClient.onClientInit();
     }
-
 
 }

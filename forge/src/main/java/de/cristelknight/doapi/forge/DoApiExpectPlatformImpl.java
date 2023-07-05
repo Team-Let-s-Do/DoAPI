@@ -57,7 +57,7 @@ public class DoApiExpectPlatformImpl {
 
 
     public static void addSignSprite(ResourceLocation signTextureId) {
-        SpriteIdentifierRegistry.INSTANCE.addIdentifier(new Material(Sheets.SIGN_SHEET, signTextureId));
+        SpriteIdentifierRegistry.INSTANCE.addIdentifier(signTextureId);
     }
 
     public static <T> List<Pair<List<String>, T>> findAPIs(Class<T> returnClazz, String name, Class<?> annotationClazz) {

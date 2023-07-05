@@ -1,7 +1,10 @@
 package de.cristelknight.doapi.forge.terraform;
 
 import de.cristelknight.doapi.DoApi;
+import de.cristelknight.doapi.client.DoApiClient;
+import de.cristelknight.doapi.client.terraform.TerraformBoatClientHelper;
 import de.cristelknight.doapi.forge.terraform.boat.impl.TerraformBoatInitializer;
+import dev.architectury.platform.Platform;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +22,10 @@ public class TerraformApiForge {
 
         TerraformBoatInitializer.init();
         modEventBus.addListener(this::commonSetup);
+
+        if(Platform.getEnv().isClient()){
+            TerraformBoatClientHelper.preClientInit();
+        }
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

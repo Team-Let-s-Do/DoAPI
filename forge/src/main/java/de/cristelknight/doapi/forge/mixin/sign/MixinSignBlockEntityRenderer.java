@@ -29,7 +29,7 @@ public abstract class MixinSignBlockEntityRenderer {
 	@SuppressWarnings("unused")
 	private void setRenderedBlockEntity(SignRenderer instance, PoseStack matrices, MultiBufferSource verticesProvider, int light, int overlay, WoodType type, Model model, Operation<Void> original, SignBlockEntity signBlockEntity) {
 		this.terraform$renderedBlockEntity = signBlockEntity;
-		original.call(instance, matrices, light, overlay, model, verticesProvider);
+		original.call(instance, matrices, verticesProvider, light, overlay, type, model);
 		this.terraform$renderedBlockEntity = null;
 	}
 
