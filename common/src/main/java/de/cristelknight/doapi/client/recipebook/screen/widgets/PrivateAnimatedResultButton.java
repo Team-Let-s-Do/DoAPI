@@ -24,7 +24,7 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class PrivateAnimatedResultButton extends AbstractWidget {
-    private static final ResourceLocation BACKGROUND_TEXTURE = new DoApiRL("textures/gui/recipe_book.png"); //Use own texture, to stop mods to remove our recipe book
+    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private AbstractPrivateRecipeScreenHandler craftingScreenHandler;
     private Recipe<?> recipe;
     private float bounce;

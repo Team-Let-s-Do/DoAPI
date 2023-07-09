@@ -18,14 +18,15 @@ public class TerraformApiForge {
     public TerraformApiForge() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         EventBuses.registerModEventBus(TERRAFORM_MOD_ID, modEventBus);
-        //DoApi.init();
 
         TerraformBoatInitializer.init();
         modEventBus.addListener(this::commonSetup);
 
+
         if(Platform.getEnv().isClient()){
             TerraformBoatClientHelper.preClientInit();
         }
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

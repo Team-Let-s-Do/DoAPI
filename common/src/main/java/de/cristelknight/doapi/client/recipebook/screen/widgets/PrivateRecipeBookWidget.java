@@ -43,7 +43,7 @@ import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
-    public static final ResourceLocation TEXTURE = new DoApiRL("textures/gui/recipe_book.png"); //Use own texture, to stop mods to remove our recipe book
+    public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private static final Component SEARCH_HINT_TEXT;
     private static final Component TOGGLE_CRAFTABLE_RECIPES_TEXT;
     private static final Component TOGGLE_ALL_RECIPES_TEXT;

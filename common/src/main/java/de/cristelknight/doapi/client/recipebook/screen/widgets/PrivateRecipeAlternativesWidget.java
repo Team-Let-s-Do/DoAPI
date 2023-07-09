@@ -26,7 +26,7 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventListener {
-    static final ResourceLocation BACKGROUND_TEXTURE = new DoApiRL("textures/gui/recipe_book.png"); //Use own texture, to stop mods to remove our recipe book
+    static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private final List<CustomAlternativeButtonWidget> alternativeButtons = Lists.newArrayList();
     private boolean visible;
     private int buttonX;

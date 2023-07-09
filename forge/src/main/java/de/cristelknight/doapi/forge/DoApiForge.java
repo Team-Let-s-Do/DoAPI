@@ -1,8 +1,6 @@
 package de.cristelknight.doapi.forge;
 
 import de.cristelknight.doapi.DoApi;
-import de.cristelknight.doapi.client.DoApiClient;
-import dev.architectury.platform.Platform;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -18,9 +16,15 @@ public class DoApiForge {
         DoApi.init();
         modEventBus.addListener(this::commonSetup);
 
-        if(Platform.getEnv().isClient()){
-            DoApiClient.preClientInit();
+        /*
+        if(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK) instanceof BlockSettingsLock){
+            DoApi.LOGGER.error("IS instance of");
         }
+        else DoApi.LOGGER.error("is NOT instance of");
+
+         */
+
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -19,7 +19,7 @@ import net.minecraft.world.inventory.Slot;
 @Environment(EnvType.CLIENT)
 public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecipeScreenHandler> extends AbstractContainerScreen<T> {
     private final ResourceLocation BACKGROUND;
-    private static final ResourceLocation RECIPE_BUTTON_TEXTURE = new DoApiRL("textures/gui/recipe_button.png");
+    private static final ResourceLocation RECIPE_BUTTON_TEXTURE = new DoApiRL("textures/gui/recipe_button.png"); // Use own texture to prevent mods to remove our recipe book
     public final PrivateRecipeBookWidget recipeBook;
     private boolean narrow;
 
