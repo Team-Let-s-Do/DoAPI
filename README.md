@@ -44,8 +44,8 @@ public class DoApiClient {
 ## Recipe Book
 There is no tutorial yet, but you can take a look at this example of the Vinery mod
 
-- Creating your [group](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/recipebook/custom/FermentationBarrelRecipeBookGroup.java)
-- Handling your [book](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/screen/recipe/custom/FermentationPotRecipeBook.java)
+- Creating your [group](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/recipebook/group/FermentationBarrelRecipeBookGroup.java)
+- Handling your [book](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/recipebook/FermentationPotRecipeBook.java)
 
 - Adding your book to your [screenhandler](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/gui/handler/FermentationBarrelGuiHandler.java)
-and [screen](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/screen/FermentationBarrelGui.java)
+and [screen](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/gui/FermentationBarrelGui.java)
