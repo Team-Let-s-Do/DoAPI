@@ -3,7 +3,6 @@ package de.cristelknight.doapi.client.recipebook.screen.widgets;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.client.recipebook.IRecipeBookGroup;
 import de.cristelknight.doapi.client.recipebook.PrivateRecipeBookGhostSlots;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
@@ -100,7 +99,7 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         }
 
         this.open = opened;
-        RBConfig.setCraftableToggle(opened);
+        RBConfig.setRecipeBookOpenToggle(opened);
         if (!opened) {
             this.recipesArea.hideAlternates();
         }
@@ -122,8 +121,8 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
     public void close() {
         this.client.keyboard.setRepeatEvents(false);
     }
-
      */
+
     private boolean toggleFilteringCraftable() {
         boolean bl = !RBConfig.DEFAULT.getConfig().craftableToggle();
         RBConfig.setCraftableToggle(bl);
@@ -195,9 +194,9 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
     }
 
     public void update() {
-        boolean bl = this.isGuiOpen();
-        if (this.isOpen() != bl) {
-            this.setOpen(bl);
+        boolean open = this.isGuiOpen();
+        if (this.isOpen() != open) {
+            this.setOpen(open);
         }
 
         if (this.isOpen()) {
@@ -338,7 +337,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
                 } else if (this.toggleCraftableButton.mouseClicked(mouseX, mouseY, button)) {
                     boolean bl = this.toggleFilteringCraftable();
                     this.toggleCraftableButton.setStateTriggered(bl);
-                    RBConfig.setCraftableToggle(bl);
                     this.refreshResults(false);
                     return true;
                 }

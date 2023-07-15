@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 
 public interface DoApiAPI {
-
     void registerBlocks(Set<Block> blocks);
 
     <T extends LivingEntity> void registerHat(Map<Item, EntityModel<T>> models, EntityModelSet modelLoader);
