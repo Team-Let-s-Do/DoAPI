@@ -96,11 +96,11 @@ public class DoApiExpectPlatformImpl {
     }
 
     public static Block getHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId) {
-        return new TerraformHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, FabricBlockSettings.copy(Blocks.OAK_HANGING_SIGN));
+        return new TerraformHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN));
     }
 
     public static Block getWallHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId) {
-        return new TerraformWallHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, FabricBlockSettings.copy(Blocks.OAK_HANGING_SIGN));
+        return new TerraformWallHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN));
     }
 
 }
