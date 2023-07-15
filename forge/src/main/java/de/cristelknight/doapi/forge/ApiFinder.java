@@ -30,7 +30,7 @@ public class ApiFinder {
                 try {
                     clazz = (Class<T>) Class.forName(ad.memberName());
                 } catch (ClassNotFoundException e) {
-                    DoApi.LOGGER.error("Failed to load api class {} for @CristelPlugin annotation", ad.clazz(), e);
+                    DoApi.LOGGER.error("Failed to load api class {} for @{} annotation", ad.clazz(), annotationClazz.getSimpleName(), e);
                     continue;
                 }
                 try {
