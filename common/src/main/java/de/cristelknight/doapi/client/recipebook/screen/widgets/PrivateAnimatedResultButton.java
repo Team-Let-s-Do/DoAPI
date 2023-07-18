@@ -1,9 +1,7 @@
 package de.cristelknight.doapi.client.recipebook.screen.widgets;
 
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,7 +10,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -100,9 +97,9 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
         return button == 0 || button == 1;
     }
 
-    public List<Component> getTooltip(Screen screen) {
+    public List<Component> getOutputTooltip() {
         ItemStack itemStack = this.getResult().getResultItem(Minecraft.getInstance().level.registryAccess());
-        return Lists.newArrayList();
+        return List.of(itemStack.getHoverName());
     }
 
     @Override

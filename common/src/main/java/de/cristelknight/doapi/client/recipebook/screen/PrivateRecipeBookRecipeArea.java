@@ -110,7 +110,7 @@ public class PrivateRecipeBookRecipeArea {
 
     public void drawTooltip(GuiGraphics guiGraphics, int x, int y) {
         if (this.client.screen != null && this.hoveredResultButton != null && !this.alternatesWidget.isVisible()) {
-            guiGraphics.renderComponentTooltip(this.client.font, this.hoveredResultButton.getTooltip(this.client.screen), x, y);
+            guiGraphics.renderComponentTooltip(this.client.font, this.hoveredResultButton.getOutputTooltip(), x, y);
         }
 
     }
@@ -156,7 +156,7 @@ public class PrivateRecipeBookRecipeArea {
                 this.lastClickedRecipe = animatedResultButton.currentRecipe();
             }
             if (button == 1 && !this.alternatesWidget.isVisible() && animatedResultButton.hasResult()) {
-                //Todo:
+                // TODO:
                 // Implement maybe later
                 // this.alternatesWidget.showAlternativesForResult(this.client, animatedResultButton.getRecipe(), animatedResultButton.x, animatedResultButton.y, areaLeft + areaWidth / 2, areaTop + 13 + areaHeight / 2, (float)animatedResultButton.getWidth());
             }

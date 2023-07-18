@@ -47,7 +47,6 @@ public abstract class AbstractRecipeBookGUIScreen<T extends AbstractPrivateRecip
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         this.renderBackground(guiGraphics);
         if (this.recipeBook.isOpen() && this.narrow) {
-            System.out.println("render");
             this.renderBg(guiGraphics, delta, mouseX, mouseY);
             this.recipeBook.render(guiGraphics, mouseX, mouseY, delta);
         } else {

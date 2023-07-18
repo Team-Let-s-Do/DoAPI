@@ -1,7 +1,6 @@
 package de.cristelknight.doapi.client.recipebook.screen.widgets;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.cristelknight.doapi.client.recipebook.IRecipeBookGroup;
 import de.cristelknight.doapi.client.recipebook.PrivateRecipeBookGhostSlots;
@@ -19,7 +18,6 @@ import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
@@ -90,7 +88,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         if (this.open) {
             this.reset();
         }
-        //client.keyboard.setRepeatEvents(true);
     }
 
     protected void setOpen(boolean opened) {
@@ -117,12 +114,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         this.setOpen(!this.isOpen());
     }
 
-    /*
-    public void close() {
-        this.client.keyboard.setRepeatEvents(false);
-    }
-     */
-
     private boolean toggleFilteringCraftable() {
         boolean bl = !RBConfig.DEFAULT.getConfig().craftableToggle();
         RBConfig.setCraftableToggle(bl);
@@ -135,14 +126,11 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
             PoseStack poseStack = guiGraphics.pose();
             poseStack.pushPose();
             poseStack.translate(0.0, 0.0, 100.0);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, TEXTURE);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             int i = (this.parentWidth - 147) / 2 - this.leftOffset;
             int j = (this.parentHeight - 166) / 2;
             guiGraphics.blit(TEXTURE, i, j, 1, 1, 147, 166);
             if (!this.searchField.isFocused() && this.searchField.getValue().isEmpty()) {
-                //TODO drawString(guiGraphics, this.client.font, SEARCH_HINT_TEXT, i + 25, j + 14, -1);
+                guiGraphics.drawString(this.client.font, SEARCH_HINT_TEXT, i + 25, j + 14, -1);
             } else {
                 this.searchField.render(guiGraphics, mouseX, mouseY, delta);
             }
@@ -170,7 +158,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
                     guiGraphics.renderTooltip(this.client.font, text, mouseX, mouseY);
                 }
             }
-
             this.drawGhostSlotTooltip(guiGraphics, x, y, mouseX, mouseY);
         }
     }
@@ -190,7 +177,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         if (itemStack != null && this.client.screen != null) {
             guiGraphics.renderTooltip(this.client.font, itemStack, mouseX, mouseY);
         }
-
     }
 
     public void update() {
@@ -198,13 +184,11 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         if (this.isOpen() != open) {
             this.setOpen(open);
         }
-
         if (this.isOpen()) {
             if (this.cachedInvChangeCount != this.client.player.getInventory().getTimesChanged()) {
                 this.refreshInputs();
                 this.cachedInvChangeCount = this.client.player.getInventory().getTimesChanged();
             }
-
             this.searchField.tick();
         }
     }
@@ -304,11 +288,11 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
                 this.refreshInputs();
             }
         }
-
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        System.out.println("jojojo");
         if (this.open && !this.client.player.isSpectator()) {
             if (this.recipesArea.mouseClicked(mouseX, mouseY, button)) {
                 Recipe<?> recipe = this.recipesArea.getLastClickedRecipe();
@@ -331,10 +315,11 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
 
                 return true;
             } else {
-                assert this.searchField != null;
                 if (this.searchField.mouseClicked(mouseX, mouseY, button)) {
+                    this.searchField.setFocused(true);
                     return true;
                 } else if (this.toggleCraftableButton.mouseClicked(mouseX, mouseY, button)) {
+                    this.searchField.setFocused(false);
                     boolean bl = this.toggleFilteringCraftable();
                     this.toggleCraftableButton.setStateTriggered(bl);
                     this.refreshResults(false);
@@ -368,7 +353,9 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         }
     }
 
+    @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        System.out.println(keyCode);
         this.searching = false;
         if (this.isOpen() && !this.client.player.isSpectator()) {
             if (keyCode == 256 && !this.isWide()) {
@@ -408,7 +395,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
     }
 
     private void refreshSearchResults() {
-        assert this.searchField != null;
         String string = this.searchField.getValue().toLowerCase(Locale.ROOT);
         this.triggerPrivateEasterEgg(string);
         if (!string.equals(this.searchText)) {
