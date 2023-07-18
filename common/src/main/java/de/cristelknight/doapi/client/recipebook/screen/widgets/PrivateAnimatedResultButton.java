@@ -110,7 +110,6 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
         builder.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"));
     }
 
-
     @Override
     public int getWidth() {
         return 25;
