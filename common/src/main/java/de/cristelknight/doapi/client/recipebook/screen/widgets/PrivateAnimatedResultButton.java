@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
@@ -100,10 +101,11 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
         return button == 0 || button == 1;
     }
 
-    public List<Component> getTooltip(Screen screen) {
+    public List<Component> getTooltipText() {
         ItemStack itemStack = this.getResult().getResultItem(Minecraft.getInstance().level.registryAccess());
-        return Lists.newArrayList();
+        return Lists.newArrayList(Screen.getTooltipFromItem(Minecraft.getInstance(), itemStack));
     }
+
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput builder) {

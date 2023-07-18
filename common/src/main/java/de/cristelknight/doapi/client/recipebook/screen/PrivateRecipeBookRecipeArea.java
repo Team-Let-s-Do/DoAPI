@@ -110,7 +110,7 @@ public class PrivateRecipeBookRecipeArea {
 
     public void drawTooltip(GuiGraphics guiGraphics, int x, int y) {
         if (this.client.screen != null && this.hoveredResultButton != null && !this.alternatesWidget.isVisible()) {
-            guiGraphics.renderComponentTooltip(this.client.font, this.hoveredResultButton.getTooltip(this.client.screen), x, y);
+            guiGraphics.renderComponentTooltip(this.client.font, this.hoveredResultButton.getTooltipText(), x, y);
         }
 
     }
