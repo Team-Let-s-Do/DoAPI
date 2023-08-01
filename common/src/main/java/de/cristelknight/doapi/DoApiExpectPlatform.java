@@ -15,6 +15,10 @@ import java.util.Map;
 
 public class DoApiExpectPlatform {
     @ExpectPlatform
+    public static boolean isModLoaded(String modid){
+        throw new AssertionError();
+    }
+    @ExpectPlatform
     public static Path getConfigDirectory() {
         throw new AssertionError();
     }

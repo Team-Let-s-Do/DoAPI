@@ -32,6 +32,9 @@ import java.util.List;
 import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
+    public static boolean isModLoaded(String modId) {
+        return FabricLoader.getInstance().isModLoaded(modId);
+    }
     public static Path getConfigDirectory() {
         return FabricLoader.getInstance().getConfigDir();
     }

@@ -19,14 +19,38 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.LoadingModList;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
+    public static boolean isModLoaded(String modid) {
+        ModList modList = ModList.get();
+        if(modList != null){
+            return modList.isLoaded(modid);
+        }
+        return isModPreLoaded(modid);
+    }
+
+    public static boolean isModPreLoaded(String modid) {
+        return getPreLoadedModInfo(modid) != null;
+    }
+
+    public static @Nullable ModInfo getPreLoadedModInfo(String modId){
+        for(ModInfo info : LoadingModList.get().getMods()){
+            if(info.getModId().equals(modId)) {
+                return info;
+            }
+        }
+        return null;
+    }
 
     public static Path getConfigDirectory() {
         return FMLPaths.CONFIGDIR.get();
