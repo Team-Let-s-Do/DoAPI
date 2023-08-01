@@ -26,6 +26,7 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     implementation("blue.endless:jankson:${jankson_version}")
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras_version}"))
 }
 
 publishing {

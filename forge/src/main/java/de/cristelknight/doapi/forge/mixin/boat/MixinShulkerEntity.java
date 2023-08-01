@@ -1,5 +1,7 @@
 package de.cristelknight.doapi.forge.mixin.boat;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import de.cristelknight.doapi.forge.terraform.boat.impl.TerraformBoatInitializer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -10,11 +12,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Shulker.class)
 public class MixinShulkerEntity {
-	@Redirect(method = "getMyRidingOffset", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getType()Lnet/minecraft/world/entity/EntityType;"))
-	private EntityType<?> fixTerraformBoatHeightOffset(Entity entity) {
-		if (entity.getType() == TerraformBoatInitializer.BOAT.get()) {
+	@WrapOperation(method = "getMyRidingOffset", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getType()Lnet/minecraft/world/entity/EntityType;"))
+	@SuppressWarnings("unused")
+	private EntityType<?> fixTerraformBoatHeightOffset(Entity instance, Operation<EntityType<?>> original) {
+		if (instance.getType() == TerraformBoatInitializer.BOAT.get()) {
 			return EntityType.BOAT;
 		}
-		return entity.getType();
+		return original.call(instance);
 	}
 }
