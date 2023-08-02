@@ -26,4 +26,6 @@ public class DoApiRecipes {
         };
         return Registry.register(BuiltInRegistries.RECIPE_TYPE, location, type);
     }
+
+    public static void loadClass(){}
 }

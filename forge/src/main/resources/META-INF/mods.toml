@@ -16,7 +16,8 @@ This is an API for the Let's do mods
 modId = "terraform"
 version = "7.0.1"
 displayName = "Terraform Wood Api Reforged"
-authors = "Prospector, coderbot16, TerraformersMC"
+credits = "Prospector, coderbot16, TerraformersMC, for making the original"
+authors = "Cristelknight999"
 description = '''
 Terraform Wood Api, but for forge
 '''

@@ -37,7 +37,7 @@ public class SimpleConditionalRecipe implements Recipe<Container> {
             //if(checkCondition(c, type)) Not necessary, because of our mixin
             DoApi.LOGGER.debug("Loading conditional recipe named: " + recipeId);
 
-            return (T) RecipeManager.fromJson(recipeId, getRecipe(json));
+            return (T) RecipeManager.fromJson(recipeId, GsonHelper.getAsJsonObject(getRecipe(json), "recipe"));
         }
 
         //Should never get here as we return one of the recipes we wrap.

@@ -15,8 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
 @Mixin(RecipeManager.class)
@@ -24,24 +23,24 @@ public class RecipeManagerMixin {
 
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At(value = "HEAD"))
     public void checkConditions(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profilerFiller, CallbackInfo ci) {
-        List<ResourceLocation> locations = new ArrayList<>();
-        for(ResourceLocation r : map.keySet()){
+        Iterator<Map.Entry<ResourceLocation, JsonElement>> iterator = map.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry<ResourceLocation, JsonElement> entry = iterator.next();
+            ResourceLocation r = entry.getKey();
             if(!r.getNamespace().equals("conditional")) continue;
 
             JsonObject json = map.get(r).getAsJsonObject();
+            if(!GsonHelper.getAsString(json, "type").equals("forge:conditional")) continue;
+
             JsonArray conditions = GsonHelper.getAsJsonArray(SimpleConditionalRecipe.getRecipe(json), "conditions");
 
             for(JsonElement e : conditions){
-                if(!SimpleConditionalRecipe.checkCondition(e.getAsJsonObject())){
-                    DoApi.LOGGER.debug("Condition for recipe: {} is not met!", r);
-                    locations.add(r);
-                    break;
-                }
+                if(SimpleConditionalRecipe.checkCondition(e.getAsJsonObject())) continue;
+                DoApi.LOGGER.debug("Condition for recipe: {} is not met!", r);
+                iterator.remove();
+                break;
             }
-
-        }
-        for(ResourceLocation r : locations){
-            map.remove(r);
         }
     }
 
