@@ -4,29 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.fabric.DoApiExpectPlatformImpl;
-import de.cristelknight.doapi.fabric.common.registry.DoApiRecipes;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.Container;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level;
 
-public class SimpleConditionalRecipe implements Recipe<Container> {
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return DoApiRecipes.CONDITIONAL_RECIPE_SERIALIZER;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return DoApiRecipes.CONDITIONAL_RECIPE_TYPE;
-    }
+public class SimpleConditionalRecipe {
 
     public static class Serializer<T extends Recipe<?>> implements RecipeSerializer<T> {
 
@@ -58,36 +43,5 @@ public class SimpleConditionalRecipe implements Recipe<Container> {
             return DoApiExpectPlatformImpl.isModLoaded(modId);
         }
         return false;
-    }
-
-
-    @Override
-    public boolean matches(Container container, Level level) {
-        return false;
-    }
-
-    @Override
-    public ItemStack assemble(Container container, RegistryAccess registryAccess) {
-        return null;
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int i, int j) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return null;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return null;
-    }
-
-    @Override
-    public boolean isSpecial() {
-        return true;
     }
 }

@@ -1,6 +1,6 @@
 package de.cristelknight.doapi.forge.mixin;
 
-import de.cristelknight.doapi.forge.registry.BurningBlockRegistry;
+import de.cristelknight.doapi.forge.common.registry.BurningBlockRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;

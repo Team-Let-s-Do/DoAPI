@@ -1,4 +1,4 @@
-package de.cristelknight.doapi.forge.registry;
+package de.cristelknight.doapi.forge.common.registry;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.level.block.Block;
