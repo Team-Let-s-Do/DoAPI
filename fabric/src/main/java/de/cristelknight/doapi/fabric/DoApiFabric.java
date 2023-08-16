@@ -10,6 +10,12 @@ public class DoApiFabric implements ModInitializer {
     public void onInitialize() {
         DoApi.init();
         DoApi.commonTerraformInit();
-        if(!FabricLoader.getInstance().isModLoaded("porting_lib")) DoApiRecipes.loadClass();
+
+        boolean portingLibLoaded = FabricLoader.getInstance().isModLoaded("porting_lib");
+        boolean portingLibBaseLoaded = FabricLoader.getInstance().isModLoaded("porting_lib_base");
+
+        if (!portingLibLoaded && !portingLibBaseLoaded) {
+            DoApiRecipes.loadClass();
+        }
     }
 }
