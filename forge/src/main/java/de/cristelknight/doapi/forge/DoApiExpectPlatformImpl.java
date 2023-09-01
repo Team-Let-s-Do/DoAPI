@@ -1,7 +1,11 @@
 package de.cristelknight.doapi.forge;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import de.cristelknight.doapi.forge.registry.BurningBlockRegistry;
+import de.cristelknight.doapi.DoApi;
+import de.cristelknight.doapi.forge.common.packs.BuiltInPackRegistry;
+import de.cristelknight.doapi.forge.common.registry.BurningBlockRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.api.TerraformBoatTypeRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformBoatEntity;
 import de.cristelknight.doapi.forge.terraform.boat.impl.entity.TerraformChestBoatEntity;
@@ -11,26 +15,50 @@ import de.cristelknight.doapi.forge.terraform.sign.block.TerraformSignBlock;
 import de.cristelknight.doapi.forge.terraform.sign.block.TerraformWallHangingSignBlock;
 import de.cristelknight.doapi.forge.terraform.sign.block.TerraformWallSignBlock;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
-import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
+import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.loading.LoadingModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
+import net.minecraftforge.forgespi.locating.IModFile;
+import net.minecraftforge.resource.PathPackResources;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
+    @SuppressWarnings("unchecked")
+    public static <T extends Recipe<?>> T fromJson(ResourceLocation recipeId, JsonObject json) {
+        JsonObject recipe = GsonHelper.getAsJsonObject(json, "recipe");
+        JsonArray conditions = GsonHelper.getAsJsonArray(json, "conditions");
+
+        JsonObject forgeRecipe = new JsonObject();
+        forgeRecipe.addProperty("type", "forge:conditional");
+
+        JsonArray recipes = new JsonArray();
+
+        JsonObject newRecipe = new JsonObject();
+        newRecipe.add("conditions", conditions);
+        newRecipe.add("recipe", recipe);
+
+        recipes.add(newRecipe);
+        forgeRecipe.add("recipes", recipes);
+
+        return (T) ConditionalRecipe.SERIALZIER.fromJson(recipeId, forgeRecipe);
+    }
+
     public static boolean isModLoaded(String modid) {
         ModList modList = ModList.get();
         if(modList != null){
@@ -38,6 +66,29 @@ public class DoApiExpectPlatformImpl {
         }
         return isModPreLoaded(modid);
     }
+    public static void registerBuiltInPack(String modId, ResourceLocation location, boolean alwaysEnabled){
+        String stringPath = location.getPath();
+        Path path = getResourceDirectory(modId, "resourcepacks/" + stringPath);
+        if(path == null) return;
+        String[] pathElements = stringPath.split("/");
+        BuiltInPackRegistry.packResources.put(location, new Pair<>(new PathPackResources(pathElements[pathElements.length - 1], true, path), alwaysEnabled));
+    }
+
+    public static @Nullable Path getResourceDirectory(String modId, String subPath) {
+        ModContainer container = ModList.get().getModContainerById(modId).orElse(null);
+        if(container == null){
+            DoApi.LOGGER.warn("Mod container for modId:" + modId + " is null");
+            return null;
+        }
+        IModFile file = container.getModInfo().getOwningFile().getFile();
+        Path path = file.findResource(subPath);
+        if(path == null){
+            DoApi.LOGGER.warn("Path for subPath: " + subPath + " in modId: " + modId + " is null");
+        }
+        return path;
+    }
+
+
 
     public static boolean isModPreLoaded(String modid) {
         return getPreLoadedModInfo(modid) != null;
