@@ -46,7 +46,11 @@ public class TerraformBoatEntity extends Boat implements TerraformBoatHolder {
 
 	@Override
 	protected Component getTypeName() {
-		return EntityType.BOAT.getDescription();
+		if (this.getTerraformBoat() == null) {
+			return EntityType.BOAT.getDescription();
+		}
+
+		return super.getTypeName();
 	}
 
 	@Override

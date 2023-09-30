@@ -38,6 +38,6 @@
     "fabric": "*",
     "minecraft": ">=1.20",
     "architectury": ">=9.0.8",
-    "terraform-wood-api-v1": ">=7.0.1"
+    "terraform-wood-api-v1": ">=8.0.0"
   }
 }
