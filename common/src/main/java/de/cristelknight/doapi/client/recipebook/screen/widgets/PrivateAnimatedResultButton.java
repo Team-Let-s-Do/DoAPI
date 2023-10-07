@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
         int i = 29;
-        if (!craftingScreenHandler.hasIngredient(this.recipe)) {
+        if (!craftingScreenHandler.hasIngredient(this.getRecipe())) {
             i += 25;
         }
 
@@ -98,13 +99,13 @@ public class PrivateAnimatedResultButton extends AbstractWidget {
     }
 
     public List<Component> getOutputTooltip() {
-        ItemStack itemStack = this.getResult().getResultItem(Minecraft.getInstance().level.registryAccess());
+        ItemStack itemStack = this.currentRecipe().getResultItem(Minecraft.getInstance().level.registryAccess());
         return List.of(itemStack.getHoverName());
     }
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput builder) {
-        ItemStack itemStack = this.getResult().getResultItem(Minecraft.getInstance().level.registryAccess());
+        ItemStack itemStack = this.currentRecipe().getResultItem(Minecraft.getInstance().level.registryAccess());
         builder.add(NarratedElementType.TITLE, Component.translatable("narration.recipe", itemStack.getHoverName()));
 
         builder.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"));

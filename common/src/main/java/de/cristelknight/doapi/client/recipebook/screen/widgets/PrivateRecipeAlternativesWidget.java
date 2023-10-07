@@ -19,6 +19,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -31,7 +32,7 @@ public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventList
     private boolean visible;
     private int buttonX;
     private int buttonY;
-    private Recipe<?> recipe;
+    private RecipeHolder<?> recipe;
     @Nullable
     private Recipe<?> lastClickedRecipe;
     float time;
@@ -44,7 +45,7 @@ public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventList
         return this.visible;
     }
 
-    public Recipe<?> getResults() {
+    public RecipeHolder<?> getResults() {
         return this.recipe;
     }
 
@@ -53,7 +54,7 @@ public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventList
         return this.lastClickedRecipe;
     }
 
-    public void showAlternativesForResult(Recipe<?> recipe, int buttonX, int buttonY, int areaCenterX, int areaCenterY, float delta) {
+    public void showAlternativesForResult(RecipeHolder<?> recipe, int buttonX, int buttonY, int areaCenterX, int areaCenterY, float delta) {
         this.recipe = recipe;
 
         boolean bl = RBConfig.DEFAULT.getConfig().craftableToggle();
@@ -105,7 +106,7 @@ public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventList
                 alternativeButtonWidget = var6.next();
             } while (!alternativeButtonWidget.mouseClicked(mouseX, mouseY, button));
 
-            this.lastClickedRecipe = alternativeButtonWidget.recipe;
+            this.lastClickedRecipe = alternativeButtonWidget.recipe.value();
             return true;
         }
     }
@@ -178,11 +179,11 @@ public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventList
 
     @Environment(EnvType.CLIENT)
     private class CustomAlternativeButtonWidget extends AbstractWidget implements PlaceRecipe<Ingredient> {
-        final Recipe<?> recipe;
+        final RecipeHolder<?> recipe;
         private final boolean craftable;
         protected final List<InputSlot> slots = Lists.newArrayList();
 
-        public CustomAlternativeButtonWidget(int x, int y, Recipe<?> recipe, boolean craftable) {
+        public CustomAlternativeButtonWidget(int x, int y, RecipeHolder<?> recipe, boolean craftable) {
             super(x, y, 200, 20, CommonComponents.EMPTY);
             this.width = 24;
             this.height = 24;
@@ -191,8 +192,8 @@ public class PrivateRecipeAlternativesWidget implements Renderable, GuiEventList
             this.alignRecipe(recipe);
         }
 
-        protected void alignRecipe(Recipe<?> recipe) {
-            this.placeRecipe(3, 3, -1, recipe, recipe.getIngredients().iterator(), 0);
+        protected void alignRecipe(RecipeHolder<?> recipe) {
+            this.placeRecipe(3, 3, -1, recipe, recipe.value().getIngredients().iterator(), 0);
         }
 
         protected void updateWidgetNarration(NarrationElementOutput builder) {

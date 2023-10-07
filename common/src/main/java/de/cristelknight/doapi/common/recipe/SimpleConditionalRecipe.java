@@ -1,6 +1,7 @@
 package de.cristelknight.doapi.common.recipe;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
 import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.DoApiExpectPlatform;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,7 +15,6 @@ public class SimpleConditionalRecipe {
     public static class Serializer<T extends Recipe<?>> implements RecipeSerializer<T> {
 
         // We return a nested one, so we can't know what type it is.
-        @Override
         public T fromJson(ResourceLocation recipeId, JsonObject json) {
             DoApi.LOGGER.debug("Starting to load conditional recipe named: " + recipeId);
 
@@ -22,7 +22,14 @@ public class SimpleConditionalRecipe {
         }
 
         //Should never get here as we return one of the recipes we wrap.
-        @Override public T fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) { return null; }
+        @Override
+        public T fromNetwork(FriendlyByteBuf buf) { return null; }
+
+        @Override
+        public Codec<T> codec() {
+            return null;
+        }
+
         @Override public void toNetwork(FriendlyByteBuf buffer, T recipe) {}
     }
 

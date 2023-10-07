@@ -11,15 +11,22 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
+import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
+@Environment(
+        EnvType.CLIENT)
 public class PrivateRecipeBookRecipeArea {
+    private static final WidgetSprites PAGE_FORWARD_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/page_forward"), new ResourceLocation("recipe_book/page_forward_highlighted"));
+    private static final WidgetSprites PAGE_BACKWARD_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/page_backward"), new ResourceLocation("recipe_book/page_backward_highlighted"));
+
     private final List<PrivateAnimatedResultButton> resultButtons = Lists.newArrayListWithCapacity(20);
     @Nullable
     private PrivateAnimatedResultButton hoveredResultButton;
@@ -49,9 +56,9 @@ public class PrivateRecipeBookRecipeArea {
         }
 
         this.nextPageButton = new StateSwitchingButton(parentLeft + 93, parentTop + 137, 12, 17, false);
-        this.nextPageButton.initTextureValues(1, 208, 13, 18, PrivateRecipeBookWidget.TEXTURE);
+        this.nextPageButton.initTextureValues(PAGE_FORWARD_SPRITES);
         this.prevPageButton = new StateSwitchingButton(parentLeft + 38, parentTop + 137, 12, 17, true);
-        this.prevPageButton.initTextureValues(1, 208, 13, 18, PrivateRecipeBookWidget.TEXTURE);
+        this.prevPageButton.initTextureValues(PAGE_BACKWARD_SPRITES);
     }
 
     public void setResults(List<? extends Recipe<Container>> resultCollections, boolean resetCurrentPage) {

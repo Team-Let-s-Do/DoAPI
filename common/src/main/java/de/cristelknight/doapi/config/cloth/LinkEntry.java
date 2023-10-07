@@ -23,7 +23,7 @@ public class LinkEntry extends AbstractConfigListEntry<Void> {
 
     public LinkEntry(Component fieldName, Button.OnPress onPress, ResourceLocation texture, int offset) {
         super(fieldName, false);
-        button = new ImageButton(0, 0, 200, HEIGHT, 0, 0, offset, texture,200, 40, onPress);
+        // TODO button = new ImageButton(0, 0, 200, HEIGHT, 0, 0, offset, texture,200, 40, onPress);
     }
 
 

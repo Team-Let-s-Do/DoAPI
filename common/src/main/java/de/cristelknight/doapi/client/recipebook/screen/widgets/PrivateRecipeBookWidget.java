@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.StateSwitchingButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.core.RegistryAccess;
@@ -30,6 +31,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,6 +42,7 @@ import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>, Renderable, GuiEventListener, RecipeShownListener {
+    private static final WidgetSprites FILTER_BUTTON_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/filter_enabled"), new ResourceLocation("recipe_book/filter_disabled"), new ResourceLocation("recipe_book/filter_enabled_highlighted"), new ResourceLocation("recipe_book/filter_disabled_highlighted"));
     public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/recipe_book.png");
     private static final Component SEARCH_HINT_TEXT;
     private static final Component TOGGLE_CRAFTABLE_RECIPES_TEXT;
@@ -189,7 +192,7 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
                 this.refreshInputs();
                 this.cachedInvChangeCount = this.client.player.getInventory().getTimesChanged();
             }
-            this.searchField.tick();
+            //this.searchField.tick();
         }
     }
 
@@ -197,7 +200,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
     private void refreshResults(boolean resetCurrentPage) {
         if (this.currentTab == null) return;
         if (this.searchField == null) return;
-
         List<? extends Recipe<Container>> recipes = getResultsForGroup(currentTab.getGroup(), client.level.getRecipeManager().getAllRecipesFor(getRecipeType()));
 
         String string = this.searchField.getValue();
@@ -213,11 +215,11 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         this.recipesArea.setResults(recipes, resetCurrentPage);
     }
 
-    private <T extends Recipe<Container>> List<T> getResultsForGroup(IRecipeBookGroup group, List<T> recipes) {
+    private  <C extends Container, T extends Recipe<C>> List<T> getResultsForGroup(IRecipeBookGroup group, List<RecipeHolder<T>> recipes) {
         List<T> results = Lists.newArrayList();
-        for (T recipe : recipes) {
-            if (group.fitRecipe(recipe, client.level.registryAccess())) {
-                results.add(recipe);
+        for (RecipeHolder<T> recipe : recipes) {
+            if (group.fitRecipe(recipe.value(), client.level.registryAccess())) {
+                results.add(recipe.value());
             }
         }
         return results;
@@ -444,8 +446,9 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
     }
 
     protected void setCraftableButtonTexture() {
-        this.toggleCraftableButton.initTextureValues(152, 41, 28, 18, TEXTURE);
+        this.toggleCraftableButton.initTextureValues(FILTER_BUTTON_SPRITES);
     }
+
 
     protected Component getToggleCraftableButtonText() {
         return TOGGLE_CRAFTABLE_RECIPES_TEXT;
@@ -472,10 +475,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
 
     @Override
     public void addItemToSlot(Iterator<Ingredient> inputs, int slot, int amount, int gridX, int gridY) {
-    }
-
-    @Override
-    public void recipesShown(List<Recipe<?>> recipes) {
     }
 
     static {
