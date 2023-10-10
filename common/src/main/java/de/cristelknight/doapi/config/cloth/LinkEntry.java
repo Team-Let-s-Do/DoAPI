@@ -5,10 +5,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -18,11 +19,11 @@ import java.util.Optional;
 @Environment(EnvType.CLIENT)
 public class LinkEntry extends AbstractConfigListEntry<Void> {
     private static final int HEIGHT = 40;
-    private Button button = null;
+    private final Button button;
 
-    public LinkEntry(Component fieldName, Button.OnPress onPress, ResourceLocation texture, int offset) {
+    public LinkEntry(Component fieldName, Button.OnPress onPress, WidgetSprites sprites) {
         super(fieldName, false);
-        // TODO button = new ImageButton(0, 0, 200, HEIGHT, 0, 0, offset, texture,200, 40, onPress);
+        button = new ImageButton(0, 0, 200, HEIGHT, sprites, onPress);
     }
 
 
