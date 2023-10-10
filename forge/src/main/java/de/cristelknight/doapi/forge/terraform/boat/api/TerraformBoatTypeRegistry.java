@@ -4,13 +4,12 @@ import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class TerraformBoatTypeRegistry {
 
-	private static Map<ResourceLocation, TerraformBoatType> INSTANCE = new HashMap<>();
+	private static final Map<ResourceLocation, TerraformBoatType> INSTANCE = new HashMap<>();
 
 	public static void register(ResourceLocation location, TerraformBoatType type){
 		INSTANCE.put(location, type);

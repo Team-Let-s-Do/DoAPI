@@ -1,22 +1,13 @@
 package de.cristelknight.doapi.config.cloth;
 
-import de.cristelknight.doapi.DoApiRL;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
 import me.shedaniel.clothconfig2.gui.entries.FloatListEntry;
 import me.shedaniel.clothconfig2.gui.entries.IntegerListEntry;
-import me.shedaniel.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.clothconfig2.impl.builders.BooleanToggleBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.ConfirmLinkScreen;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-
-import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
 public class CCUtil {

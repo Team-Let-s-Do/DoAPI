@@ -1,7 +1,6 @@
 package de.cristelknight.doapi.forge.terraform;
 
 import de.cristelknight.doapi.DoApi;
-import de.cristelknight.doapi.client.DoApiClient;
 import de.cristelknight.doapi.client.terraform.TerraformBoatClientHelper;
 import de.cristelknight.doapi.forge.terraform.boat.impl.TerraformBoatInitializer;
 import dev.architectury.platform.Platform;

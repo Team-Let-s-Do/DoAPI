@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class DoApiRecipes {
     private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(DoApi.MOD_ID, Registries.RECIPE_SERIALIZER);
-    public static final RegistrySupplier<RecipeSerializer<Recipe<?>>> CONDITIONAL_RECIPE_SERIALIZER = create("conditional", SimpleConditionalRecipe.Serializer::new);
+    public static final RegistrySupplier<RecipeSerializer<Recipe<?>>> CONDITIONAL_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("conditional", () -> SimpleConditionalRecipe.SERIALZIER);
 
     private static <T extends Recipe<?>> RegistrySupplier<RecipeSerializer<T>> create(String name, Supplier<RecipeSerializer<T>> serializer) {
         return RECIPE_SERIALIZERS.register(name, serializer);

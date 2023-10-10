@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import de.cristelknight.doapi.client.recipebook.handler.AbstractPrivateRecipeScreenHandler;
 import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateAnimatedResultButton;
 import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateRecipeAlternativesWidget;
-import de.cristelknight.doapi.client.recipebook.screen.widgets.PrivateRecipeBookWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -15,7 +14,6 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;

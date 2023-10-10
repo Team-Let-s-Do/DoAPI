@@ -1,9 +1,14 @@
 package de.cristelknight.doapi.forge;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.JsonOps;
 import de.cristelknight.doapi.DoApi;
+import de.cristelknight.doapi.common.recipe.SimpleConditionalRecipe;
 import de.cristelknight.doapi.forge.common.packs.BuiltInPackRegistry;
 import de.cristelknight.doapi.forge.common.registry.BurningBlockRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.api.TerraformBoatTypeRegistry;
@@ -39,10 +44,10 @@ import java.util.List;
 import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
-    @SuppressWarnings("unchecked")
-    public static <T extends Recipe<?>> T fromJson(ResourceLocation recipeId, JsonObject json) {
-        JsonObject recipe = GsonHelper.getAsJsonObject(json, "recipe");
-        JsonArray conditions = GsonHelper.getAsJsonArray(json, "conditions");
+
+    public static <T> DataResult<Pair<Recipe<?>, T>> decode(DynamicOps<T> ops, JsonElement json) {
+        JsonObject recipe = GsonHelper.getAsJsonObject(json.getAsJsonObject(), "recipe");
+        JsonArray conditions = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "conditions");
 
         JsonObject forgeRecipe = new JsonObject();
         forgeRecipe.addProperty("type", "forge:conditional");
@@ -56,7 +61,8 @@ public class DoApiExpectPlatformImpl {
         recipes.add(newRecipe);
         forgeRecipe.add("recipes", recipes);
 
-        return (T) ConditionalRecipe.SERIALZIER.fromJson(recipeId, forgeRecipe);
+        DataResult<Recipe<?>> parsed = ConditionalRecipe.SERIALZIER.codec().parse(JsonOps.INSTANCE, forgeRecipe);
+        return SimpleConditionalRecipe.checkResult(parsed, ops);
     }
 
     public static boolean isModLoaded(String modid) {
@@ -163,5 +169,7 @@ public class DoApiExpectPlatformImpl {
     public static Block getWallHangingSign(ResourceLocation hangingSignTextureId, ResourceLocation hangingSignGuiTextureId) {
         return new TerraformWallHangingSignBlock(hangingSignTextureId, hangingSignGuiTextureId, BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN));
     }
+
+
 
 }

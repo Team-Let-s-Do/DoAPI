@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 public class RepositorySourceMaker implements RepositorySource {
-	private boolean client;
+	private final boolean client;
 	public RepositorySourceMaker(boolean client) {
 		this.client = client;
 	}

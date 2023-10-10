@@ -7,7 +7,6 @@ import de.cristelknight.doapi.api.DoApiPlugin;
 import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;

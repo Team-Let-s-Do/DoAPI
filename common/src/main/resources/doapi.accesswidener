@@ -1,1 +1,2 @@
 accessWidener   v2  named
+accessible method net/minecraft/world/item/crafting/RecipeManager fromJson (Lnet/minecraft/resources/ResourceLocation;Lcom/google/gson/JsonObject;)Lnet/minecraft/world/item/crafting/RecipeHolder;

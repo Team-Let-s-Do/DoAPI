@@ -38,8 +38,19 @@ public class BuiltInPackRegistry {
                     packResources.packId(),
                     Component.literal(id.getNamespace() + "/" + id.getPath()),
                     pair.getSecond(),
-                    ignored -> packResources,
-                    PackType.SERVER_DATA,
+                    new Pack.ResourcesSupplier() {
+                        @Override
+                        public PackResources openPrimary(String name) {
+                            return packResources;
+                        }
+
+                        @Override
+                        public PackResources openFull(String string, Pack.Info metadata) {
+                            // Don't support overlays in builtin res packs.
+                            return packResources;
+                        }
+                    },
+                    client ? PackType.CLIENT_RESOURCES : PackType.SERVER_DATA,
                     Pack.Position.TOP,
                     new BuiltinResourcePackSource(id.getNamespace())
             );
