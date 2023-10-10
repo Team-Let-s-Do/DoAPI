@@ -49,3 +49,6 @@ There is no tutorial yet, but you can take a look at this example of the Vinery 
 
 - Adding your book to your [screenhandler](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/gui/handler/FermentationBarrelGuiHandler.java)
 and [screen](https://github.com/satisfyu/Vinery/blob/architectury-1.19.2/common/src/main/java/satisfyu/vinery/client/screen/FermentationBarrelGui.java)
+
+## Conditional Recipes
+There is no tutorial yet, but you can take a look at these recipes from the Meadow mod: https://github.com/satisfyu/Meadow/tree/1.20.1-architectury/common/src/main/resources/data/conditional/recipes
