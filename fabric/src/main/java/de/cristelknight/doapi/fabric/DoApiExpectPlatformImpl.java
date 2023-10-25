@@ -1,12 +1,7 @@
 package de.cristelknight.doapi.fabric;
 
 import com.google.common.collect.Lists;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.JsonOps;
 import com.terraformersmc.terraform.boat.api.TerraformBoatTypeRegistry;
 import com.terraformersmc.terraform.boat.impl.entity.TerraformBoatEntity;
 import com.terraformersmc.terraform.boat.impl.entity.TerraformChestBoatEntity;
@@ -15,7 +10,6 @@ import com.terraformersmc.terraform.sign.block.TerraformHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
-import de.cristelknight.doapi.common.recipe.SimpleConditionalRecipe;
 import de.cristelknight.doapi.fabric.terraform.DoApiBoatTypeHolder;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
@@ -25,13 +19,9 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -43,17 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
-
-    public static <T> DataResult<Pair<Recipe<?>, T>> decode(DynamicOps<T> ops, JsonElement json) {
-        JsonObject object = GsonHelper.getAsJsonObject(json.getAsJsonObject(), "recipe");
-
-        ResourceLocation type = new ResourceLocation(GsonHelper.getAsString(object, "type"));
-        RecipeSerializer<?> serializer = BuiltInRegistries.RECIPE_SERIALIZER.get(type);
-        if (serializer == null)
-            return DataResult.error(() -> "Invalid or unsupported recipe type '" + type + "'");
-        DataResult<Recipe<?>> parsed = (DataResult<Recipe<?>>) serializer.codec().parse(JsonOps.INSTANCE, object);
-        return SimpleConditionalRecipe.checkResult(parsed, ops);
-    }
 
     public static boolean isModLoaded(String modId) {
         return FabricLoader.getInstance().isModLoaded(modId);

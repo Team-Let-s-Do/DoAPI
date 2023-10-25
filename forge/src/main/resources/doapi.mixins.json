@@ -14,7 +14,8 @@
     "sign.MixinAbstractBlockSettings",
     "sign.MixinBlockEntityType",
     "boat.MixinBoatEntity",
-    "FireBlockMixin"
+    "FireBlockMixin",
+    "RecipeManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

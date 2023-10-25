@@ -1,14 +1,7 @@
 package de.cristelknight.doapi.forge;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.JsonOps;
 import de.cristelknight.doapi.DoApi;
-import de.cristelknight.doapi.common.recipe.SimpleConditionalRecipe;
 import de.cristelknight.doapi.forge.common.packs.BuiltInPackRegistry;
 import de.cristelknight.doapi.forge.common.registry.BurningBlockRegistry;
 import de.cristelknight.doapi.forge.terraform.boat.api.TerraformBoatTypeRegistry;
@@ -21,14 +14,11 @@ import de.cristelknight.doapi.forge.terraform.sign.block.TerraformWallHangingSig
 import de.cristelknight.doapi.forge.terraform.sign.block.TerraformWallSignBlock;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -45,25 +35,48 @@ import java.util.Map;
 
 public class DoApiExpectPlatformImpl {
 
+
+    /*
     public static <T> DataResult<Pair<Recipe<?>, T>> decode(DynamicOps<T> ops, JsonElement json) {
         JsonObject recipe = GsonHelper.getAsJsonObject(json.getAsJsonObject(), "recipe");
         JsonArray conditions = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "conditions");
 
+        int size = conditions.size();
+        JsonObject forgeCondition;
+        if(size == 1) forgeCondition = conditions.get(0).getAsJsonObject();
+        else {
+            forgeCondition = new JsonObject();
+            forgeCondition.addProperty("type", "forge:and");
+            forgeCondition.add("values", conditions);
+        }
+
         JsonObject forgeRecipe = new JsonObject();
         forgeRecipe.addProperty("type", "forge:conditional");
+        forgeRecipe.add("forge:condition", forgeCondition);
 
         JsonArray recipes = new JsonArray();
 
         JsonObject newRecipe = new JsonObject();
-        newRecipe.add("conditions", conditions);
+        newRecipe.add("forge:condition", forgeCondition);
         newRecipe.add("recipe", recipe);
 
         recipes.add(newRecipe);
         forgeRecipe.add("recipes", recipes);
 
+
+
+        String string = new Gson().newBuilder().setPrettyPrinting().create().toJson(forgeRecipe);
+
+        try {
+            Files.write(Path.of("C:/Users/Admin/Desktop/recipe.json"), string.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         DataResult<Recipe<?>> parsed = ConditionalRecipe.SERIALZIER.codec().parse(JsonOps.INSTANCE, forgeRecipe);
         return SimpleConditionalRecipe.checkResult(parsed, ops);
     }
+     */
 
     public static boolean isModLoaded(String modid) {
         ModList modList = ModList.get();

@@ -6,13 +6,14 @@ import com.google.gson.JsonSyntaxException;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
 import de.cristelknight.doapi.DoApiExpectPlatform;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class SimpleConditionalRecipe {
-
 
     private static final Codec<Recipe<?>> CODEC = new Codec<Recipe<?>>() {
         @Override
@@ -24,12 +25,24 @@ public class SimpleConditionalRecipe {
         public <T> DataResult<Pair<Recipe<?>, T>> decode(DynamicOps<T> ops, T input) {
             JsonElement json = new Dynamic<>(ops, input).convert(JsonOps.INSTANCE).getValue();
             try {
-               return DoApiExpectPlatform.decode(ops, json);
+               return decodeJson(ops, json);
             } catch (JsonSyntaxException e) {
                 return DataResult.error(e::getMessage);
             }
         }
     }.stable();
+
+    private static <T> DataResult<Pair<Recipe<?>, T>> decodeJson(DynamicOps<T> ops, JsonElement json) {
+        JsonObject object = GsonHelper.getAsJsonObject(json.getAsJsonObject(), "recipe");
+
+        ResourceLocation type = new ResourceLocation(GsonHelper.getAsString(object, "type"));
+        RecipeSerializer<?> serializer = BuiltInRegistries.RECIPE_SERIALIZER.get(type);
+        if (serializer == null)
+            return DataResult.error(() -> "Invalid or unsupported recipe type '" + type + "'");
+        DataResult<Recipe<?>> parsed = (DataResult<Recipe<?>>) serializer.codec().parse(JsonOps.INSTANCE, object);
+        return SimpleConditionalRecipe.checkResult(parsed, ops);
+    }
+
     public static final RecipeSerializer<Recipe<?>> SERIALZIER = new RecipeSerializer<>() {
         @Override
         public Codec<Recipe<?>> codec() {

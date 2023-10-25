@@ -1,14 +1,10 @@
 package de.cristelknight.doapi;
 
-import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -18,11 +14,6 @@ import java.util.Map;
 
 
 public class DoApiExpectPlatform {
-
-    @ExpectPlatform
-    public static <T> DataResult<Pair<Recipe<?>, T>> decode(DynamicOps<T> ops, JsonElement json) {
-        throw new AssertionError();
-    }
     @ExpectPlatform
     public static void registerBuiltInPack(String modId, ResourceLocation location, boolean alwaysEnabled){
         throw new AssertionError();

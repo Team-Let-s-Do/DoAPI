@@ -25,7 +25,7 @@ Terraform Wood Api, but for forge
 [[dependencies.doapi]]
 modId = "forge"
 mandatory = true
-versionRange = "[48.0.13,)"
+versionRange = "[48.0.30,)"
 ordering = "NONE"
 side = "BOTH"
 
