@@ -4,10 +4,10 @@ import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.Util;
 import de.cristelknight.doapi.api.DoApiAPI;
 import de.cristelknight.doapi.api.DoApiPlugin;
+import de.cristelknight.doapi.common.block.entity.StandardBlockEntity;
 import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,6 +23,9 @@ public class DoApiBlockEntityTypes {
 
     public static final RegistrySupplier<BlockEntityType<StorageBlockEntity>> STORAGE_ENTITY = create("storage", () -> BlockEntityType.Builder.of(
             StorageBlockEntity::new, getBlocksForStorage()).build(null));
+
+    public static final RegistrySupplier<BlockEntityType<StandardBlockEntity>> STANDARD = create("standard", () -> BlockEntityType.Builder.of(
+            StandardBlockEntity::new, DoApiBlocks.STANDARD.get(), DoApiBlocks.WALL_STANDARD.get()).build(null));
 
     private static Block[] getBlocksForStorage(){
         Set<Block> set = new HashSet<>();
