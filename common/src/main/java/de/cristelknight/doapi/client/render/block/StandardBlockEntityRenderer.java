@@ -102,7 +102,7 @@ public class StandardBlockEntityRenderer implements BlockEntityRenderer<Standard
     public static void renderStandard(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, StandardBlockEntity standard) {
         ResourceLocation location = StandardItem.getLocationOrNull(standard.getItem());
         if(location == null){
-            DoApi.LOGGER.error("ResourceLocation for StandardBlock texture is null!");
+            DoApi.LOGGER.error("ResourceLocation for StandardBlock texture is null! At: " + standard.getBlockPos());
             return;
         }
         VertexConsumer vc = multiBufferSource.getBuffer(RenderType.entitySolid(location));
