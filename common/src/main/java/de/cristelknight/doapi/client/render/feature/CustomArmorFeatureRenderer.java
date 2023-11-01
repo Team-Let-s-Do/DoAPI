@@ -32,7 +32,7 @@ import java.util.Map;
 @Environment(value= EnvType.CLIENT)
 public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
-	public Map<FullCustomArmor, Pair<HumanoidModel<T>, HumanoidModel<T>>> MODELS = Maps.newHashMap();
+	public final Map<FullCustomArmor, Pair<HumanoidModel<T>, HumanoidModel<T>>> MODELS = Maps.newHashMap();
 	private final EntityModelSet modelLoader;
 
 	public CustomArmorFeatureRenderer(RenderLayerParent<T, M> context, EntityModelSet modelSet) {

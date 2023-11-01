@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-	public  Map<Item, EntityModel<T>> MODELS = Maps.newHashMap();
+	public final Map<Item, EntityModel<T>> MODELS = Maps.newHashMap();
 
 	private final EntityModelSet modelLoader;
 	private final float yOffset;

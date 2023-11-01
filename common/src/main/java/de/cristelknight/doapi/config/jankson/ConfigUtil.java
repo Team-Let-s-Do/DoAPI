@@ -107,9 +107,7 @@ public class ConfigUtil {
             TreeMap<String, JsonElement> map = new TreeMap<>(String::compareTo);
             map.putAll(object);
             alphabeticallySortedJsonObject.putAll(map);
-            alphabeticallySortedJsonObject.forEach((key, entry) -> {
-                alphabeticallySortedJsonObject.setComment(key, object.getComment(key));
-            });
+            alphabeticallySortedJsonObject.forEach((key, entry) -> alphabeticallySortedJsonObject.setComment(key, object.getComment(key)));
 
             return alphabeticallySortedJsonObject;
         }

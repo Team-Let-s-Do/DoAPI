@@ -51,9 +51,4 @@ public class ChairEntity extends Entity {
     protected void addAdditionalSaveData(CompoundTag nbt) {
 
     }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this);
-    }
 }

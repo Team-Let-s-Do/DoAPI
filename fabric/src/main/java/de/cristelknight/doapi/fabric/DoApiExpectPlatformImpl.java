@@ -38,9 +38,7 @@ public class DoApiExpectPlatformImpl {
         return FabricLoader.getInstance().isModLoaded(modId);
     }
     public static void registerBuiltInPack(String modId, ResourceLocation location, boolean alwaysEnabled){
-        FabricLoader.getInstance().getModContainer(modId).ifPresent(modContainer -> {
-            ResourceManagerHelper.registerBuiltinResourcePack(location, modContainer, alwaysEnabled ? ResourcePackActivationType.ALWAYS_ENABLED : ResourcePackActivationType.NORMAL);
-        });
+        FabricLoader.getInstance().getModContainer(modId).ifPresent(modContainer -> ResourceManagerHelper.registerBuiltinResourcePack(location, modContainer, alwaysEnabled ? ResourcePackActivationType.ALWAYS_ENABLED : ResourcePackActivationType.NORMAL));
     }
 
     public static Path getConfigDirectory() {

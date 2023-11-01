@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class BuiltInPackRegistry {
-    public static Map<ResourceLocation, Pair<PackResources, Boolean>> packResources = new HashMap<>();
+    public static final Map<ResourceLocation, Pair<PackResources, Boolean>> packResources = new HashMap<>();
 
     public static void getPacks(Consumer<Pack> consumer, boolean client){
         if(packResources.isEmpty()) return;

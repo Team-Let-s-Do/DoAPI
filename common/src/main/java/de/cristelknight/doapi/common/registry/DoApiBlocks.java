@@ -20,8 +20,8 @@ public class DoApiBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(DoApi.MOD_ID, Registries.BLOCK);
     public static final Registrar<Block> BLOCK_REGISTRAR = BLOCKS.getRegistrar();
 
-    public static Supplier<Block> STANDARD = registerWithoutItem("standard", () -> new StandardBlock(properties(1F).instrument(NoteBlockInstrument.BASS).noCollission().sound(SoundType.WOOD)));
-    public static Supplier<Block> WALL_STANDARD = registerWithoutItem("wall_standard", () -> new StandardWallBlock(properties(1F).instrument(NoteBlockInstrument.BASS).noCollission().sound(SoundType.WOOD).dropsLike(STANDARD.get())));
+    public static final Supplier<Block> STANDARD = registerWithoutItem("standard", () -> new StandardBlock(properties(1F).instrument(NoteBlockInstrument.BASS).noCollission().sound(SoundType.WOOD)));
+    public static final Supplier<Block> WALL_STANDARD = registerWithoutItem("wall_standard", () -> new StandardWallBlock(properties(1F).instrument(NoteBlockInstrument.BASS).noCollission().sound(SoundType.WOOD).dropsLike(STANDARD.get())));
 
 
     public static void init(){

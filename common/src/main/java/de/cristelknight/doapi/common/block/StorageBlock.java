@@ -29,8 +29,6 @@ import java.util.Optional;
 
 public abstract class StorageBlock extends FacingBlock implements EntityBlock {
 
-    public static SoundEvent event = SoundEvents.WOOD_PLACE;
-
     public StorageBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
@@ -90,11 +88,11 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
     }
 
     public SoundEvent getRemoveSound(Level level, BlockPos blockPos, Player player,  int i){
-        return event;
+        return SoundEvents.WOOD_PLACE;
     }
 
     public SoundEvent getAddSound(Level level, BlockPos blockPos, Player player,  int i){
-        return event;
+        return SoundEvents.WOOD_PLACE;
     }
 
     @Override
