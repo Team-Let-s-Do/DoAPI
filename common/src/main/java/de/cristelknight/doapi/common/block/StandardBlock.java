@@ -4,7 +4,9 @@ import de.cristelknight.doapi.common.block.entity.StandardBlockEntity;
 import de.cristelknight.doapi.common.registry.DoApiBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -24,6 +26,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class StandardBlock extends BaseEntityBlock
 {
     public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
@@ -34,10 +38,36 @@ public class StandardBlock extends BaseEntityBlock
         makeDefaultState();
     }
 
+    @Override
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof StandardBlockEntity entity) {
+                Item item = entity.getItem();
+                if(item != null){
+                    Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item));
+                }
+            }
+            super.onRemove(state, world, pos, newState, moved);
+        }
+    }
+
     protected void makeDefaultState() {
         registerDefaultState(this.stateDefinition.any().setValue(ROTATION, 0));
     }
 
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState) {
+        Optional<StandardBlockEntity> entity = blockGetter.getBlockEntity(blockPos, DoApiBlockEntityTypes.STANDARD.get());
+        if(entity.isPresent()){
+            Item item = entity.get().getItem();
+            if(item != null){
+                return new ItemStack(item);
+            }
+        }
+
+        return super.getCloneItemStack(blockGetter, blockPos, blockState);
+    }
 
     @Nullable
     @Override

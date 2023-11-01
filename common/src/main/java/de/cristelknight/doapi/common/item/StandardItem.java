@@ -34,4 +34,9 @@ public class StandardItem extends StandingAndWallBlockItem {
         if(pair == null) return null;
         return pair.getSecond().get();
     }
+
+    @Override
+    public String getDescriptionId() {
+        return this.getOrCreateDescriptionId();
+    }
 }

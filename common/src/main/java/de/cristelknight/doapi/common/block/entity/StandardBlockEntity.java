@@ -27,6 +27,7 @@ public class StandardBlockEntity extends BlockEntity implements BlockEntityTicke
     @Override
     public void saveAdditional(CompoundTag nbt) {
         CompoundTag tag = new CompoundTag();
+        if(stack == null) stack = ItemStack.EMPTY;
         stack.save(tag);
         nbt.put("stack", tag);
         super.saveAdditional(nbt);
@@ -43,7 +44,7 @@ public class StandardBlockEntity extends BlockEntity implements BlockEntityTicke
         if(item instanceof StandardItem){
             this.stack = new ItemStack(stack.getItem());
         }
-        else throw new RuntimeException("[DoApi] False item for standard!");
+        else throw new RuntimeException("[DoApi] False item for standard! At: " + getBlockPos());
     }
 
     public Item getItem(){
@@ -65,7 +66,7 @@ public class StandardBlockEntity extends BlockEntity implements BlockEntityTicke
         if (!level.isClientSide() && level.getGameTime() % 80L == 0L) {
             MobEffectInstance instance = StandardItem.getEffectInstanceOrNull(getItem());
             if(instance == null){
-                DoApi.LOGGER.error("MobEffectInstance for StandardBlock is null!");
+                DoApi.LOGGER.error("MobEffectInstance for StandardBlock is null! At: " + pos);
                 return;
             }
             level.getEntitiesOfClass(Player.class, new AABB(pos).inflate(8F), player -> true).forEach(player -> player.addEffect(instance));
