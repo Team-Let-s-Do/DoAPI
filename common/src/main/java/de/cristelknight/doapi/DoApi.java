@@ -1,6 +1,7 @@
 package de.cristelknight.doapi;
 
 import de.cristelknight.doapi.common.registry.DoApiBlockEntityTypes;
+import de.cristelknight.doapi.common.registry.DoApiBlocks;
 import de.cristelknight.doapi.common.registry.DoApiEntityTypes;
 import de.cristelknight.doapi.common.registry.DoApiRecipes;
 import de.cristelknight.doapi.terraform.boat.item.TerraformBoatItemHelper;
@@ -13,6 +14,7 @@ public class DoApi {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static void init() {
+        DoApiBlocks.init();
         DoApiEntityTypes.init();
         DoApiBlockEntityTypes.init();
         DoApiRecipes.init();
