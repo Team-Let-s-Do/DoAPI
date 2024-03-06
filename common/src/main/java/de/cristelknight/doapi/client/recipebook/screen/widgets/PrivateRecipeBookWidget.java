@@ -185,6 +185,7 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
             this.setOpen(open);
         }
         if (this.isOpen()) {
+            assert this.client.player != null;
             if (this.cachedInvChangeCount != this.client.player.getInventory().getTimesChanged()) {
                 this.refreshInputs();
                 this.cachedInvChangeCount = this.client.player.getInventory().getTimesChanged();
@@ -237,6 +238,7 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
 
     private void refreshInputs() {
         this.recipeFinder.clear();
+        assert this.client.player != null;
         this.client.player.getInventory().fillStackedContents(this.recipeFinder);
         this.refreshResults(false);
     }
@@ -246,6 +248,7 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
         int i = (this.parentWidth - 147) / 2 - this.leftOffset;
         int j = (this.parentHeight - 166) / 2;
         this.recipeFinder.clear();
+        assert this.client.player != null;
         this.client.player.getInventory().fillStackedContents(this.recipeFinder);
         String string = this.searchField != null ? this.searchField.getValue() : "";
         Font var10003 = this.client.font;
@@ -292,7 +295,6 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        System.out.println("jojojo");
         if (this.open && !this.client.player.isSpectator()) {
             if (this.recipesArea.mouseClicked(mouseX, mouseY, button)) {
                 Recipe<?> recipe = this.recipesArea.getLastClickedRecipe();
@@ -355,23 +357,25 @@ public abstract class PrivateRecipeBookWidget implements PlaceRecipe<Ingredient>
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        System.out.println(keyCode);
         this.searching = false;
-        if (this.isOpen() && !this.client.player.isSpectator()) {
+        if (this.isOpen() && !Objects.requireNonNull(this.client.player).isSpectator()) {
             if (keyCode == 256 && !this.isWide()) {
                 this.setOpen(false);
                 return true;
-            } else if (this.searchField.keyPressed(keyCode, scanCode, modifiers)) {
-                this.refreshSearchResults();
-                return true;
-            } else if (this.searchField.isFocused() && this.searchField.isVisible() && keyCode != 256) {
-                return true;
-            } else if (this.client.options.keyChat.matches(keyCode, scanCode) && !this.searchField.isFocused()) {
-                this.searching = true;
-                this.searchField.setFocused(true);
-                return true;
             } else {
-                return false;
+                assert this.searchField != null;
+                if (this.searchField.keyPressed(keyCode, scanCode, modifiers)) {
+                    this.refreshSearchResults();
+                    return true;
+                } else if (this.searchField.isFocused() && this.searchField.isVisible() && keyCode != 256) {
+                    return true;
+                } else if (this.client.options.keyChat.matches(keyCode, scanCode) && !this.searchField.isFocused()) {
+                    this.searching = true;
+                    this.searchField.setFocused(true);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } else {
             return false;
