@@ -15,7 +15,6 @@ import java.util.function.Supplier;
 
 public final class TerraformBoatClientHelper {
 	private TerraformBoatClientHelper() {
-		return;
 	}
 
 	private static ResourceLocation getLayerId(ResourceLocation boatId, boolean raft, boolean chest) {

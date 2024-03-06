@@ -3,7 +3,6 @@ package de.cristelknight.doapi.terraform.boat.item;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -16,7 +15,6 @@ public final class TerraformBoatItemHelper {
 	private static final Map<RegistrySupplier<? extends ItemLike>, TerraformBoatDispenserBehavior> DISPENSER_BEHAVIOURS = new HashMap<>();
 
 	private TerraformBoatItemHelper() {
-		return;
 	}
 	
 	

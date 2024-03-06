@@ -31,7 +31,7 @@ import java.util.Optional;
 public class StandardBlock extends BaseEntityBlock
 {
     public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
-    private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);;
+    private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 
     public StandardBlock(Properties properties) {
         super(properties);

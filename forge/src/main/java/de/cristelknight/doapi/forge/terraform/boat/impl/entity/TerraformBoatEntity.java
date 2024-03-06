@@ -70,7 +70,6 @@ public class TerraformBoatEntity extends Boat implements TerraformBoatHolder {
 
 	@Override
 	public void setVariant(Type type) {
-		return;
 	}
 
 	@Override

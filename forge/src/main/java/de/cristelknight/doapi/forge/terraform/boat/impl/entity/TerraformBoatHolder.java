@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
 
 public interface TerraformBoatHolder {
-	static final String BOAT_KEY = "TerraformBoat";
+	String BOAT_KEY = "TerraformBoat";
 
 	TerraformBoatType getTerraformBoat();
 

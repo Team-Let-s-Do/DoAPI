@@ -9,12 +9,12 @@ public interface BlockSettingsLock {
 	/**
 	 * Locks the block sound group.
 	 */
-	public void lock();
+	void lock();
 
 	/**
 	 * Locks the block sound group.
 	 */
-	public static BlockBehaviour.Properties lock(BlockBehaviour.Properties settings) {
+	static BlockBehaviour.Properties lock(BlockBehaviour.Properties settings) {
 		((BlockSettingsLock) settings).lock();
 		return settings;
 	}

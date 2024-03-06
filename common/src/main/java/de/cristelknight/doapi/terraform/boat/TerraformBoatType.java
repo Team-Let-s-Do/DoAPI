@@ -9,7 +9,7 @@ public interface TerraformBoatType {
 	Item getChestItem();
 	Item getPlanks();
 
-	public static class Builder {
+	class Builder {
 		private boolean raft;
 		private RegistrySupplier<Item> item;
 		private RegistrySupplier<Item> chestItem;

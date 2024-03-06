@@ -23,6 +23,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.DyeableArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -117,7 +118,7 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 
 	private FullCustomArmor getArmorModel(T entity, EquipmentSlot slot) {
 		ICustomArmor hatItem = getArmorItem(entity, slot);
-		if (hatItem != null) {
+		if (hatItem instanceof Item item) {
 			if (MODELS.isEmpty()) {
 				List<DoApiAPI> apis = Util.getApis(DoApiAPI.class, "doapi", DoApiPlugin.class);
 				for (DoApiAPI api : apis) {
@@ -125,7 +126,7 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 				}
 			}
 			for (FullCustomArmor armor : MODELS.keySet()) {
-				if (armor.set.contains(hatItem)) return armor;
+				if (armor.set.contains(item)) return armor;
 			}
 		}
 		return null;

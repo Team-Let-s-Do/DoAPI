@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public final class TerraformBoatTrackedData {
 	private TerraformBoatTrackedData() {
-		return;
 	}
 
 	public static final EntityDataSerializer<Optional<TerraformBoatType>> HANDLER = EntityDataSerializer.optional(TerraformBoatTrackedData::write, TerraformBoatTrackedData::read);

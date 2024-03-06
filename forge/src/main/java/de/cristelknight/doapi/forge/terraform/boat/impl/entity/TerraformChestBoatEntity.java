@@ -70,7 +70,6 @@ public class TerraformChestBoatEntity extends ChestBoat implements TerraformBoat
 
 	@Override
 	public void setVariant(Type type) {
-		return;
 	}
 
 	@Override
