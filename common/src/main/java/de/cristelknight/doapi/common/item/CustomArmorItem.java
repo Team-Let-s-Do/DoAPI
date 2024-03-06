@@ -1,11 +1,10 @@
 package de.cristelknight.doapi.common.item;
 
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 
-public abstract class CustomArmorItem extends ArmorItem {
-    public CustomArmorItem(ArmorMaterial material, ArmorItem.Type type, Properties settings) {
-        super(material, type, settings);
+public abstract class CustomArmorItem extends ArmorItem implements ICustomArmor {
+    public CustomArmorItem(ArmorMaterial armorMaterial, Type type, Properties properties) {
+        super(armorMaterial, type, properties);
     }
 }

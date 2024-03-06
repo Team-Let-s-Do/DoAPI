@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 public class StandardBlockEntity extends BlockEntity implements BlockEntityTicker<StandardBlockEntity> {
 
@@ -57,7 +58,7 @@ public class StandardBlockEntity extends BlockEntity implements BlockEntityTicke
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public @NotNull CompoundTag getUpdateTag() {
         return this.saveWithoutMetadata();
     }
 
@@ -65,7 +66,7 @@ public class StandardBlockEntity extends BlockEntity implements BlockEntityTicke
     public void tick(Level level, BlockPos pos, BlockState blockState, StandardBlockEntity blockEntity) {
         if (!level.isClientSide() && level.getGameTime() % 80L == 0L) {
             MobEffectInstance instance = StandardItem.getEffectInstanceOrNull(getItem());
-            if(instance == null){
+            if (instance == null) {
                 DoApi.LOGGER.error("MobEffectInstance for StandardBlock is null! At: " + pos);
                 return;
             }

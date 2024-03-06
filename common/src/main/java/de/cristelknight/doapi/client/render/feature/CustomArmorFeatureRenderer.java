@@ -8,7 +8,7 @@ import com.mojang.datafixers.util.Pair;
 import de.cristelknight.doapi.Util;
 import de.cristelknight.doapi.api.DoApiAPI;
 import de.cristelknight.doapi.api.DoApiPlugin;
-import de.cristelknight.doapi.common.item.CustomArmorItem;
+import de.cristelknight.doapi.common.item.ICustomArmor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HumanoidModel;
@@ -23,7 +23,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.DyeableArmorItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -117,24 +116,24 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 	}
 
 	private FullCustomArmor getArmorModel(T entity, EquipmentSlot slot) {
-		Item hatItem = getArmorItem(entity, slot);
-		if(hatItem != null) {
-			if(MODELS.isEmpty()) {
+		ICustomArmor hatItem = getArmorItem(entity, slot);
+		if (hatItem != null) {
+			if (MODELS.isEmpty()) {
 				List<DoApiAPI> apis = Util.getApis(DoApiAPI.class, "doapi", DoApiPlugin.class);
-				for(DoApiAPI api : apis){
+				for (DoApiAPI api : apis) {
 					api.registerArmor(MODELS, modelLoader);
 				}
 			}
-			for(FullCustomArmor armor : MODELS.keySet()){
-				if(armor.set.contains(hatItem)) return armor;
+			for (FullCustomArmor armor : MODELS.keySet()) {
+				if (armor.set.contains(hatItem)) return armor;
 			}
 		}
 		return null;
 	}
 
-	private CustomArmorItem getArmorItem(T entity, EquipmentSlot slot) {
+	private ICustomArmor getArmorItem(T entity, EquipmentSlot slot) {
 		ItemStack armorSlot = entity.getItemBySlot(slot);
-		if(armorSlot.getItem() instanceof CustomArmorItem hat && !armorSlot.isEmpty()) {
+		if(armorSlot.getItem() instanceof ICustomArmor hat && !armorSlot.isEmpty()) {
 			return hat;
 		}
 		return null;
