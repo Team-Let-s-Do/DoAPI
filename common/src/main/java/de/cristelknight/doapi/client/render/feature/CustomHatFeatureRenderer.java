@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DyeableArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -43,15 +44,15 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 	}
 
 	public EntityModel<T> getHatModel(T entity, EquipmentSlot slot) {
-		ICustomHat hatItem = getHat(entity, slot);
+		ICustomHat hatItem = this.getHat(entity, slot);
 		if (hatItem instanceof Item item) {
-			if (MODELS.isEmpty()) {
+			if (this.MODELS.isEmpty()) {
 				List<DoApiAPI> apis = Util.getApis(DoApiAPI.class, "doapi", DoApiPlugin.class);
 				for(DoApiAPI api : apis){
-					api.registerHat(MODELS, this.modelLoader);
+					api.registerHat(this.MODELS, this.modelLoader);
 				}
 			}
-			return MODELS.get(item);
+			return this.MODELS.get(item);
 		}
 		return null;
 	}
@@ -68,34 +69,40 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 	@Override
 	public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 		EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
-		for(EquipmentSlot slot : slots){
-			EntityModel<T> headModel = getHatModel(entity, slot);
+		for (EquipmentSlot slot : slots) {
+			EntityModel<T> headModel = this.getHatModel(entity, slot);
 
-
-			ItemStack headSlot = entity.getItemBySlot(slot);
-			if (headModel != null && headSlot.getItem() instanceof ICustomHat hatItem) {
-
+			ItemStack hatStack = entity.getItemBySlot(slot);
+			if (headModel != null && hatStack.getItem() instanceof ICustomHat hatItem) {
 				matrices.pushPose();
-				setupHat(matrices, slot, hatItem.getOffset());
+                this.setupHat(matrices, slot, hatItem.getOffset());
 
-				VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(vertexConsumers, RenderType.armorCutoutNoCull(this.getTexture(entity, slot)), false, headSlot.hasFoil());
-				headModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1F, 1F, 1F, 1F);
+				VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(vertexConsumers, RenderType.armorCutoutNoCull(this.getTexture(entity, slot)), false, hatStack.hasFoil());
+				if (hatItem instanceof DyeableArmorItem dyeableArmorItem) {
+					int j = dyeableArmorItem.getColor(hatStack);
+					float f = (float) (j >> 16 & 0xFF) / 255.0f;
+					float g = (float) (j >> 8 & 0xFF) / 255.0f;
+					float h = (float) (j & 0xFF) / 255.0f;
+					headModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, f, g, h, 1F);
+				} else {
+					headModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1F, 1F, 1F, 1F);
+				}
 				matrices.popPose();
 			}
 		}
 	}
 
 	public void setupHat(PoseStack matrices, EquipmentSlot slot, float extraYOffset) {
-		if(slot.equals(EquipmentSlot.HEAD)){
+		if (slot == EquipmentSlot.HEAD) {
 			((HeadedModel) this.getParentModel()).getHead().translateAndRotate(matrices);
 		}
 		matrices.scale(1F,1F,1F);
-		matrices.translate(0, yOffset + extraYOffset, 0);
+		matrices.translate(0, this.yOffset + extraYOffset, 0);
 	}
 
 
 	protected ResourceLocation getTexture(T entity, EquipmentSlot slot) {
-		ICustomHat customItem = getHat(entity, slot);
+		ICustomHat customItem = this.getHat(entity, slot);
 		if(customItem != null) return customItem.getTexture();
 		return super.getTextureLocation(entity);
 	}

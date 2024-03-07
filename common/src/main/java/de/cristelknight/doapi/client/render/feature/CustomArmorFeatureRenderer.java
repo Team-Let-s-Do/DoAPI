@@ -29,7 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 import java.util.Map;
 
-@Environment(value= EnvType.CLIENT)
+@Environment(EnvType.CLIENT)
 public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
 	public Map<FullCustomArmor, Pair<HumanoidModel<T>, HumanoidModel<T>>> MODELS = Maps.newHashMap();
@@ -50,17 +50,13 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 
 	private void renderArmorPiece(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, FullCustomArmor armor) {
 		ItemStack itemStack = livingEntity.getItemBySlot(equipmentSlot);
-		if (!(itemStack.getItem() instanceof ArmorItem armorItem)) {
-			return;
-		}
-		if (armorItem.getEquipmentSlot() != equipmentSlot) {
-			return;
-		}
-		if(armor == null) return;
+		if (!(itemStack.getItem() instanceof ArmorItem armorItem)) return;
+		if (armorItem.getEquipmentSlot() != equipmentSlot) return;
+		if (armor == null) return;
 
-		Pair<HumanoidModel<T>, HumanoidModel<T>> humanoidModels = MODELS.get(armor);
+		Pair<HumanoidModel<T>, HumanoidModel<T>> humanoidModels = this.MODELS.get(armor);
 
-		HumanoidModel<T> humanoidModel = usesInnerModel(equipmentSlot) ? humanoidModels.getSecond() : humanoidModels.getFirst();
+		HumanoidModel<T> humanoidModel = this.usesInnerModel(equipmentSlot) ? humanoidModels.getSecond() : humanoidModels.getFirst();
 
 
 		this.getParentModel().copyPropertiesTo(humanoidModel);
@@ -68,8 +64,8 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 		boolean bl = this.usesInnerModel(equipmentSlot);
 		boolean bl2 = itemStack.hasFoil();
 
-		if (armorItem instanceof DyeableArmorItem) {
-			int j = ((DyeableArmorItem)armorItem).getColor(itemStack);
+		if (armorItem instanceof DyeableArmorItem dyeableArmorItem) {
+			int j = dyeableArmorItem.getColor(itemStack);
 			float f = (float)(j >> 16 & 0xFF) / 255.0f;
 			float g = (float)(j >> 8 & 0xFF) / 255.0f;
 			float h = (float)(j & 0xFF) / 255.0f;
@@ -112,20 +108,20 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 	}
 
 	public void addModels(FullCustomArmor armor, HumanoidModel<T> outerModel, HumanoidModel<T> innerModel){
-		MODELS.put(armor, new Pair<>(outerModel, innerModel));
+        this.MODELS.put(armor, new Pair<>(outerModel, innerModel));
 
 	}
 
 	private FullCustomArmor getArmorModel(T entity, EquipmentSlot slot) {
-		ICustomArmor hatItem = getArmorItem(entity, slot);
+		ICustomArmor hatItem = this.getArmorItem(entity, slot);
 		if (hatItem instanceof Item item) {
-			if (MODELS.isEmpty()) {
+			if (this.MODELS.isEmpty()) {
 				List<DoApiAPI> apis = Util.getApis(DoApiAPI.class, "doapi", DoApiPlugin.class);
 				for (DoApiAPI api : apis) {
-					api.registerArmor(MODELS, modelLoader);
+					api.registerArmor(this.MODELS, this.modelLoader);
 				}
 			}
-			for (FullCustomArmor armor : MODELS.keySet()) {
+			for (FullCustomArmor armor : this.MODELS.keySet()) {
 				if (armor.set.contains(item)) return armor;
 			}
 		}
