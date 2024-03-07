@@ -1,13 +1,12 @@
 package de.cristelknight.doapi.client.render.feature;
 
-
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import de.cristelknight.doapi.Util;
 import de.cristelknight.doapi.api.DoApiAPI;
 import de.cristelknight.doapi.api.DoApiPlugin;
-import de.cristelknight.doapi.common.item.ICustomArmor;
+import de.cristelknight.doapi.common.item.ICustomHat;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -20,6 +19,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-	public  Map<ICustomArmor, EntityModel<T>> MODELS = Maps.newHashMap();
+	public Map<Item, EntityModel<T>> MODELS = Maps.newHashMap();
 
 	private final EntityModelSet modelLoader;
 	private final float yOffset;
@@ -43,22 +43,22 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 	}
 
 	public EntityModel<T> getHatModel(T entity, EquipmentSlot slot) {
-		ICustomArmor hatItem = getHat(entity, slot);
-		if(hatItem != null) {
-			if(MODELS.isEmpty()) {
+		ICustomHat hatItem = getHat(entity, slot);
+		if (hatItem instanceof Item item) {
+			if (MODELS.isEmpty()) {
 				List<DoApiAPI> apis = Util.getApis(DoApiAPI.class, "doapi", DoApiPlugin.class);
 				for(DoApiAPI api : apis){
 					api.registerHat(MODELS, this.modelLoader);
 				}
 			}
-			return MODELS.get(hatItem);
+			return MODELS.get(item);
 		}
 		return null;
 	}
 
-	public ICustomArmor getHat(T entity, EquipmentSlot slot) {
+	public ICustomHat getHat(T entity, EquipmentSlot slot) {
 		ItemStack headSlot = entity.getItemBySlot(slot);
-		if (headSlot.getItem() instanceof ICustomArmor hat && !headSlot.isEmpty())
+		if (headSlot.getItem() instanceof ICustomHat hat && !headSlot.isEmpty())
 			return hat;
 		return null;
 	}
@@ -73,10 +73,10 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 
 
 			ItemStack headSlot = entity.getItemBySlot(slot);
-			if(headModel != null && headSlot.getItem() instanceof ICustomArmor armorItem){
+			if (headModel != null && headSlot.getItem() instanceof ICustomHat hatItem) {
 
 				matrices.pushPose();
-				setupHat(matrices, slot, armorItem.getOffset());
+				setupHat(matrices, slot, hatItem.getOffset());
 
 				VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(vertexConsumers, RenderType.armorCutoutNoCull(this.getTexture(entity, slot)), false, headSlot.hasFoil());
 				headModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1F, 1F, 1F, 1F);
@@ -95,7 +95,7 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 
 
 	protected ResourceLocation getTexture(T entity, EquipmentSlot slot) {
-		ICustomArmor customItem = getHat(entity, slot);
+		ICustomHat customItem = getHat(entity, slot);
 		if(customItem != null) return customItem.getTexture();
 		return super.getTextureLocation(entity);
 	}

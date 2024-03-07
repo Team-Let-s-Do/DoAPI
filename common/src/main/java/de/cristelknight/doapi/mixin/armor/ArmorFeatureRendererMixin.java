@@ -2,6 +2,7 @@ package de.cristelknight.doapi.mixin.armor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.cristelknight.doapi.common.item.ICustomArmor;
+import de.cristelknight.doapi.common.item.ICustomHat;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -25,7 +26,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
     @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
     private void checkIfCorrectArmor(PoseStack matrices, MultiBufferSource vertexConsumers, T entity, EquipmentSlot armorSlot, int light, A model, CallbackInfo ci) {
         ItemStack itemStack = entity.getItemBySlot(armorSlot);
-        if (itemStack.getItem() instanceof ICustomArmor)
+        if (itemStack.getItem() instanceof ICustomArmor || itemStack.getItem() instanceof ICustomHat)
             ci.cancel();
     }
 }
