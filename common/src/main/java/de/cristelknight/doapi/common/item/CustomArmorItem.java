@@ -4,8 +4,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 
-public abstract class CustomArmorItem extends ArmorItem {
-    public CustomArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties settings) {
-        super(material, slot, settings);
+@Deprecated
+public abstract class CustomArmorItem extends ArmorItem implements ICustomArmor {
+    protected CustomArmorItem(ArmorMaterial armorMaterial, EquipmentSlot slot, Properties properties) {
+        super(armorMaterial, slot, properties);
     }
 }

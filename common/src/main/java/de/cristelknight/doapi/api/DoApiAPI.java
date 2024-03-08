@@ -1,9 +1,7 @@
 package de.cristelknight.doapi.api;
 
-import com.mojang.datafixers.util.Pair;
-import de.cristelknight.doapi.client.render.feature.FullCustomArmor;
+import de.cristelknight.doapi.client.render.feature.CustomArmorManager;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -18,6 +16,6 @@ public interface DoApiAPI {
 
     <T extends LivingEntity> void registerHat(Map<Item, EntityModel<T>> models, EntityModelSet modelLoader);
 
-    <T extends LivingEntity> void registerArmor(Map<FullCustomArmor, Pair<HumanoidModel<T>, HumanoidModel<T>>> models, EntityModelSet modelLoader);
+    <T extends LivingEntity> void registerArmor(CustomArmorManager<T> armors, EntityModelSet modelLoader);
 
 }
