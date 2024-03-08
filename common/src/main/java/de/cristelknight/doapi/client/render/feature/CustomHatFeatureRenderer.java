@@ -26,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
 	public final Map<Item, EntityModel<T>> MODELS = Maps.newHashMap();
@@ -44,15 +45,15 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 	}
 
 	public EntityModel<T> getHatModel(T entity, EquipmentSlot slot) {
-		Item hatItem = getHatItem(entity, slot);
+		Item hatItem = this.getHatItem(entity, slot);
 		if(hatItem != null) {
-			if(MODELS.isEmpty()) {
+			if(this.MODELS.isEmpty()) {
 				List<DoApiAPI> apis = Util.getApis(DoApiAPI.class, "doapi", DoApiPlugin.class);
 				for(DoApiAPI api : apis){
-					api.registerHat(MODELS, this.modelLoader);
+					api.registerHat(this.MODELS, this.modelLoader);
 				}
 			}
-			return MODELS.get(hatItem);
+			return this.MODELS.get(hatItem);
 		}
 		return null;
 	}
@@ -70,14 +71,14 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 	public void render(PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 		EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 		for(EquipmentSlot slot : slots){
-			EntityModel<T> headModel = getHatModel(entity, slot);
+			EntityModel<T> headModel = this.getHatModel(entity, slot);
 
 
 			ItemStack headSlot = entity.getItemBySlot(slot);
 			if(headModel != null && headSlot.getItem() instanceof CustomHatItem armorItem){
 
 				matrices.pushPose();
-				setupHat(matrices, slot, armorItem.getOffset());
+                this.setupHat(matrices, slot, armorItem.getOffset());
 
 				VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(vertexConsumers, RenderType.armorCutoutNoCull(this.getTexture(entity, slot)), false, headSlot.hasFoil());
 				headModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1F, 1F, 1F, 1F);
@@ -87,16 +88,16 @@ public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityMo
 	}
 
 	public void setupHat(PoseStack matrices, EquipmentSlot slot, float extraYOffset) {
-		if(slot.equals(EquipmentSlot.HEAD)){
+		if(slot == EquipmentSlot.HEAD){
 			((HeadedModel) this.getParentModel()).getHead().translateAndRotate(matrices);
 		}
 		matrices.scale(1F,1F,1F);
-		matrices.translate(0, yOffset + extraYOffset, 0);
+		matrices.translate(0, this.yOffset + extraYOffset, 0);
 	}
 
 
 	protected ResourceLocation getTexture(T entity, EquipmentSlot slot) {
-		CustomHatItem customItem = getHatItem(entity, slot);
+		CustomHatItem customItem = this.getHatItem(entity, slot);
 		if(customItem != null) return customItem.getTexture();
 		return super.getTextureLocation(entity);
 	}
