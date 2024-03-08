@@ -5,6 +5,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 
+@Deprecated
 public class BetterCustomHatItem extends CustomHatItem {
     public ResourceLocation texture;
     public float offset;
@@ -17,12 +18,12 @@ public class BetterCustomHatItem extends CustomHatItem {
 
     @Override
     public ResourceLocation getTexture() {
-        return texture;
+        return this.texture;
     }
 
     @Override
     public Float getOffset() {
-        return offset;
+        return this.offset;
     }
 
 }

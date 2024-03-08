@@ -26,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 public class CustomHatFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
 	public Map<Item, EntityModel<T>> MODELS = Maps.newHashMap();
