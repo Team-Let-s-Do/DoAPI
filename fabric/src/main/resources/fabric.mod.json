@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "doapi",
   "version": "${version}",
-  "name": "Lets Do Api",
+  "name": "[Let's Do] API",
   "description": "This is an API for the Let's do mods",
   "authors": [
     "Cristelknight",

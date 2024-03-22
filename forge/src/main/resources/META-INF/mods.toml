@@ -5,7 +5,7 @@ license = "LGPL-3.0-only"
 [[mods]]
 modId = "doapi"
 version = "${version}"
-displayName = "Lets Do Api"
+displayName = "[Let's Do] API"
 authors = "Cristelknight, BaumeisterJO"
 logoFile = "pack.png"
 description = '''
