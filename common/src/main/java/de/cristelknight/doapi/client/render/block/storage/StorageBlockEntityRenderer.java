@@ -25,7 +25,10 @@ public class StorageBlockEntityRenderer implements BlockEntityRenderer<StorageBl
         return name;
     }
 
+
+
     public static StorageTypeRenderer getRendererForId(ResourceLocation name){
+
         return STORAGE_TYPES.get(name);
     }
 
@@ -44,10 +47,14 @@ public class StorageBlockEntityRenderer implements BlockEntityRenderer<StorageBl
             matrices.pushPose();
             applyBlockAngle(matrices, state, 180);
             ResourceLocation type = sB.type();
-            getRendererForId(type).render(entity, matrices, vertexConsumers, itemStacks);
+            StorageTypeRenderer renderer = getRendererForId(type);
+            if(renderer != null) {
+                renderer.render(entity, matrices, vertexConsumers, itemStacks);
+            }
             matrices.popPose();
         }
     }
+
 
 
     public static void applyBlockAngle(PoseStack matrices, BlockState state, float angleOffset) {
