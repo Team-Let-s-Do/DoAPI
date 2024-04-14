@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +29,7 @@ import java.util.Optional;
 
 public abstract class StorageBlock extends FacingBlock implements EntityBlock {
 
-    public static SoundEvent event = SoundEvents.WOOD_PLACE;
+    public static final SoundEvent event = SoundEvents.WOOD_PLACE;
 
     public StorageBlock(BlockBehaviour.Properties settings) {
         super(settings);

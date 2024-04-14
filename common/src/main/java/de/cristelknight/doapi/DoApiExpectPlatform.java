@@ -5,10 +5,8 @@ import com.mojang.datafixers.util.Pair;
 import de.cristelknight.doapi.terraform.boat.TerraformBoatType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 

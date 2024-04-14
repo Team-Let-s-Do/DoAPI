@@ -3,7 +3,6 @@ package de.cristelknight.doapi.client.recipebook.screen.widgets;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.cristelknight.doapi.DoApiRL;
 import de.cristelknight.doapi.config.builtin.RBConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
