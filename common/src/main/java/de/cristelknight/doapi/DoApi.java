@@ -17,8 +17,4 @@ public class DoApi {
         DoApiRecipes.init();
     }
 
-    public static void commonTerraformInit() {
-        TerraformBoatItemHelper.registerDispenserBehaviours();
-    }
-
 }

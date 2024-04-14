@@ -2,6 +2,7 @@ package de.cristelknight.doapi.forge;
 
 import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.forge.common.packs.RepositorySourceMaker;
+import de.cristelknight.doapi.terraform.boat.item.TerraformBoatItemHelper;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.event.AddPackFindersEvent;
@@ -22,7 +23,7 @@ public class DoApiForge {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        //DoApi.commonInit();
+        event.enqueueWork(TerraformBoatItemHelper::registerDispenserBehaviours);
     }
 
     private void injectPackRepositories(AddPackFindersEvent event) {
