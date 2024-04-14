@@ -1,8 +1,8 @@
 package de.cristelknight.doapi.forge.terraform;
 
-import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.client.terraform.TerraformBoatClientHelper;
 import de.cristelknight.doapi.forge.terraform.boat.impl.TerraformBoatInitializer;
+import de.cristelknight.doapi.terraform.boat.item.TerraformBoatItemHelper;
 import dev.architectury.platform.Platform;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -29,6 +29,7 @@ public class TerraformApiForge {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        DoApi.commonTerraformInit();
+        event.enqueueWork(TerraformBoatItemHelper::registerDispenserBehaviours);
     }
+
 }

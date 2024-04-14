@@ -2,13 +2,11 @@ package de.cristelknight.doapi.forge;
 
 import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.forge.common.packs.RepositorySourceMaker;
-import de.cristelknight.doapi.terraform.boat.item.TerraformBoatItemHelper;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(DoApi.MOD_ID)
@@ -18,12 +16,7 @@ public class DoApiForge {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         EventBuses.registerModEventBus(DoApi.MOD_ID, modEventBus);
         DoApi.init();
-        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::injectPackRepositories);
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(TerraformBoatItemHelper::registerDispenserBehaviours);
     }
 
     private void injectPackRepositories(AddPackFindersEvent event) {

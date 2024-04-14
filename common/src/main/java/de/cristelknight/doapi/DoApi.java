@@ -1,7 +1,9 @@
 package de.cristelknight.doapi;
 
-import de.cristelknight.doapi.common.registry.*;
-import de.cristelknight.doapi.terraform.boat.item.TerraformBoatItemHelper;
+import de.cristelknight.doapi.common.registry.DoApiBlockEntityTypes;
+import de.cristelknight.doapi.common.registry.DoApiBlocks;
+import de.cristelknight.doapi.common.registry.DoApiEntityTypes;
+import de.cristelknight.doapi.common.registry.DoApiRecipes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
