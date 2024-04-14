@@ -20,12 +20,6 @@ public class TerraformApiForge {
 
         TerraformBoatInitializer.init();
         modEventBus.addListener(this::commonSetup);
-
-
-        if(Platform.getEnv().isClient()){
-            TerraformBoatClientHelper.preClientInit();
-        }
-
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
