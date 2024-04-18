@@ -14,6 +14,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class StorageBlockEntity extends BlockEntity {
 
@@ -44,14 +45,18 @@ public class StorageBlockEntity extends BlockEntity {
 
     @Override
     public void setChanged() {
-        if(level != null && !level.isClientSide()) {
-            Packet<ClientGamePacketListener> updatePacket = getUpdatePacket();
-            for (ServerPlayer player : Util.tracking((ServerLevel) level, getBlockPos())) {
-                player.connection.send(updatePacket);
+        if (level instanceof ServerLevel serverLevel) {
+            if (!level.isClientSide()) {
+                Packet<ClientGamePacketListener> updatePacket = getUpdatePacket();
+                for (ServerPlayer player : Util.tracking(serverLevel, getBlockPos())) {
+                    player.connection.send(updatePacket);
+                }
             }
         }
         super.setChanged();
+        
     }
+
 
     @Override
     public void load(CompoundTag nbt) {
@@ -76,7 +81,7 @@ public class StorageBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public @NotNull CompoundTag getUpdateTag() {
         return this.saveWithoutMetadata();
     }
 

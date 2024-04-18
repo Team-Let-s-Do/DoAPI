@@ -4,7 +4,6 @@ import de.cristelknight.doapi.Util;
 import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -19,14 +18,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+@SuppressWarnings("deprecation, unused")
 public abstract class StorageBlock extends FacingBlock implements EntityBlock {
 
     public static final SoundEvent event = SoundEvents.WOOD_PLACE;
@@ -36,35 +38,35 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof StorageBlockEntity shelfBlockEntity) {
-            Optional<Tuple<Float, Float>> optional = Util.getRelativeHitCoordinatesForBlockFace(hit, state.getValue(FACING), unAllowedDirections());
-            if (optional.isEmpty()) {
-                return InteractionResult.PASS;
-            } else {
-                Tuple<Float, Float> ff = optional.get();
-                int i = getSection(ff.getA(), ff.getB());
-                if (i == Integer.MIN_VALUE) {
-                    return InteractionResult.PASS;
-                }
-                if (!shelfBlockEntity.getInventory().get(i).isEmpty()) {
-                    remove(world, pos, player, shelfBlockEntity, i);
-                    return InteractionResult.sidedSuccess(world.isClientSide);
-                } else {
-                    ItemStack stack = player.getItemInHand(hand);
-                    if (!stack.isEmpty() && canInsertStack(stack)) {
-                        add(world, pos, player, shelfBlockEntity, stack, i);
-                        return InteractionResult.sidedSuccess(world.isClientSide);
-                    } else {
-                        return InteractionResult.CONSUME;
-                    }
-                }
-            }
-        } else {
+        if (!(blockEntity instanceof StorageBlockEntity shelfBlockEntity)) {
             return InteractionResult.PASS;
         }
+
+        Optional<Tuple<Float, Float>> optional = Util.getRelativeHitCoordinatesForBlockFace(hit, state.getValue(FACING), unAllowedDirections());
+        if (optional.isEmpty()) {
+            return InteractionResult.PASS;
+        }
+        Tuple<Float, Float> ff = optional.get();
+        int i = getSection(ff.getA(), ff.getB());
+        if (i == Integer.MIN_VALUE) {
+            return InteractionResult.PASS;
+        }
+        if (!shelfBlockEntity.getInventory().get(i).isEmpty()) {
+            remove(world, pos, player, shelfBlockEntity, i);
+            return InteractionResult.sidedSuccess(world.isClientSide);
+        } else {
+            ItemStack stack = player.getItemInHand(hand);
+            if (!stack.isEmpty() && canInsertStack(stack)) {
+                add(world, pos, player, shelfBlockEntity, stack, i);
+                return InteractionResult.sidedSuccess(world.isClientSide);
+            } else {
+                return InteractionResult.CONSUME;
+            }
+        }
     }
+
 
     public void add(Level level, BlockPos blockPos, Player player, StorageBlockEntity shelfBlockEntity, ItemStack itemStack, int i) {
         if (!level.isClientSide) {
@@ -77,6 +79,7 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, blockPos);
         }
     }
+
     public void remove(Level level, BlockPos blockPos, Player player, StorageBlockEntity shelfBlockEntity, int i) {
         if (!level.isClientSide) {
             ItemStack itemStack = shelfBlockEntity.removeStack(i);
@@ -112,13 +115,13 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     public abstract int size();
 
-    public abstract ResourceLocation type();
+    public abstract BlockEntityType<StorageBlockEntity> type();
 
     public abstract Direction[] unAllowedDirections();
 
@@ -129,5 +132,6 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new StorageBlockEntity(pos, state, size());
     }
+
     public abstract int getSection(Float x, Float y);
 }
