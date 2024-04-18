@@ -7,12 +7,10 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -46,18 +44,21 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 @SuppressWarnings({"unused", "deprecation"})
 public class GeneralUtil {
+	private static final String BLOCK_POS_KEY = "block_pos";
+	private static final String BLOCK_POSES_KEY = "block_poses";
+
 	public static boolean isFullAndSolid(LevelReader levelReader, BlockPos blockPos){
 		return isFaceFull(levelReader, blockPos) && isSolid(levelReader, blockPos);
 	}
@@ -331,6 +332,48 @@ public class GeneralUtil {
 			itemEntity.setDefaultPickUpDelay();
 			level.addFreshEntity(itemEntity);
 		}
+	}
+
+	public static void putBlockPos(CompoundTag compoundTag, BlockPos blockPos) {
+		if (blockPos == null)
+			return;
+		int[] positions = new int[3];
+		positions[0] = blockPos.getX();
+		positions[1] = blockPos.getY();
+		positions[2] = blockPos.getZ();
+		compoundTag.putIntArray(BLOCK_POS_KEY, positions);
+	}
+
+	public static void putBlockPoses(CompoundTag compoundTag, Collection<BlockPos> blockPoses) {
+		if (blockPoses == null || blockPoses.isEmpty()) return;
+		int[] positions = new int[blockPoses.size() * 3];
+		int pos = 0;
+		for (BlockPos blockPos : blockPoses) {
+			positions[pos * 3] = blockPos.getX();
+			positions[pos * 3 + 1] = blockPos.getY();
+			positions[pos * 3 + 2] = blockPos.getZ();
+			pos++;
+		}
+		compoundTag.putIntArray(BLOCK_POSES_KEY, positions);
+	}
+
+	@Nullable
+	public static BlockPos readBlockPos(CompoundTag compoundTag) {
+		if (!compoundTag.contains(BLOCK_POS_KEY))
+			return null;
+		int[] positions = compoundTag.getIntArray(BLOCK_POS_KEY);
+		return new BlockPos(positions[0], positions[1], positions[2]);
+	}
+
+
+	public static Set<BlockPos> readBlockPoses(CompoundTag compoundTag) {
+		Set<BlockPos> blockSet = new HashSet<>();
+		if (!compoundTag.contains(BLOCK_POSES_KEY))
+			return blockSet;
+		int[] positions = compoundTag.getIntArray(BLOCK_POSES_KEY);
+		for (int pos = 0; pos < positions.length / 3; pos++)
+			blockSet.add(new BlockPos(positions[pos * 3], positions[pos * 3 + 1], positions[pos * 3 + 2]));
+		return blockSet;
 	}
 
 }
