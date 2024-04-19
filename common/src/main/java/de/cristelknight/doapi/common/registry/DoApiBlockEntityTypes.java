@@ -32,9 +32,6 @@ public class DoApiBlockEntityTypes {
     public static final RegistrySupplier<BlockEntityType<SideBoardBlockEntity>> SIDEBOARD_BLOCK_ENTITY = create("sideboard", () -> BlockEntityType.Builder.of(
             SideBoardBlockEntity::new, getBlocksForEntity()).build(null));
 
-    public static final RegistrySupplier<BlockEntityType<FlowerPotBigBlockEntity>> FLOWER_POT_BIG_ENTITY = create("flower_pot_big", () -> BlockEntityType.Builder.of(
-            FlowerPotBigBlockEntity::new, getBlocksForEntity()).build(null));
-
     private static Block[] getBlocksForEntity(){
         Set<Block> set = new HashSet<>();
         List<DoApiAPI> apis = Util.getApis(DoApiAPI.class, "doapi", DoApiPlugin.class);

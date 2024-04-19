@@ -4,6 +4,7 @@ import de.cristelknight.doapi.Util;
 import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -121,7 +121,7 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
 
     public abstract int size();
 
-    public abstract BlockEntityType<StorageBlockEntity> type();
+    public abstract ResourceLocation type();
 
     public abstract Direction[] unAllowedDirections();
 
