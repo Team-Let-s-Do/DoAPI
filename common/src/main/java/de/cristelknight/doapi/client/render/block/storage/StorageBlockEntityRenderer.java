@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public class StorageBlockEntityRenderer implements BlockEntityRenderer<StorageBl
 
 
 
-    public static StorageTypeRenderer getRendererForId(BlockEntityType<StorageBlockEntity> name){
+    public static StorageTypeRenderer getRendererForId(ResourceLocation name){
 
         return STORAGE_TYPES.get(name);
     }
@@ -47,7 +46,7 @@ public class StorageBlockEntityRenderer implements BlockEntityRenderer<StorageBl
             NonNullList<ItemStack> itemStacks = entity.getInventory();
             matrices.pushPose();
             applyBlockAngle(matrices, state, 180);
-            BlockEntityType<StorageBlockEntity> type = sB.type();
+            ResourceLocation type = sB.type();
             StorageTypeRenderer renderer = getRendererForId(type);
             if(renderer != null) {
                 renderer.render(entity, matrices, vertexConsumers, itemStacks);
