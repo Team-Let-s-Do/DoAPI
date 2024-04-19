@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("all")
 public class StackableEatableBlock extends Block {
-    private static final IntegerProperty STACK_PROPERTY = IntegerProperty.create("stack", 1, 4);
+    private static final IntegerProperty STACK_PROPERTY = IntegerProperty.create("stack", 1, 8);
     private static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private final int maxStack;
     private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 10, 14);
