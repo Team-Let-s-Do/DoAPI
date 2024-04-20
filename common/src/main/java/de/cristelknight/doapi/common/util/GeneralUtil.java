@@ -1,6 +1,7 @@
 package de.cristelknight.doapi.common.util;
 
 import com.google.gson.JsonArray;
+import com.mojang.datafixers.util.Pair;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import io.netty.buffer.Unpooled;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -25,10 +26,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
@@ -376,4 +379,9 @@ public class GeneralUtil {
 		return blockSet;
 	}
 
+	public static class FoodComponent extends FoodProperties {
+		public FoodComponent(List<Pair<MobEffectInstance, Float>> statusEffects) {
+			super(1, 0, false, true, false, statusEffects);
+		}
+	}
 }
