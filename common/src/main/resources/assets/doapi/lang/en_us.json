@@ -1,5 +1,18 @@
 {
   "block.doapi.standard": "Completionist Banner",
   "block.doapi.wall_standard": "Completionist Wall Banner",
+  "sound.doapi.cart_moving": "Cart Moving",
+  "sound.doapi.cooking_pot_boiling": "Cooking Pot Boiling",
+  "sound.doapi.cooking_pot_hit": "KLANG!",
+  "sound.doapi.crafting_bowl_stirring": "Crafting Bowl Stirring",
+  "sound.doapi.mincer_cranking": "Mincer Cranking",
+  "sound.doapi.roaster_cooking": "Roaster Sizzling",
+  "sound.doapi.stove_crackling": "Stove Crackling",
+  "sound.doapi.water_sprinkler": "Sprinkler Spritzing",
+  "sound.doapi.cabinet_close": "Cabinet closing",
+  "sound.doapi.cabinet_open": "Cabinet opening",
+  "sound.doapi.drawer_close": "Drawer closing",
+  "sound.doapi.drawer_open": "Drawer opening",
+  "sound.doapi.cake_cut": "Cake cut",
   "pack.source.builtinMod": "built-in: %s"
 }

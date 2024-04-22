@@ -1,9 +1,6 @@
 package de.cristelknight.doapi;
 
-import de.cristelknight.doapi.common.registry.DoApiBlockEntityTypes;
-import de.cristelknight.doapi.common.registry.DoApiBlocks;
-import de.cristelknight.doapi.common.registry.DoApiEntityTypes;
-import de.cristelknight.doapi.common.registry.DoApiRecipes;
+import de.cristelknight.doapi.common.registry.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,5 +14,6 @@ public class DoApi {
         DoApiEntityTypes.init();
         DoApiBlockEntityTypes.init();
         DoApiRecipes.init();
+        DoApiSoundEventRegistry.init();
     }
 }
