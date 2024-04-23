@@ -1,7 +1,7 @@
 package de.cristelknight.doapi.forge.terraform;
 
-import de.cristelknight.doapi.DoApi;
 import de.cristelknight.doapi.forge.terraform.boat.impl.TerraformBoatInitializer;
+import de.cristelknight.doapi.terraform.boat.item.TerraformBoatItemHelper;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -15,13 +15,12 @@ public class TerraformApiForge {
     public TerraformApiForge() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         EventBuses.registerModEventBus(TERRAFORM_MOD_ID, modEventBus);
-        //DoApi.init();
 
         TerraformBoatInitializer.init();
         modEventBus.addListener(this::commonSetup);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        DoApi.commonTerraformInit();
+        event.enqueueWork(TerraformBoatItemHelper::registerDispenserBehaviours);
     }
 }

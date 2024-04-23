@@ -11,15 +11,18 @@ import net.minecraftforge.registries.RegisterEvent;
 @Mod.EventBusSubscriber(modid = DoApi.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DoApiClientEvents {
 
-    @SubscribeEvent
-    public static void beforeClientSetup(RegisterEvent event) {
-        DoApiClient.preClientInit();
-    }
-
+    private static boolean initialized = false;
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         DoApiClient.onClientInit();
     }
 
+    @SubscribeEvent
+    public static void preClientSetup(RegisterEvent event) {
+        if(!initialized){
+            DoApiClient.preClientInit();
+            initialized = true;
+        }
+    }
 
 }

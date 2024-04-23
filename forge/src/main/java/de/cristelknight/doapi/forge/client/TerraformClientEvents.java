@@ -12,15 +12,17 @@ import net.minecraftforge.registries.RegisterEvent;
 @Mod.EventBusSubscriber(modid = TerraformApiForge.TERRAFORM_MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TerraformClientEvents {
 
-    @SubscribeEvent
-    public static void beforeClientSetup(RegisterEvent event) {
-        TerraformBoatClientHelper.preClientInit();
-    }
-
-
+    private static boolean initialized = false;
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
         TerraformBoatClientInitializer.init(event);
     }
 
+    @SubscribeEvent
+    public static void preClientSetup(RegisterEvent event) {
+        if(!initialized){
+            TerraformBoatClientHelper.preClientInit();
+            initialized = true;
+        }
+    }
 }

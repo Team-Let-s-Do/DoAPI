@@ -16,8 +16,4 @@ public class DoApi {
         DoApiBlockEntityTypes.init();
     }
 
-    public static void commonTerraformInit() {
-        TerraformBoatItemHelper.registerDispenserBehaviours();
-    }
-
 }
