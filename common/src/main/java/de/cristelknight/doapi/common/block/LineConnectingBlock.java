@@ -2,6 +2,9 @@ package de.cristelknight.doapi.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,6 +29,9 @@ public class LineConnectingBlock extends Block {
     public LineConnectingBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(((this.stateDefinition.any().setValue(FACING, Direction.NORTH)).setValue(TYPE, LineConnectingType.NONE)));
+    }
+    public @NotNull InteractionResult use(BlockState arg, Level arg2, BlockPos arg3, Player arg4, InteractionHand arg5, BlockHitResult arg6) {
+        return InteractionResult.PASS;
     }
 
     @Nullable

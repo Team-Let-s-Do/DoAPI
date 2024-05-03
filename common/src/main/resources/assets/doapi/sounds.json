@@ -76,5 +76,94 @@
     "sounds": [
       "doapi:cake_cut"
     ]
+  },
+  "typewriter": {
+    "subtitle": "sound.doapi.typewriter",
+    "sounds": [
+      "doapi:typewriter"
+    ]
+  },
+  "dinner_bell": {
+    "subtitle": "sound.doapi.dinner_bell",
+    "sounds": [
+      "doapi:dinner_bell"
+    ]
+  },
+  "breath": {
+    "subtitle": "doapi.sound.breath",
+    "sounds": [
+      "doapi:breath"
+    ]
+  },
+  "beer_elemental_ambient": {
+    "subtitle": "doapi.sound.beer_elemental_ambient",
+    "sounds": [
+      "doapi:beer_elemental_ambient1",
+      "doapi:beer_elemental_ambient2",
+      "doapi:beer_elemental_ambient3"
+    ]
+  },
+  "beer_elemental_hurt": {
+    "subtitle": "doapi.sound.beer_elemental_hurt",
+    "sounds": [
+      "doapi:beer_elemental_hurt1",
+      "doapi:beer_elemental_hurt2",
+      "doapi:beer_elemental_hurt3"
+    ]
+  },
+  "beer_elemental_death": {
+    "subtitle": "doapi.sound.beer_elemental_death",
+    "sounds": [
+      "doapi:beer_elemental_death1",
+      "doapi:beer_elemental_death2",
+      "doapi:beer_elemental_death3"
+    ]
+  },
+  "beer_elemental_attack": {
+    "subtitle": "doapi.sound.beer_elemental_attack",
+    "sounds": [
+      "doapi:beer_elemental_attack1",
+      "doapi:beer_elemental_attack2",
+      "doapi:beer_elemental_attack3",
+      "doapi:beer_elemental_attack4"
+    ]
+  },
+  "brewstation_timer": {
+    "subtitle": "doapi.sound.brewstation_timer",
+    "sounds": [
+      "doapi:brewstation_timer_loop"
+    ]
+  },
+  "brewstation_whistle": {
+    "subtitle": "doapi.sound.brewstation_whistle",
+    "sounds": [
+      "doapi:brewstation_whistle1",
+      "doapi:brewstation_whistle2",
+      "doapi:brewstation_whistle3"
+    ]
+  },
+  "brewstation_ambient": {
+    "subtitle": "doapi.sound.brewstation_ambient",
+    "sounds": [
+      "doapi:brewstation_ambient"
+    ]
+  },
+  "brewstation_kettle": {
+    "subtitle": "doapi.sound.brewstation_kettle",
+    "sounds": [
+      "doapi:brewstation_kettle"
+    ]
+  },
+  "brewstation_oven": {
+    "subtitle": "doapi.sound.brewstation_oven",
+    "sounds": [
+      "doapi:brewstation_oven"
+    ]
+  },
+  "brewstation_process_failed": {
+    "subtitle": "doapi.sound.brewstation_process_failed",
+    "sounds": [
+      "doapi:brewstation_process_failed"
+    ]
   }
 }

@@ -25,6 +25,20 @@ public class DoApiSoundEventRegistry {
     public static final RegistrySupplier<SoundEvent> MINCER_CRANKING = create("mincer_cranking");
     public static final RegistrySupplier<SoundEvent> WATER_SPRINKLER = create("water_sprinkler");
     public static final RegistrySupplier<SoundEvent> CART_MOVING = create("cart_moving");
+    public static final RegistrySupplier<SoundEvent> DINNER_BELL = create("dinner_bell");
+    public static final RegistrySupplier<SoundEvent> TYPEWRITER = create("typewriter");
+    public static final RegistrySupplier<SoundEvent> BREATH = create("breath");
+    public static final RegistrySupplier<SoundEvent> BEER_ELEMENTAL_AMBIENT = create("beer_elemental_ambient");
+    public static final RegistrySupplier<SoundEvent> BEER_ELEMENTAL_HURT = create("beer_elemental_hurt");
+    public static final RegistrySupplier<SoundEvent> BEER_ELEMENTAL_DEATH = create("beer_elemental_death");
+    public static final RegistrySupplier<SoundEvent> BEER_ELEMENTAL_ATTACK = create("beer_elemental_attack");
+    public static final RegistrySupplier<SoundEvent> BREWSTATION_AMBIENT = create("brewstation_ambient");
+    public static final RegistrySupplier<SoundEvent> BREWSTATION_KETTLE = create("brewstation_kettle");
+    public static final RegistrySupplier<SoundEvent> BREWSTATION_OVEN = create("brewstation_oven");
+    public static final RegistrySupplier<SoundEvent> BREWSTATION_PROCESS_FAILED = create("brewstation_process_failed");
+    public static final RegistrySupplier<SoundEvent> BREWSTATION_TIMER_LOOP = create("brewstation_timer");
+    public static final RegistrySupplier<SoundEvent> BREWSTATION_WHISTLE = create("brewstation_whistle");
+
 
 
     private static RegistrySupplier<SoundEvent> create(String name) {
