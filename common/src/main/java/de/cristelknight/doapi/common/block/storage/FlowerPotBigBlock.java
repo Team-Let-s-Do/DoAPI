@@ -61,7 +61,7 @@ public class FlowerPotBigBlock extends StorageBlock {
 
 	@Override
 	public int getSection(Float x, Float y) {
-		return 1;
+		return 0;
 	}
 
 	@Override

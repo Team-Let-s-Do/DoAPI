@@ -7,6 +7,8 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -89,6 +91,16 @@ public class FlowerBoxBlock extends StorageBlock {
 	public int getSection(Float x, Float y) {
 		if(x < 0.5) return 0;
 		return 1;
+	}
+
+	@Override
+	public SoundEvent getAddSound(Level level, BlockPos blockPos, Player player, int i) {
+		return SoundEvents.GRASS_PLACE;
+	}
+
+	@Override
+	public SoundEvent getRemoveSound(Level level, BlockPos blockPos, Player player, int i) {
+		return SoundEvents.GRASS_BREAK;
 	}
 }
 
