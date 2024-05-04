@@ -6,30 +6,36 @@ import java.util.HashMap;
 
 public class StringPairs {
 
-    private HashMap<String, String> ids;
+    private final HashMap<String, String> paths;
+
+
 
     protected StringPairs() {
-        ids = new HashMap<>();
+        paths = new HashMap<>();
     }
 
-    public boolean containsOldID(String oldID){
-        return ids.containsKey(oldID);
+    public boolean containsOldPath(String oldPath){
+        return paths.containsKey(oldPath);
     }
 
-    public void addPair(String oldID, String newID){
-        if(oldID == null || newID == null){
-            DoApi.LOGGER.error("ID: " + oldID + " or ID: " + newID + " is null!");
+    public void addPair(String oldPath, String newPath){
+        if(DataFixers.isFreezed()){
+            DoApi.LOGGER.error("Data fixer registry is already freezed. Cannot add oldPath " + oldPath + " and newPath " + newPath + ".");
             return;
         }
-        if(ids.containsKey(oldID)){
-            DoApi.LOGGER.error("ID: " + oldID + "is already added to a datafixer.");
+        if(oldPath == null || newPath == null){
+            DoApi.LOGGER.error("Path: " + oldPath + " or Path: " + newPath + " is null!");
             return;
         }
-        ids.put(oldID, newID);
+        if(paths.containsKey(oldPath)){
+            DoApi.LOGGER.error("Path: " + oldPath + "is already added to a datafixer.");
+            return;
+        }
+        paths.put(oldPath, newPath);
     }
 
-    public String getNewId(String oldID){
-        return ids.get(oldID);
+    public String getNewPath(String oldPath){
+        return paths.get(oldPath);
     }
 
 }

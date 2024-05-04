@@ -18,7 +18,8 @@ public class DataFixerMixin {
 
     @Inject(method = "<init>(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/resources/ResourceLocation$Dummy;)V", at = @At("TAIL"))
     private void updateRL(String namespace, String path, ResourceLocation.Dummy dummy, CallbackInfo ci){
-        StringPairs pairs = DataFixers.getDataFixerForMod(namespace);
-        if(pairs.containsOldID(namespace)) this.path = pairs.getNewId(path);
+        if(!DataFixers.isFreezed()) DataFixers.freeze();
+        StringPairs pairs = DataFixers.get(namespace);
+        if(pairs != null && pairs.containsOldPath(namespace)) this.path = pairs.getNewPath(path);
     }
 }
