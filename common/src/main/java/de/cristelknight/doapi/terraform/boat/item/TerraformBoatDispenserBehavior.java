@@ -1,6 +1,6 @@
 package de.cristelknight.doapi.terraform.boat.item;
 
-import de.cristelknight.doapi.DoApiExpectPlatform;
+import de.cristelknight.doapi.DoApiCommonEP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -44,7 +44,7 @@ public class TerraformBoatDispenserBehavior extends DefaultDispenseItemBehavior 
 			return FALLBACK_BEHAVIOR.dispense(pointer, stack);
 		}
 
-		Boat boatEntity = DoApiExpectPlatform.createBoat(this.boatTypeName, world, x, y, z, this.chest);
+		Boat boatEntity = DoApiCommonEP.createBoat(this.boatTypeName, world, x, y, z, this.chest);
 
 		boatEntity.setYRot(facing.toYRot());
 

@@ -3,7 +3,7 @@ package de.cristelknight.doapi.terraform.boat.item;
 import java.util.List;
 import java.util.function.Predicate;
 
-import de.cristelknight.doapi.DoApiExpectPlatform;
+import de.cristelknight.doapi.DoApiCommonEP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
@@ -62,7 +62,7 @@ public class TerraformBoatItem extends Item {
 			double y = hitResult.getLocation().y;
 			double z = hitResult.getLocation().z;
 
-			Boat boatEntity = DoApiExpectPlatform.createBoat(this.boatTypeName, world, x, y, z, this.chest);
+			Boat boatEntity = DoApiCommonEP.createBoat(this.boatTypeName, world, x, y, z, this.chest);
 
 			boatEntity.setYRot(user.getYRot());
 

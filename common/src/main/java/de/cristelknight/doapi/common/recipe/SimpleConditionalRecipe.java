@@ -2,7 +2,8 @@ package de.cristelknight.doapi.common.recipe;
 
 import com.google.gson.JsonObject;
 import de.cristelknight.doapi.DoApi;
-import de.cristelknight.doapi.DoApiExpectPlatform;
+import de.cristelknight.doapi.DoApiCommonEP;
+import de.cristelknight.doapi.DoApiEP;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -18,7 +19,7 @@ public class SimpleConditionalRecipe {
         public T fromJson(ResourceLocation recipeId, JsonObject json) {
             DoApi.LOGGER.debug("Starting to load conditional recipe named: " + recipeId);
 
-            return DoApiExpectPlatform.fromJson(recipeId, json);
+            return DoApiEP.fromJson(recipeId, json);
         }
 
         //Should never get here as we return one of the recipes we wrap.
@@ -32,7 +33,7 @@ public class SimpleConditionalRecipe {
 
         if(type.equals("forge:mod_loaded")){
             String modId = c.get("modid").getAsString();
-            return DoApiExpectPlatform.isModLoaded(modId);
+            return DoApiEP.isModLoaded(modId);
         }
         return false;
     }
