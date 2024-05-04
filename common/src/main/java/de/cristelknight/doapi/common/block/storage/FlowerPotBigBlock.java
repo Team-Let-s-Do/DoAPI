@@ -1,6 +1,7 @@
-package de.cristelknight.doapi.common.block;
+package de.cristelknight.doapi.common.block.storage;
 
-import de.cristelknight.doapi.common.registry.DoApiStorageTypesRegistry;
+import de.cristelknight.doapi.common.block.StorageBlock;
+import de.cristelknight.doapi.common.registry.DoApiStorageTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +24,7 @@ import java.util.function.Supplier;
 @SuppressWarnings("deprecation")
 public class FlowerPotBigBlock extends StorageBlock {
 
-	private static Supplier<VoxelShape> voxelShapeSupplier = () -> {
+	private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
 		VoxelShape shape = Shapes.empty();
 		shape = Shapes.joinUnoptimized(shape, Shapes.box(0.78125, 0.4375, 0.21875, 0.90625, 0.625, 0.78125), BooleanOp.OR);
 		shape = Shapes.joinUnoptimized(shape, Shapes.box(0.09375, 0.4375, 0.21875, 0.21875, 0.625, 0.78125), BooleanOp.OR);
@@ -45,7 +46,7 @@ public class FlowerPotBigBlock extends StorageBlock {
 
 	@Override
 	public ResourceLocation type() {
-		return DoApiStorageTypesRegistry.FLOWER_POT_BIG;
+		return DoApiStorageTypeRegistry.FLOWER_POT_BIG;
 	}
 
 	@Override
