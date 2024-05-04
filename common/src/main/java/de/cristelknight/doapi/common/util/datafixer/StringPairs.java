@@ -19,10 +19,6 @@ public class StringPairs {
     }
 
     public void add(String oldPath, String newPathOrRL){
-        if(DataFixers.isFreezed()){
-            DoApi.LOGGER.error("Data fixer registry is already freezed. Cannot add old path " + oldPath + " and new path/RL " + newPathOrRL + ".");
-            return;
-        }
         if(oldPath == null || newPathOrRL == null){
             DoApi.LOGGER.error("Old path: " + oldPath + " or new path/RL: " + newPathOrRL + " is null!");
             return;
