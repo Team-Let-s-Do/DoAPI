@@ -6,30 +6,32 @@ import java.util.HashMap;
 
 public class StringPairs {
 
-    private HashMap<String, String> ids;
+    private final HashMap<String, String> paths;
+
+
 
     protected StringPairs() {
-        ids = new HashMap<>();
+        paths = new HashMap<>();
     }
 
-    public boolean containsOldID(String oldID){
-        return ids.containsKey(oldID);
+    public boolean containsOldPath(String oldPath){
+        return paths.containsKey(oldPath);
     }
 
-    public void addPair(String oldID, String newID){
-        if(oldID == null || newID == null){
-            DoApi.LOGGER.error("ID: " + oldID + " or ID: " + newID + " is null!");
+    public void add(String oldPath, String newPathOrRL){
+        if(oldPath == null || newPathOrRL == null){
+            DoApi.LOGGER.error("Old path: " + oldPath + " or new path/RL: " + newPathOrRL + " is null!");
             return;
         }
-        if(ids.containsKey(oldID)){
-            DoApi.LOGGER.error("ID: " + oldID + "is already added to a datafixer.");
+        if(paths.containsKey(oldPath)){
+            DoApi.LOGGER.error("Path: " + oldPath + "is already added to a datafixer.");
             return;
         }
-        ids.put(oldID, newID);
+        paths.put(oldPath, newPathOrRL);
     }
 
-    public String getNewId(String oldID){
-        return ids.get(oldID);
+    public String getNewPathOrRL(String oldPath){
+        return paths.get(oldPath);
     }
 
 }
