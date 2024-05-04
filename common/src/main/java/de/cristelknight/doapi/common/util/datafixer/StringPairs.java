@@ -18,7 +18,7 @@ public class StringPairs {
         return paths.containsKey(oldPath);
     }
 
-    public void addPair(String oldPath, String newPath){
+    public void add(String oldPath, String newPath){
         if(DataFixers.isFreezed()){
             DoApi.LOGGER.error("Data fixer registry is already freezed. Cannot add oldPath " + oldPath + " and newPath " + newPath + ".");
             return;
