@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 public class Util {
     public static <T> List<T> getApis(Class<T> returnClazz, String name, Class<?> annotationClazz){
          List<T> apis = new ArrayList<>();
-        for(Pair<List<String>, T> apiPair : DoApiExpectPlatform.findAPIs(returnClazz, name, annotationClazz)){
+        for(Pair<List<String>, T> apiPair : DoApiEP.findAPIs(returnClazz, name, annotationClazz)){
             apis.add(apiPair.getSecond());
         }
         return apis;

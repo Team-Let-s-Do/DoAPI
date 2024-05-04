@@ -1,7 +1,8 @@
 package de.cristelknight.doapi.config.jankson.config;
 
 import com.mojang.serialization.Codec;
-import de.cristelknight.doapi.DoApiExpectPlatform;
+import de.cristelknight.doapi.DoApiCommonEP;
+import de.cristelknight.doapi.DoApiEP;
 import de.cristelknight.doapi.config.jankson.ConfigUtil;
 import de.cristelknight.doapi.config.jankson.JanksonOps;
 import org.jetbrains.annotations.Nullable;
@@ -34,7 +35,7 @@ public interface CommentedConfig<T extends Record> {
 
 
     default Path getConfigPath() {
-        return DoApiExpectPlatform.getConfigDirectory().resolve(getSubPath() + ".json5");
+        return DoApiEP.getConfigDirectory().resolve(getSubPath() + ".json5");
     }
 
     default T getConfig(boolean fromFile, boolean save) {

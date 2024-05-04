@@ -9,6 +9,7 @@
     "armor.PlayerEntityRendererMixin"
   ],
   "mixins": [
+    "DataFixerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

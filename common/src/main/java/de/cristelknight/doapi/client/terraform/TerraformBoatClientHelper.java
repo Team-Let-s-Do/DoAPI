@@ -1,6 +1,6 @@
 package de.cristelknight.doapi.client.terraform;
 
-import de.cristelknight.doapi.DoApiExpectPlatform;
+import de.cristelknight.doapi.DoApiCommonEP;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
@@ -44,7 +44,7 @@ public final class TerraformBoatClientHelper {
 	}
 
 	public static void registerAllModelLayers(){
-		for(Map.Entry<ResourceLocation, Boolean> e : DoApiExpectPlatform.getAllDoApiBoatTypeNamesAndRaft().entrySet()){
+		for(Map.Entry<ResourceLocation, Boolean> e : DoApiCommonEP.getAllDoApiBoatTypeNamesAndRaft().entrySet()){
 			registerModelLayers(e.getKey(), e.getValue());
 		}
 	}
