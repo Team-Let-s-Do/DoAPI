@@ -1,4 +1,4 @@
-package de.cristelknight.doapi.client.render.block.storage;
+package de.cristelknight.doapi.client.render.block.storage.api;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.cristelknight.doapi.common.block.entity.StorageBlockEntity;

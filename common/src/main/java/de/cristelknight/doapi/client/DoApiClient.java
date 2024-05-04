@@ -2,8 +2,8 @@ package de.cristelknight.doapi.client;
 
 import de.cristelknight.doapi.client.render.block.StandardBlockEntityRenderer;
 import de.cristelknight.doapi.client.render.block.storage.FlowerBoxRenderer;
-import de.cristelknight.doapi.client.render.block.storage.FlowerPotBigStorageRenderer;
-import de.cristelknight.doapi.client.render.block.storage.StorageBlockEntityRenderer;
+import de.cristelknight.doapi.client.render.block.storage.FlowerPotBigRenderer;
+import de.cristelknight.doapi.client.render.block.storage.api.StorageBlockEntityRenderer;
 import de.cristelknight.doapi.client.render.entity.ChairRenderer;
 import de.cristelknight.doapi.common.registry.DoApiBlockEntityTypes;
 import de.cristelknight.doapi.common.registry.DoApiBlocks;
@@ -43,7 +43,7 @@ public class DoApiClient {
     }
 
     public static void registerStorageTypeRenderers(){
-        StorageBlockEntityRenderer.registerStorageType(DoApiStorageTypeRegistry.FLOWER_POT_BIG, new FlowerPotBigStorageRenderer());
+        StorageBlockEntityRenderer.registerStorageType(DoApiStorageTypeRegistry.FLOWER_POT_BIG, new FlowerPotBigRenderer());
         StorageBlockEntityRenderer.registerStorageType(DoApiStorageTypeRegistry.FLOWER_BOX, new FlowerBoxRenderer());
     }
 
