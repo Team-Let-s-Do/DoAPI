@@ -1,6 +1,6 @@
 package de.cristelknight.doapi.common.block;
 
-import de.cristelknight.doapi.common.registry.DoApiStorageTypesRegistry;
+import de.cristelknight.doapi.common.registry.DoApiStorageTypeRegistry;
 import de.cristelknight.doapi.common.util.GeneralUtil;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -67,7 +67,7 @@ public class FlowerBoxBlock extends StorageBlock {
 
 	@Override
 	public ResourceLocation type() {
-		return DoApiStorageTypesRegistry.FLOWER_BOX;
+		return DoApiStorageTypeRegistry.FLOWER_BOX;
 	}
 
 	@Override
