@@ -24,7 +24,7 @@ public class StringPairs {
             return;
         }
         if(paths.containsKey(oldPath)){
-            DoApi.LOGGER.error("Path: " + oldPath + "is already added to a datafixer.");
+            DoApi.LOGGER.error("Old path: " + oldPath + " is already added to a datafixer.");
             return;
         }
         paths.put(oldPath, newPathOrRL);
