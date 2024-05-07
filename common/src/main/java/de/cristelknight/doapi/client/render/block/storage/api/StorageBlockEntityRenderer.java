@@ -41,21 +41,24 @@ public class StorageBlockEntityRenderer implements BlockEntityRenderer<StorageBl
         if (!entity.hasLevel()) {
             return;
         }
+
         BlockState state = entity.getBlockState();
-        if(state.getBlock() instanceof StorageBlock sB){
+        if (state.getBlock() instanceof StorageBlock sB) {
             NonNullList<ItemStack> itemStacks = entity.getInventory();
+            if (itemStacks.isEmpty()) {
+                return;
+            }
+
             matrices.pushPose();
             applyBlockAngle(matrices, state, 180);
             ResourceLocation type = sB.type();
             StorageTypeRenderer renderer = getRendererForId(type);
-            if(renderer != null) {
+            if (renderer != null) {
                 renderer.render(entity, matrices, vertexConsumers, itemStacks);
             }
             matrices.popPose();
         }
     }
-
-
 
     public static void applyBlockAngle(PoseStack matrices, BlockState state, float angleOffset) {
         float angle = state.getValue(StorageBlock.FACING).toYRot();
