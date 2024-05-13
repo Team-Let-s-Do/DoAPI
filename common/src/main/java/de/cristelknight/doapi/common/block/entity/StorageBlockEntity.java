@@ -32,15 +32,20 @@ public class StorageBlockEntity extends BlockEntity {
         this.inventory = NonNullList.withSize(this.size, ItemStack.EMPTY);
     }
 
-    public ItemStack removeStack(int slot){
-        ItemStack stack = inventory.set(slot, ItemStack.EMPTY);
-        setChanged();
-        return stack;
+    public void setStack(int slot, ItemStack stack){
+        if (slot >= 0 && slot < inventory.size()) {
+            inventory.set(slot, stack);
+            setChanged();
+        }
     }
 
-    public void setStack(int slot, ItemStack stack){
-        inventory.set(slot, stack);
-        setChanged();
+    public ItemStack removeStack(int slot){
+        if (slot >= 0 && slot < inventory.size()) {
+            ItemStack stack = inventory.set(slot, ItemStack.EMPTY);
+            setChanged();
+            return stack;
+        }
+        return ItemStack.EMPTY;
     }
 
     @Override

@@ -50,7 +50,7 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
         }
         Tuple<Float, Float> ff = optional.get();
         int i = getSection(ff.getA(), ff.getB());
-        if (i == Integer.MIN_VALUE) {
+        if (i == Integer.MIN_VALUE || i >= shelfBlockEntity.getInventory().size()) {
             return InteractionResult.PASS;
         }
         if (!shelfBlockEntity.getInventory().get(i).isEmpty()) {
@@ -66,6 +66,7 @@ public abstract class StorageBlock extends FacingBlock implements EntityBlock {
             }
         }
     }
+
 
 
     public void add(Level level, BlockPos blockPos, Player player, StorageBlockEntity shelfBlockEntity, ItemStack itemStack, int i) {
