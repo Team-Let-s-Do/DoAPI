@@ -2,6 +2,7 @@ package de.cristelknight.doapi.config.jankson;
 
 
 import blue.endless.jankson.*;
+import blue.endless.jankson.api.SyntaxError;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -11,11 +12,11 @@ import de.cristelknight.doapi.DoApi;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Supplier;
-
 
 
 public class ConfigUtil {
@@ -28,18 +29,69 @@ public class ConfigUtil {
 
     public static final String MODID = "Do Api";
 
+    // config debug from ChatGPT it works ig?
+    private static final Object lock = new Object();
+    public static JsonElement readConfig(String filePath) throws IOException, SyntaxError {
+        synchronized (lock) {
+            Path path = Paths.get(filePath);
+            DoApi.LOGGER.debug("Reading config file: " + filePath);
+            String content = Files.readString(path);
+            DoApi.LOGGER.debug("File content read as string:\n" + content);
+            return JANKSON.load(content);
+        }
+    }
+    private static void logFileDetails(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+        DoApi.LOGGER.debug("\nLogging file details for: " + filePath);
+        DoApi.LOGGER.debug("Absolute path: " + path.toAbsolutePath());
+        DoApi.LOGGER.debug("File size: " + Files.size(path) + " bytes");
+        DoApi.LOGGER.debug("File content read as raw bytes:\n" + readConfigRaw(filePath));
+        DoApi.LOGGER.debug("File content read as string:\n" + Files.readString(path) + "\n");
+    }
+
+    private static String readConfigRaw(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+        byte[] bytes = Files.readAllBytes(path);
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x ", b));
+        }
+        return sb.toString();
+    }
+    public static JsonElement getConfig(String configPath) {
+        try {
+            // Log file details before actual loading
+            logFileDetails(configPath);
+
+            synchronized (lock) {
+                JsonElement config = readConfig(configPath);
+                DoApi.LOGGER.debug("Config loaded successfully:\n" + config.toJson(true, true));
+                return config;
+            }
+        } catch (IOException e) {
+            DoApi.LOGGER.error("Error reading config: " + e.getMessage(), e);
+        } catch (SyntaxError e) {
+            DoApi.LOGGER.error("Syntax error in config file: " + e.getMessage(), e);
+        } catch (Exception e) {
+            DoApi.LOGGER.error("Unexpected error: " + e.getMessage(), e);
+        }
+        throw new IllegalArgumentException("["+MODID+"] Couldn't read 1 " + configPath + ", crashing instead. Maybe try to delete the config files!");
+    }
+
+    // end of that stuff
+
     public static <T> T readConfig(Path path, Codec<T> codec, DynamicOps<JsonElement> ops) {
         try{
-            JsonElement load = JANKSON.load(path.toFile());
+            JsonElement load = getConfig(path.toString());
 
             DataResult<Pair<T, JsonElement>> decode = codec.decode(ops, load);
             Optional<DataResult.PartialResult<Pair<T, JsonElement>>> error = decode.error();
             if (error.isPresent()) {
-                throw new IllegalArgumentException("["+MODID+"] Couldn't read " + path + ", crashing instead. Maybe try to delete the config files!");
+                throw new IllegalArgumentException("["+MODID+"] Couldn't read 2 " + path + ", crashing instead. Maybe try to delete the config files!\n" + error.get().message());
             }
             return decode.result().orElseThrow().getFirst();
         } catch (Exception errorMsg) {
-            throw new IllegalArgumentException("["+MODID+"] Couldn't read " + path + ", crashing instead. Maybe try to delete the config files!");
+            throw new IllegalArgumentException("["+MODID+"] Couldn't read 3 " + path + ", crashing instead. Maybe try to delete the config files!\n" + errorMsg);
         }
     }
 
