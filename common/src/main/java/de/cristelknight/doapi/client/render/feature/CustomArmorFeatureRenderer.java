@@ -61,7 +61,7 @@ public class CustomArmorFeatureRenderer<T extends LivingEntity, M extends Humano
 			((HeadedModel) this.getParentModel()).getHead().translateAndRotate(poseStack);
 		}
 		poseStack.scale(1F, 1F, 1F);
-		poseStack.translate(0, customArmor.getYOffset(), 0);
+		poseStack.translate(0, customArmor.doapi$getYOffset(), 0);
 
 
 		if (armorItem instanceof DyeableArmorItem dyeableArmorItem) {
