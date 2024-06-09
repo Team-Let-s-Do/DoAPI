@@ -1,3 +1,6 @@
 {
-  "accessWidener": "doapi.accesswidener"
+  "accessWidener": "doapi.accesswidener",
+  "injected_interfaces": {
+    "net/minecraft/class_1738": ["de/cristelknight/doapi/common/item/ICustomArmor"]
+  }
 }

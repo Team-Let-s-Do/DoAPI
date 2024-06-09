@@ -22,7 +22,7 @@ public class BetterCustomHatItem extends CustomHatItem {
     }
 
     @Override
-    public Float getOffset() {
+    public Float doapi$getYOffset() {
         return this.offset;
     }
 
