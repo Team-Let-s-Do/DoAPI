@@ -34,12 +34,13 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
 
     public CabinetBlockEntity(BlockPos pos, BlockState state, SoundEvent openSound, SoundEvent closeSound) {
         super(DoApiBlockEntityTypes.CABINET_BLOCK_ENTITY.get(), pos, state);
-        this.inventory = NonNullList.withSize(35, ItemStack.EMPTY);
+        this.inventory = NonNullList.withSize(36, ItemStack.EMPTY);
         this.stateManager = new ContainerOpenersCounter() {
             @Override
             protected void onOpen(Level world, BlockPos pos, BlockState state) {
                 world.setBlock(pos, state.setValue(BlockStateProperties.OPEN, true), 3);
                 assert CabinetBlockEntity.this.level != null;
+
                 playSound(CabinetBlockEntity.this.level, pos, openSound);
             }
 
@@ -94,7 +95,7 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
 
     @Override
     public int getContainerSize() {
-        return 35;
+        return 36;
     }
 
     @Override
@@ -114,7 +115,7 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
 
     @Override
     protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
-        return new ChestMenu(MenuType.GENERIC_9x5, syncId, playerInventory, this, 2);
+        return new ChestMenu(MenuType.GENERIC_9x4, syncId, playerInventory, this, 4);
     }
 
     @Override
@@ -141,5 +142,4 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
         assert this.level != null;
         this.level.setBlock(this.getBlockPos(), state.setValue(BlockStateProperties.OPEN, open), 3);
     }
-
 }
