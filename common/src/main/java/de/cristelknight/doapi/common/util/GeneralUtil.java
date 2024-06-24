@@ -157,7 +157,6 @@ public class GeneralUtil {
 
 	static {
 		LINE_CONNECTING_TYPE = EnumProperty.create("type", LineConnectingType.class);
-
 	}
 
 	public static void spawnSlice(Level level, ItemStack stack, double x, double y, double z, double xMotion, double yMotion, double zMotion) {
