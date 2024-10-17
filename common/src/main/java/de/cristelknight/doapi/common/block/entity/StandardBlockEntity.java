@@ -67,7 +67,7 @@ public class StandardBlockEntity extends BlockEntity implements BlockEntityTicke
         if (!level.isClientSide() && level.getGameTime() % 80L == 0L) {
             MobEffectInstance instance = StandardItem.getEffectInstanceOrNull(getItem());
             if (instance == null) {
-                DoApi.LOGGER.error("MobEffectInstance for StandardBlock is null! At: " + pos);
+                if(!level.isDebug()) DoApi.LOGGER.error("MobEffectInstance for StandardBlock is null! At: " + pos);
                 return;
             }
             level.getEntitiesOfClass(Player.class, new AABB(pos).inflate(8F), player -> true).forEach(player -> player.addEffect(instance));
