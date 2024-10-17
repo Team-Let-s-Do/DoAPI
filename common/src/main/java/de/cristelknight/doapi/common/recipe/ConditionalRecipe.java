@@ -119,7 +119,7 @@ public class ConditionalRecipe {
     public static boolean checkCondition(JsonObject c){
         String type = GsonHelper.getAsString(c, "type");
 
-        if(type.equals("forge:mod_loaded")){
+        if(type.equals("neoforge:mod_loaded")){
             String modId = c.get("modid").getAsString();
             return DoApiEP.isModLoaded(modId);
         }
