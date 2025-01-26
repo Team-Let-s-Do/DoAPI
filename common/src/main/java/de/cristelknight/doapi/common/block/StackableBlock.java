@@ -68,27 +68,26 @@ public class StackableBlock extends Block {
         final ItemStack stack = player.getItemInHand(hand);
         if (player.isShiftKeyDown() && stack.isEmpty()) {
             if (!world.isClientSide) {
-                if (state.getValue(STACK_PROPERTY) > 1) {
-                    world.setBlock(pos, state.setValue(STACK_PROPERTY, state.getValue(STACK_PROPERTY) - 1), Block.UPDATE_ALL);
-                    player.getFoodData().eat(5, 0.8f);
-                    world.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    if (world instanceof ServerLevel) {
-                        ServerLevel serverWorld = (ServerLevel) world;
-                        for (int count = 0; count < 10; ++count) {
-                            double d0 = world.random.nextGaussian() * 0.02D;
-                            double d1 = world.random.nextGaussian() * 0.00D;
-                            double d2 = world.random.nextGaussian() * 0.02D;
-                            serverWorld.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, state), pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, d0, d1, d2, 0.1);
-                        }
+                int stackAmount = state.getValue(STACK_PROPERTY) - 1;
+                if (stackAmount > 0)
+                    world.setBlock(pos, state.setValue(STACK_PROPERTY, stackAmount, Block.UPDATE_ALL);
+                player.getFoodData().eat(5, 0.8f);
+                world.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                if (world instanceof ServerLevel serverWorld) {
+                    for (int count = 0; count < 10; ++count) {
+                        double d0 = world.random.nextGaussian() * 0.02D;
+                        double d1 = world.random.nextGaussian() * 0.00D;
+                        double d2 = world.random.nextGaussian() * 0.02D;
+                        serverWorld.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, state), pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, d0, d1, d2, 0.1);
                     }
-                } else {
-                    world.removeBlock(pos, false);
                 }
-                return InteractionResult.sidedSuccess(world.isClientSide);
+                if(stackAmount == 0) world.removeBlock(pos, false);
             }
+            return InteractionResult.sidedSuccess(world.isClientSide);
         } else if (stack.getItem() == this.asItem()) {
             if (state.getValue(STACK_PROPERTY) < this.maxStack) {
                 world.setBlock(pos, state.setValue(STACK_PROPERTY, state.getValue(STACK_PROPERTY) + 1), Block.UPDATE_ALL);
+                world.playSound(player, pos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS);
                 if (!player.isCreative()) {
                     stack.shrink(1);
                 }
