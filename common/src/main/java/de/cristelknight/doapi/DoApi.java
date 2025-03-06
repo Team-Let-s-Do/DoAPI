@@ -1,6 +1,8 @@
 package de.cristelknight.doapi;
 
 import de.cristelknight.doapi.common.registry.*;
+import dev.architectury.platform.Platform;
+import net.fabricmc.api.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,5 +17,6 @@ public class DoApi {
         DoApiBlockEntityTypes.init();
         DoApiRecipes.init();
         DoApiSoundEventRegistry.init();
+        Platform.getEnv()
     }
 }

@@ -12,6 +12,7 @@
   ],
   "mixins": [
     "FireBlockMixin",
+    "RecipeManagerMixin",
     "boat.MixinBoatEntity",
     "sign.MixinAbstractBlockSettings",
     "sign.MixinBlockEntityType"
